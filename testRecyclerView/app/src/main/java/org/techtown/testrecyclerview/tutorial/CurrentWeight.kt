@@ -1,24 +1,18 @@
 package org.techtown.testrecyclerview.tutorial
 
 import android.content.Intent
-import android.database.sqlite.SQLiteDatabase
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.NumberPicker
 import android.widget.TextView
-import org.techtown.testrecyclerview.DBHelper
 import org.techtown.testrecyclerview.R
 
 class CurrentWeight : AppCompatActivity() {
-    lateinit var dbHelper : DBHelper
-    lateinit var database : SQLiteDatabase
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_current_weight)
-        dbHelper = DBHelper(this, "food.db", null, 1)
-        database = dbHelper.writableDatabase
-        dbHelper.insertUserInfo()
+
 
         val currentWeight = findViewById<TextView>(R.id.infoTv)
         val intentBtn = findViewById<Button>(R.id.intentBtn)
@@ -33,10 +27,6 @@ class CurrentWeight : AppCompatActivity() {
         currentNp.wrapSelectorWheel = true
         currentNp.displayedValues = weightStrConvertList.toTypedArray()
         currentNp.value = 90
-        var currentvalue = 0
-        currentNp.setOnValueChangedListener { picker, oldVal, newVal ->
-            currentvalue = newVal
-        }
 
 
 //        fun saveData() {
@@ -45,7 +35,7 @@ class CurrentWeight : AppCompatActivity() {
 
 
         intentBtn.setOnClickListener {
-            dbHelper.updateUserInfo("current_weight", 150 - currentvalue)
+
             val intent = Intent( this, TargetWeight::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

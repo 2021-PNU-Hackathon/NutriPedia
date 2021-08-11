@@ -43,8 +43,11 @@
         <!-- android:label="@string/title_activity_main" -->
         <!-- android:theme="@style/Theme.TestRecyclerView.NoActionBar" /> -->
         <activity android:name=".recommend.RecommendResult" />
-        <activity android:name=".recommend.RecommendList" />
-        <activity android:name=".search.SearchList" />
+        <activity android:name=".recommend.RecommendList"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/Theme.Dark"/>
+        <activity android:name=".search.SearchList"
+            android:theme="@style/Theme.Dark"/>
         <activity android:name=".search.SearchResult" />
         <activity android:name=".MainActivity">
             <intent-filter>

@@ -5,6 +5,7 @@ import android.util.Log
 import okhttp3.*
 import org.json.JSONArray
 import org.json.JSONObject
+import org.techtown.testrecyclerview.search.FoodResult
 import java.io.File
 import java.io.IOException
 
@@ -14,7 +15,6 @@ public class FileUploadUtils {
         var requestBody:RequestBody = MultipartBody.Builder()
             .setType(MultipartBody.FORM)
             .addFormDataPart("file",file.name, RequestBody.create(MediaType.parse("image/*"),file))
-//          .addFormDataPart("image","androidFlask.jpg",RequestBody.create(MediaType.parse("image/*jpg"), byteArray ))
             .build()
 
         var request = Request.Builder()
@@ -29,10 +29,26 @@ public class FileUploadUtils {
             }
 
             override fun onResponse(call: Call, response: Response) {
-                Log.e("TEST1 ", response.body()!!.string())
-
+                val checkText : String = response.body()!!.string()
+                Log.e("TEST1 ", checkText)
+                var jsonResult : String = checkText
+                val jsonObject = JSONObject(checkText)
+                val x1Arr = jsonObject.getJSONArray("x1_arr")
+                val x2Arr = jsonObject.getJSONArray("x2_arr")
+                val y1Arr = jsonObject.getJSONArray("y1_arr")
+                val y2Arr = jsonObject.getJSONArray("y2_arr")
+                val nameArr = jsonObject.getJSONArray("name")
+                val num = jsonObject.getInt("num")
+                var serverData = arrayListOf<ServerData>()
+                for (i in 0 until num) {
+                    val sample : ServerData = ServerData(x1Arr.get(i).toString().toDouble(),
+                        x2Arr.get(i).toString().toDouble(),
+                        y1Arr.get(i).toString().toDouble(),
+                        y2Arr.get(i).toString().toDouble(),
+                        nameArr.get(i).toString())
+                    serverData.add(sample)
+                }
             }
-
         })
     }
 
@@ -83,7 +99,6 @@ public class FileUploadUtils {
 //    }
 
     //Data model
-    data class ServerData(var ididid : String ,var foodid: ArrayList<Int>, var fid: ArrayList<Int>, var foodname: ArrayList<Int>, var position: ArrayList<Int>){
-
-    }
+    data class ServerData(var x1 : Double ,var x2 : Double, var y1: Double,
+                          var y2 : Double, var name: String)
 }
