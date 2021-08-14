@@ -19,7 +19,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TestRecyclerView"
         android:usesCleartextTraffic="true">
-        <activity android:name=".settings.PrivateFix"></activity>
+        <activity android:name=".settings.PrivateFix"
+            android:parentActivityName=".settings.SettingActivity"></activity>
         <activity android:name=".result.FixItemActivity" />
         <activity android:name=".result.FixSearchResult" />
         <activity android:name=".result.ResultSearchActivity" />
