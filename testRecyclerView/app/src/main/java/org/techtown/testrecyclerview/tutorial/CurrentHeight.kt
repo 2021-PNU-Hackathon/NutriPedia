@@ -6,13 +6,14 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.NumberPicker
 import android.widget.TextView
+import org.techtown.testrecyclerview.DBHelper
 import org.techtown.testrecyclerview.R
 
 class CurrentHeight : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_current_height)
-
+        val db = DBHelper(this, "food.db", null, 1)
 
         val currentHeight = findViewById<TextView>(R.id.infoTv)
         val intentBtn = findViewById<Button>(R.id.intentBtn)
@@ -27,10 +28,15 @@ class CurrentHeight : AppCompatActivity() {
         heightNp.wrapSelectorWheel = true
         heightNp.displayedValues = heightStrConvertList.toTypedArray()
         heightNp.value = 40
+        var heightvalue = 0
+        heightNp.setOnValueChangedListener { picker, oldVal, newVal ->
+            heightvalue = newVal
+        }
 
 
         intentBtn.setOnClickListener {
-
+            db.updateUserInfo("current_height", 200 - heightvalue)
+            db.close()
             val intent = Intent( this, Age::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
