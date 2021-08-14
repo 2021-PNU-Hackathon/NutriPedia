@@ -53,9 +53,9 @@ class SettingActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(item.itemId == R.id.fixActionBtn) {
-//            var privateIntent = Intent(applicationContext,::class.java)
-//            startActivityForResult(,13)
+        if(item.itemId == R.id.fixBtn) {
+            var privateIntent = Intent(applicationContext,PrivateFix::class.java)
+            startActivity(privateIntent)
         }
         else{}
         return super.onOptionsItemSelected(item)
