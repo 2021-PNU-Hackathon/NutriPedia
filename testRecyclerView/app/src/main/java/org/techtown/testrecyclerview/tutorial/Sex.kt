@@ -25,12 +25,11 @@ class Sex : AppCompatActivity() {
         val intentBtn = findViewById<Button>(R.id.intentBtn)
         intentBtn.text = "다음"
 
-        var result : String
         var clicked : Boolean = false
         var idCheck : AppCompatButton?= null
 
         manBtn.setOnClickListener {
-            if (idCheck == null || clicked == false){ // 아무 것도 클릭 안되어 있음
+            if (idCheck == null && clicked == false){ // 아무 것도 클릭 안되어 있음
                 idCheck = manBtn
                 clicked = true
                 manBtn.setBackgroundDrawable(ContextCompat.getDrawable(this,R.drawable.btn_background))
@@ -51,7 +50,7 @@ class Sex : AppCompatActivity() {
         }
 
         womanBtn.setOnClickListener {
-            if (idCheck == null || clicked == false){ // 아무 것도 클릭 안되어 있음
+            if (idCheck == null && clicked == false){ // 아무 것도 클릭 안되어 있음
                 idCheck = womanBtn
                 clicked = true
                 manBtn.setBackgroundDrawable(ContextCompat.getDrawable(this,R.drawable.btn_background))
