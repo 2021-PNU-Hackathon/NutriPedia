@@ -14,7 +14,6 @@ import org.techtown.testrecyclerview.search.FoodData
 
 class RecommendFoodAdapter (val context: Context, var foodList: ArrayList<FoodData>) :
     RecyclerView.Adapter<RecommendFoodAdapter.CustomViewHolder>() {
-    private var searchList: ArrayList<FoodData> ?= null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.recommend_row_item, parent, false)
@@ -52,6 +51,7 @@ class RecommendFoodAdapter (val context: Context, var foodList: ArrayList<FoodDa
     class CustomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         val foodTitle = itemView.findViewById<TextView>(R.id.titleTv)
+        val kcalTv = itemView.findViewById<TextView>(R.id.kcalTv)
         val nutri1 = itemView.findViewById<TextView>(R.id.nutri1)
         val nutri2 = itemView.findViewById<TextView>(R.id.nutri2)
         val nutri3 = itemView.findViewById<TextView>(R.id.nutri3)
@@ -64,7 +64,8 @@ class RecommendFoodAdapter (val context: Context, var foodList: ArrayList<FoodDa
 
         fun bind (foodData:FoodData, context: Context) {
             /* 나머지 TextView와 String 데이터를 연결한다. */
-            foodTitle.text = foodData.foodName+"("+foodData.calorie+"kcal"+"/"+foodData.amount+"g"+")"
+            foodTitle.text = foodData.foodName
+            kcalTv.text = foodData.calorie.toString()+" | "+foodData.amount.toString()+"g 기준"
             nutri1.text = foodData.nutri1.toString()+"g"
             nutri2.text = foodData.nutri2.toString()+"g"
             nutri3.text = foodData.nutri3.toString()+"g"

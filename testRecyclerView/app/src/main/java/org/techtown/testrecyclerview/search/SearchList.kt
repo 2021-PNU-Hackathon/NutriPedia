@@ -1,14 +1,17 @@
 package org.techtown.testrecyclerview.search
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import org.techtown.testrecyclerview.R
 import android.content.Intent
+import android.graphics.Color
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.Menu
 import android.view.View
 import android.widget.AutoCompleteTextView
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -22,7 +25,6 @@ class SearchList : AppCompatActivity() {
     lateinit var recyclerView : RecyclerView
     val displayList = ArrayList<FoodData>()
     val mAdapter = FoodAdapter(this,displayList)
-    val wordList = mutableListOf<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,21 +38,6 @@ class SearchList : AppCompatActivity() {
         recyclerView.setHasFixedSize(true)
         displayList.addAll(foodList)
 
-        var searchBar = findViewById<AutoCompleteTextView>(R.id.auto_tv)
-        searchBar.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-               // filter(s.toString())
-            }
-
-        })
 
         mAdapter.setItemClickListner(object : FoodAdapter.OnItemClickListner{
             override fun onClick(v: View, position: Int) {
@@ -76,11 +63,12 @@ class SearchList : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu,menu)
+        supportActionBar?.title = "음식 검색"
         val menuItem = menu!!.findItem(R.id.action_search)
-
         if(menuItem != null) {
             val searchView = menuItem.actionView as SearchView
-
+            searchView.queryHint = "칼로리가 궁금한 음식을 검색해보세요."
+            searchView.setBackgroundColor(Color.WHITE)
             searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
                 override fun onQueryTextSubmit(query: String?): Boolean {
                     return true
