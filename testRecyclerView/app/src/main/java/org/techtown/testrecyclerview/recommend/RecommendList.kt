@@ -11,15 +11,14 @@ import org.techtown.testrecyclerview.search.FoodAdapter
 import org.techtown.testrecyclerview.search.FoodData
 
 class RecommendList : AppCompatActivity() {
-    var foodList = ArrayList<FoodData>()
+    var foodList = arrayListOf<FoodData>()
     lateinit var recyclerView : RecyclerView
     val mAdapter = RecommendFoodAdapter(this,foodList)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recommend_list)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.title = ""
+
         recyclerView = findViewById(R.id.mRecyclerView)
         fillData()
         recyclerView.adapter = mAdapter

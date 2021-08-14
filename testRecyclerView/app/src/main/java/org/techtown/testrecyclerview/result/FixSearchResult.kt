@@ -22,27 +22,27 @@ class FixSearchResult : AppCompatActivity() {
         setContentView(R.layout.activity_fix_search_result)
         val arrayAdapter = ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, wordList)
         var searchView = findViewById<View>(R.id.result_search_bar)
-        var searchTv = searchView.findViewById<TextView>(R.id.search_tv)
+        var searchTv = searchView.findViewById<TextView>(R.id.auto_tv)
         var searchIv = searchView.findViewById<ImageView>(R.id.search_image)
         var settingBtn = searchView.findViewById<ImageView>(R.id.setting)
-//        searchTv.auto_tv.setAdapter(arrayAdapter)
-//        searchTv.auto_tv.threshold = 0
+        searchTv.auto_tv.setAdapter(arrayAdapter)
+        searchTv.auto_tv.threshold = 0
         fillData()
 
-//        searchIv.setOnClickListener {
-//            //if
-//            searchTv.auto_tv.setText("")
-//        }
+        searchIv.setOnClickListener {
+            //if
+            searchTv.auto_tv.setText("")
+        }
         settingBtn.setOnClickListener {
             var settingIntent: Intent = Intent(this, SettingActivity::class.java)
             startActivity(settingIntent)
         }
 
-//        searchTv.auto_tv.setOnItemClickListener { parent, view, position, id ->
-//            //if
-//            searchTv.auto_tv.setText("")
-//        }
-        searchTv.setOnClickListener {
+        searchTv.auto_tv.setOnItemClickListener { parent, view, position, id ->
+            //if
+            searchTv.auto_tv.setText("")
+        }
+        search_send.setOnClickListener {
             //코딩 해야함 ****일치 시 있는 데이터 자료 띄움 없을 시 토스트 메세지 출력 + 다이얼로그도 추가해야함
             finish()
         }

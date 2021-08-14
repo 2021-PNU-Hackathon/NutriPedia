@@ -15,7 +15,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.appcompat.app.ActionBar
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.FileProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -69,6 +68,7 @@ class FragmentOne : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         var v :View = inflater.inflate(R.layout.fragment_one,container,false)
+
         var recyclerView = v.findViewById<RecyclerView>(R.id.recyclerview_main) // recyclerview id
         var recommendBtn = v.findViewById<Button>(R.id.recommendBtn)
         var layoutManager = LinearLayoutManager(context)
@@ -82,28 +82,29 @@ class FragmentOne : Fragment() {
 
         val arrayAdapter = ArrayAdapter<String>(requireContext(), android.R.layout.simple_dropdown_item_1line, wordList)
         var searchView = v.findViewById<View>(R.id.search_bar1)
-        var searchTv = searchView.findViewById<TextView>(R.id.search_tv)
+        var searchTv = searchView.findViewById<TextView>(R.id.auto_tv)
         var searchIv = searchView.findViewById<ImageView>(R.id.search_image)
         var settingBtn = searchView.findViewById<ImageView>(R.id.setting)
-//        searchTv.auto_tv.setAdapter(arrayAdapter)
-//        searchTv.auto_tv.threshold = 0
+        var searchSend = searchView.findViewById<AppCompatButton>(R.id.search_send)
+        searchTv.auto_tv.setAdapter(arrayAdapter)
+        searchTv.auto_tv.threshold = 0
 
-//        searchIv.setOnClickListener {
-//            //if
-//            searchTv.auto_tv.setText("")
-//        }
+        searchIv.setOnClickListener {
+            //if
+            searchTv.auto_tv.setText("")
+        }
         settingBtn.setOnClickListener {
             var settingIntent: Intent = Intent(context, SettingActivity::class.java)
             startActivity(settingIntent)
         }
 
-//        searchTv.auto_tv.setOnItemClickListener { parent, view, position, id ->
-//            val setName : String ?= arrayAdapter.getItem(position)
-//            searchTv.auto_tv.setText("${setName}")
-//        }
-        searchTv.setOnClickListener {
+        searchTv.auto_tv.setOnItemClickListener { parent, view, position, id ->
+            val setName : String ?= arrayAdapter.getItem(position)
+            searchTv.auto_tv.setText("${setName}")
+        }
+        searchSend.setOnClickListener {
             val intent = Intent(context,SearchList::class.java)
-//            intent.putExtra("send", auto_tv.text)
+            intent.putExtra("send", auto_tv.text)
             startActivity(intent)
         }
 
