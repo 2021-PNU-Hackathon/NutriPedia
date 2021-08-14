@@ -3,9 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/jhl81/OneDrive/NutriPedia/testRecyclerView/app/src/main/res/layout/activity_sex.xml" value="0.3446557971014493" />
-        <entry key="..\:/Users/jhl81/OneDrive/NutriPedia/testRecyclerView/app/src/main/res/layout/activity_tan_dan_ji_setting.xml" value="0.17831813576494426" />
-        <entry key="..\:/Users/jhl81/OneDrive/NutriPedia/testRecyclerView/app/src/main/res/menu/setting_detail.xml" value="0.36666666666666664" />
+
+        <entry key="..\:/Users/wogud/androidProject/NutriPedia/testRecyclerView/app/src/main/res/layout/activity_private_fix.xml" value="0.20606884057971014" />
+        <entry key="..\:/Users/wogud/androidProject/NutriPedia/testRecyclerView/app/src/main/res/layout/activity_setting.xml" value="0.17481884057971014" />
+
       </map>
     </option>
   </component>

@@ -1,6 +1,8 @@
 package org.techtown.testrecyclerview
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
@@ -59,5 +61,18 @@ class DBHelper(
         )
     }
 
+    fun getColValue(colindex: Int): String {
+        var db: SQLiteDatabase = readableDatabase
 
+        var cursor: Cursor = db.rawQuery("SELECT * FROM user_info", null)
+        var returnvalue = ""
+
+        while(cursor.moveToNext()) {
+            returnvalue = cursor.getString(colindex)
+        }
+
+        cursor.close()
+        db.close()
+        return returnvalue
+    }
 }

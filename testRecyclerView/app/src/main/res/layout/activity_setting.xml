@@ -17,7 +17,7 @@
         tools:src="@color/black" />
 
     <TextView
-        android:id="@+id/textView8"
+        android:id="@+id/infoTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
@@ -79,6 +79,7 @@
             android:weightSum="3">
 
             <TextView
+                android:id="@+id/cWeight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -88,6 +89,7 @@
                 android:textStyle="bold"/>
 
             <TextView
+                android:id="@+id/tWeight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
