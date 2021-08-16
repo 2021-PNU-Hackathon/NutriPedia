@@ -12,12 +12,17 @@ class CustomViewPager : ViewPager {
         context!!,
         attrs
     ) {}
+    var splitArray = emptyArray<String>()
 
     override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean {
         btn100.setOnClickListener {
             var setProg = calPb2.getProgress()
             setProg += 100
             calPb2.setProgress(setProg)
+            splitArray = waterTv.text.split("/").toTypedArray()
+            var water = splitArray[0].toInt()
+            water += 100
+            waterTv.text =water.toString() + "/" +splitArray[1]
         }
         btn250.setOnClickListener {
             var setProg = calPb2.getProgress()
