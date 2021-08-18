@@ -54,17 +54,17 @@ class DBHelper(
         db.close()
     }
 
-    fun selectUserInfo(field: String) {
+    fun selectUserInfo(field: String, tablename: String) {
         var db: SQLiteDatabase = writableDatabase
         db.execSQL(
-            "SELECT user_info." + field + " from user_info WHERE idx = " + 0 + ";"
+            "SELECT user_info." + field + " from " + tablename + " WHERE idx = " + 0 + ";"
         )
     }
 
-    fun getColValue(colindex: Int): String {
+    fun getColValue(colindex: Int, tablename: String): String {
         var db: SQLiteDatabase = readableDatabase
-
-        var cursor: Cursor = db.rawQuery("SELECT * FROM user_info", null)
+        val query = "SELECT * FROM " + tablename
+        var cursor: Cursor = db.rawQuery(query, null)
         var returnvalue = ""
 
         while(cursor.moveToNext()) {

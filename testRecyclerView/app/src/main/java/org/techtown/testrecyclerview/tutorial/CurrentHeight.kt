@@ -13,7 +13,7 @@ class CurrentHeight : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_current_height)
-        val db = DBHelper(this, "food.db", null, 1)
+        val db = DBHelper(this, "food_nutri.db", null, 1)
 
         val currentHeight = findViewById<TextView>(R.id.infoTv)
         val intentBtn = findViewById<Button>(R.id.intentBtn)
