@@ -57,13 +57,14 @@ class MainActivity : AppCompatActivity() {
                 if (folder.mkdirs()) folder.delete()
             }
 
-            myInput = context.assets.open("databases/$DB_NAME")
+            myInput = context.assets.open("$DB_NAME")
             val outFileName = DB_PATH + DB_NAME
             Log.e("Log1", outFileName)
             val f = File(outFileName)
-//            if (f.exists())
-//                Log.e("Log2", "Log ----- test7")
-//                return
+            if (f.exists()){
+                Log.e("Log1", "Log ----- 이미 COPY 완료")
+                return
+            }
             myOutput = FileOutputStream(outFileName)
 
             //transfer bytes from the inputfile to the outputfile
@@ -83,6 +84,7 @@ class MainActivity : AppCompatActivity() {
         } catch (e: IOException) {
             e.printStackTrace()
         }
+        Log.e("Log1", "Log ----- 외부 DB COPY 완료")
     }
 
     val REQUEST_IMAGE_CAPTURE = 1 //카메라 사진촬영 요청코드
