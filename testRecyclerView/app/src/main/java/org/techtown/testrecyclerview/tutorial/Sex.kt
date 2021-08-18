@@ -18,7 +18,7 @@ class Sex : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sex)
-        val db = DBHelper(this, "food.db", null, 1)
+        val db = DBHelper(this, "food_nutri.db", null, 1)
 
 
         val sex = findViewById<TextView>(R.id.infoTv)

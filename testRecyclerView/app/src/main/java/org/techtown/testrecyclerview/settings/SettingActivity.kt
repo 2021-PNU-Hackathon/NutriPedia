@@ -20,7 +20,7 @@ class SettingActivity : AppCompatActivity() {
         setContentView(R.layout.activity_setting)
         supportActionBar?.setTitle("정보 수정")
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        dbHelper = DBHelper(this, "food.db", null, 1)
+        dbHelper = DBHelper(this, "food_nutri.db", null, 1)
         database = dbHelper.writableDatabase
 
         tanDanJi.setOnClickListener {
@@ -34,16 +34,14 @@ class SettingActivity : AppCompatActivity() {
         }
 
         var gender : String
-        if (dbHelper.getColValue(3)=="0")
+        if (dbHelper.getColValue(3,"user_info")=="0")
             gender = "남자"
         else
             gender = "여자"
 
-//        var informations = dbHelper.getColValue(4).toString() + "cm | " + gender + " | " + dbHelper.getColValue(2).toString() + "세"
-
-        infoTv.text = dbHelper.getColValue(4) + "cm | " + gender + " | " + dbHelper.getColValue(2) + "세"
-        cWeight.text = dbHelper.getColValue(0) + "kg"
-        tWeight.text = dbHelper.getColValue(1) + "kg"
+        infoTv.text = dbHelper.getColValue(4, "user_info") + "cm | " + gender + " | " + dbHelper.getColValue(2,"user_info") + "세"
+        cWeight.text = dbHelper.getColValue(0,"user_info") + "kg"
+        tWeight.text = dbHelper.getColValue(1,"user_info") + "kg"
 
     }
 

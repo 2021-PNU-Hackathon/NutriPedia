@@ -35,14 +35,14 @@ class RecommendList : AppCompatActivity() {
         })
     }
         private fun fillData() {
-            foodList.add(FoodData("gimchi",1000,100,100,100,100))
-            foodList.add(FoodData("bob",1000,100,100,100,100))
-            foodList.add(FoodData("banana",1000,100,100,100,100))
-            foodList.add(FoodData("salad",1000,100,100,100,100))
-            foodList.add(FoodData("bulgogi",1000,100,100,100,100))
-            foodList.add(FoodData("chicken",1000,100,100,100,100))
-            foodList.add(FoodData("pizza",2000,100,100,100,100))
-            foodList.add(FoodData("bread",1000,100,100,100,100))
-            foodList.add(FoodData("meat",1000,100,100,100,100))
+//            foodList.add(FoodData("gimchi",1000,100,100,100,100))
+//            foodList.add(FoodData("bob",1000,100,100,100,100))
+//            foodList.add(FoodData("banana",1000,100,100,100,100))
+//            foodList.add(FoodData("salad",1000,100,100,100,100))
+//            foodList.add(FoodData("bulgogi",1000,100,100,100,100))
+//            foodList.add(FoodData("chicken",1000,100,100,100,100))
+//            foodList.add(FoodData("pizza",2000,100,100,100,100))
+//            foodList.add(FoodData("bread",1000,100,100,100,100))
+//            foodList.add(FoodData("meat",1000,100,100,100,100))
         }
 }

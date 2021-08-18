@@ -42,48 +42,7 @@ import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
-    private val DB_PATH = "/data/data/org.techtown.testrecyclerview/databases/"
-    private val DB_NAME = "food_nutri.db"
 
-    private fun copyDataBaseFromAssets(context: Context) {
-
-        var myInput: InputStream? = null
-        var myOutput: OutputStream? = null
-        try {
-
-            val folder = context.getDatabasePath("databases")
-
-            if (!folder.exists()) {
-                if (folder.mkdirs()) folder.delete()
-            }
-
-            myInput = context.assets.open("databases/$DB_NAME")
-            val outFileName = DB_PATH + DB_NAME
-            Log.e("Log1", outFileName)
-            val f = File(outFileName)
-//            if (f.exists())
-//                Log.e("Log2", "Log ----- test7")
-//                return
-            myOutput = FileOutputStream(outFileName)
-
-            //transfer bytes from the inputfile to the outputfile
-            val buffer = ByteArray(1024)
-            var length: Int = myInput.read(buffer)
-
-            while (length > 0) {
-                myOutput!!.write(buffer, 0, length)
-                length = myInput.read(buffer)
-            }
-            //Close the streams
-            myOutput!!.flush()
-            myOutput.close()
-            myInput.close()
-
-
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-    }
 
     val REQUEST_IMAGE_CAPTURE = 1 //카메라 사진촬영 요청코드
     lateinit var curPhotoPath: String //문자열 형태의 사진 경로 값(초기값을 null로 시작하고 싶을 때)
@@ -107,7 +66,7 @@ class MainActivity : AppCompatActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        copyDataBaseFromAssets(this)
+
 
 
         super.onCreate(savedInstanceState)

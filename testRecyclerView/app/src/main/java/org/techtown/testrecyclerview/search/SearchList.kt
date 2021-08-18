@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import org.techtown.testrecyclerview.R
 import android.content.Intent
+import android.database.Cursor
+import android.database.sqlite.SQLiteDatabase
 import android.graphics.Color
 import android.text.Editable
 import android.text.TextWatcher
@@ -15,12 +17,14 @@ import androidx.appcompat.app.ActionBar
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import org.techtown.testrecyclerview.DBHelper
 import org.w3c.dom.Text
 import java.util.*
 import kotlin.collections.ArrayList
 
 class SearchList : AppCompatActivity() {
-
+    lateinit var dbHelper : DBHelper
+    lateinit var db : SQLiteDatabase
     var foodList = arrayListOf<FoodData>()
     lateinit var recyclerView : RecyclerView
     val displayList = ArrayList<FoodData>()
@@ -29,6 +33,8 @@ class SearchList : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_list)
+        dbHelper = DBHelper(this, "food_nutri.db", null, 1)
+        db = dbHelper.readableDatabase
 
         recyclerView = findViewById(R.id.mRecyclerView)
         fillData()
@@ -50,15 +56,22 @@ class SearchList : AppCompatActivity() {
 
 
     private fun fillData() {
-        foodList.add(FoodData("gimchi",1000,100,100,100,100))
-        foodList.add(FoodData("bob",1000,100,100,100,100))
-        foodList.add(FoodData("banana",1000,100,100,100,100))
-        foodList.add(FoodData("salad",1000,100,100,100,100))
-        foodList.add(FoodData("bulgogi",1000,100,100,100,100))
-        foodList.add(FoodData("chicken",1000,100,100,100,100))
-        foodList.add(FoodData("pizza",2000,100,100,100,100))
-        foodList.add(FoodData("bread",1000,100,100,100,100))
-        foodList.add(FoodData("meat",1000,100,100,100,100))
+        var cursor: Cursor = db.rawQuery("SELECT * FROM real_nutri", null)
+        while(cursor.moveToNext()) {
+            foodList.add(FoodData(cursor.getString(1), cursor.getString(2).toDouble(),100,cursor.getString(3).toDouble(), cursor.getString(4).toDouble(), cursor.getString(5).toDouble()))
+
+        }
+        cursor.close()
+        db.close()
+//        foodList.add(FoodData("gimchi",1000,100,100,100,100))
+//        foodList.add(FoodData("bob",1000,100,100,100,100))
+//        foodList.add(FoodData("banana",1000,100,100,100,100))
+//        foodList.add(FoodData("salad",1000,100,100,100,100))
+//        foodList.add(FoodData("bulgogi",1000,100,100,100,100))
+//        foodList.add(FoodData("chicken",1000,100,100,100,100))
+//        foodList.add(FoodData("pizza",2000,100,100,100,100))
+//        foodList.add(FoodData("bread",1000,100,100,100,100))
+//        foodList.add(FoodData("meat",1000,100,100,100,100))
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
