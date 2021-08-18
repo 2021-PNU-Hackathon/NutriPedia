@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:textSize="25dp"
             android:text="현재 몸무게"
-            android:gravity="center"
+            android:layout_marginLeft="10dp"
             android:textColor="@color/black"
             android:textStyle="bold"
             android:layout_weight="2"/>
@@ -65,7 +65,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:text="목표 몸무게"
-            android:gravity="center"
+            android:layout_marginLeft="10dp"
             android:textColor="@color/black"
             android:textSize="25dp"
             android:textStyle="bold" />
@@ -96,7 +96,7 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:layout_marginLeft="10dp"
             android:textSize="25dp"
             android:text="키"
             android:textColor="@color/black"
@@ -129,28 +129,32 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:layout_marginLeft="10dp"
             android:textSize="25dp"
             android:text="성별"
             android:textColor="@color/black"
             android:textStyle="bold"
             android:layout_weight="2"/>
-        <EditText
-            android:id="@+id/gender_edit"
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/womanBtn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:textSize="20dp"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            android:hint="여자 / 남자"
-            android:layout_weight="3"/>
-        <TextView
+            android:layout_weight="2"
+            android:background="@drawable/eat_clicked"
+            android:backgroundTint="@null"
+            android:layout_marginHorizontal="10dp"
+            android:text="여자"
+            android:textColor="#666666" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/manBtn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textSize="25dp"
-            android:layout_weight="1"/>
+            android:layout_weight="2"
+            android:background="@drawable/eat_clicked"
+            android:backgroundTint="@null"
+            android:layout_marginHorizontal="10dp"
+            android:text="남자"
+            android:textColor="#666666" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -161,7 +165,7 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:layout_marginLeft="10dp"
             android:textSize="25dp"
             android:text="나이"
             android:textColor="@color/black"

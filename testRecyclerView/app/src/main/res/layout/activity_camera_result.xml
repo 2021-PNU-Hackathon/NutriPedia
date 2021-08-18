@@ -331,12 +331,13 @@
                         android:text="532Kcal" />
 
 
-                    <Button
+                    <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="191dp"
-                        android:background="#E5E5E5"
+                        android:background="#5CC485"
+                        android:textColor="@color/white"
                         android:text="등록하기" />
 
 
@@ -712,12 +713,13 @@
                         android:text="532Kcal" />
 
 
-                    <Button
+                    <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/button_2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="191dp"
-                        android:background="#E5E5E5"
+                        android:background="#5CC485"
+                        android:textColor="@color/white"
                         android:text="등록하기" />
 
 
@@ -1093,12 +1095,13 @@
                         android:text="532Kcal" />
 
 
-                    <Button
+                    <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/button_3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="191dp"
-                        android:background="#E5E5E5"
+                        android:background="#5CC485"
+                        android:textColor="@color/white"
                         android:text="등록하기" />
 
 

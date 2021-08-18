@@ -31,7 +31,7 @@ class Sex : AppCompatActivity() {
         var gender : Int = 0
 
         manBtn.setOnClickListener {
-            if (idCheck == null && clicked == false){ // 아무 것도 클릭 안되어 있음
+            if (idCheck == null || clicked == false){ // 아무 것도 클릭 안되어 있음
                 idCheck = manBtn
                 clicked = true
                 manBtn.setBackgroundDrawable(ContextCompat.getDrawable(this,R.drawable.btn_background))
@@ -52,11 +52,11 @@ class Sex : AppCompatActivity() {
         }
 
         womanBtn.setOnClickListener {
-            if (idCheck == null && clicked == false){ // 아무 것도 클릭 안되어 있음
+            if (idCheck == null || clicked == false){ // 아무 것도 클릭 안되어 있음
                 idCheck = womanBtn
                 clicked = true
-                manBtn.setBackgroundDrawable(ContextCompat.getDrawable(this,R.drawable.btn_background))
-                manBtn.setTextColor(Color.rgb(92,196,133))
+                womanBtn.setBackgroundDrawable(ContextCompat.getDrawable(this,R.drawable.btn_background))
+                womanBtn.setTextColor(Color.rgb(92,196,133))
             }
             else if (idCheck == womanBtn) {
                 clicked = false

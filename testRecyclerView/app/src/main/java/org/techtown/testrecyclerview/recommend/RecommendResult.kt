@@ -2,12 +2,10 @@ package org.techtown.testrecyclerview.recommend
 
 import android.app.Dialog
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.View
-import android.view.WindowManager
+import android.view.*
 import android.widget.Button
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatButton
@@ -29,6 +27,7 @@ class RecommendResult : AppCompatActivity() {
             val mAlertDialog = mBuilder.show()
             mAlertDialog.window!!.setLayout(WindowManager.LayoutParams.MATCH_PARENT,WindowManager.LayoutParams.WRAP_CONTENT)
             mAlertDialog.window!!.setGravity(Gravity.BOTTOM)
+            mAlertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
             val breakfast = mDialogView.findViewById<AppCompatButton>(R.id.breakfast)
             val brunch = mDialogView.findViewById<AppCompatButton>(R.id.brunch)

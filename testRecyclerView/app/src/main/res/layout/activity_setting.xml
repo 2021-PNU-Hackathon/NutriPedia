@@ -45,70 +45,76 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
             android:orientation="horizontal"
+            android:padding="10dp"
             android:weightSum="3">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:text="현재"
                 android:textColor="@color/white"
-                android:textSize="20dp"/>
+                android:textSize="16dp" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:text="목표"
                 android:textColor="@color/white"
-                android:textSize="20dp"/>
+                android:textSize="16dp"/>
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="권장 칼로리"
+                android:gravity="center"
+                android:text="권장"
                 android:textColor="@color/white"
-                android:textSize="20dp"/>
+                android:textSize="16dp"/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:padding="10dp"
             android:orientation="horizontal"
             android:weightSum="3">
 
             <TextView
                 android:id="@+id/cWeight"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:text="60kg"
                 android:textColor="@color/white"
-                android:textSize="20dp"
+                android:textSize="16dp"
                 android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/tWeight"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:text="50kg"
                 android:textColor="@color/white"
-                android:textSize="20dp"
+                android:textSize="16dp"
                 android:textStyle="bold"/>
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:text="150kcal"
                 android:textColor="@color/white"
-                android:textSize="20dp"
-                android:textStyle="bold"/>
+                android:textSize="16dp"
+                android:textStyle="bold" />
         </LinearLayout>
 
     </LinearLayout>

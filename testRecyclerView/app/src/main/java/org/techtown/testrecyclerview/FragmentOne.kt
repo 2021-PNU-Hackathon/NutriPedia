@@ -79,6 +79,7 @@ class FragmentOne : Fragment() {
         val viewAdapter= ViewPagerAdapter()
         val pagerTest = v.findViewById<ViewPager>(R.id.pager)
         pagerTest.adapter = viewAdapter
+        pagerTest.pageMargin = 30
 
         val arrayAdapter = ArrayAdapter<String>(requireContext(), android.R.layout.simple_dropdown_item_1line, wordList)
         var searchView = v.findViewById<View>(R.id.search_bar1)

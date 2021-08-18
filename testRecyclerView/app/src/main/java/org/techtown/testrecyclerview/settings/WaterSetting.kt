@@ -1,12 +1,16 @@
 package org.techtown.testrecyclerview.settings
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
+import android.widget.EditText
 import androidx.activity.result.contract.ActivityResultContracts
+import kotlinx.android.synthetic.main.activity_water_setting.*
 import org.techtown.testrecyclerview.R
 
 class WaterSetting : AppCompatActivity() {
@@ -17,7 +21,10 @@ class WaterSetting : AppCompatActivity() {
         supportActionBar?.setTitle("목표 물 섭취량")
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-
+        val input1 = findViewById<EditText>(R.id.input1)
+        var imm : InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.showSoftInput(input,0)
+        input.requestFocus()
 
     }
 

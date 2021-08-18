@@ -43,7 +43,6 @@
         android:layout_margin="30dp"
         android:layout_weight="1"
         android:background="@drawable/eat_clicked"
-        android:backgroundTint="@null"
         android:text="남자"
         android:textColor="#666666"
         app:layout_constraintBottom_toBottomOf="parent"

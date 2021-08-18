@@ -4,10 +4,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.View
-import android.view.WindowManager
+import android.view.*
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
@@ -18,6 +15,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.widget.NestedScrollView
 import kotlinx.android.synthetic.main.activity_camera_result.*
 import org.techtown.testrecyclerview.R
+import org.techtown.testrecyclerview.search.SearchList
 
 
 class CameraResult : AppCompatActivity(){
@@ -75,15 +73,15 @@ class CameraResult : AppCompatActivity(){
 
         }
         circleImageView.setOnClickListener {
-            var intent = Intent(applicationContext,FixSearchResult::class.java)
+            var intent = Intent(applicationContext, SearchList::class.java)
             startActivity(intent)
         }
         circleImageView_2.setOnClickListener {
-            var intent = Intent(applicationContext,FixSearchResult::class.java)
+            var intent = Intent(applicationContext, SearchList::class.java)
             startActivity(intent)
         }
         circleImageView_3.setOnClickListener {
-            var intent = Intent(applicationContext,FixSearchResult::class.java)
+            var intent = Intent(applicationContext, SearchList::class.java)
             startActivity(intent)
         }
 
@@ -95,10 +93,11 @@ class CameraResult : AppCompatActivity(){
             val mDialogView = LayoutInflater.from(this).inflate(R.layout.custom_dialog, null)
             val mBuilder = AlertDialog.Builder(this)
                 .setView(mDialogView)
-
             val mAlertDialog = mBuilder.show()
             mAlertDialog.window!!.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
             mAlertDialog.window!!.setGravity(Gravity.BOTTOM)
+            mAlertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
 
             val breakfast = mDialogView.findViewById<AppCompatButton>(R.id.breakfast)
             val brunch = mDialogView.findViewById<AppCompatButton>(R.id.brunch)
@@ -249,6 +248,7 @@ class CameraResult : AppCompatActivity(){
             val mAlertDialog = mBuilder.show()
             mAlertDialog.window!!.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
             mAlertDialog.window!!.setGravity(Gravity.BOTTOM)
+            mAlertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
             val breakfast = mDialogView.findViewById<AppCompatButton>(R.id.breakfast)
             val brunch = mDialogView.findViewById<AppCompatButton>(R.id.brunch)
@@ -399,6 +399,7 @@ class CameraResult : AppCompatActivity(){
             val mAlertDialog = mBuilder.show()
             mAlertDialog.window!!.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
             mAlertDialog.window!!.setGravity(Gravity.BOTTOM)
+            mAlertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
             val breakfast = mDialogView.findViewById<AppCompatButton>(R.id.breakfast)
             val brunch = mDialogView.findViewById<AppCompatButton>(R.id.brunch)
