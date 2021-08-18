@@ -1,11 +1,12 @@
 package org.techtown.testrecyclerview.settings
 
-import android.content.Intent
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Button
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import org.techtown.testrecyclerview.R
 
 class TanDanJiSetting : AppCompatActivity() {
@@ -15,6 +16,10 @@ class TanDanJiSetting : AppCompatActivity() {
 
         supportActionBar?.setTitle("내 정보 수정하기")
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        val input1 = findViewById<EditText>(R.id.input1)
+        var imm : InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.showSoftInput(input1,0)
+        input1.requestFocus()
 
     }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

@@ -5,10 +5,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.View
-import android.view.WindowManager
+import android.view.*
 import android.widget.Button
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatButton
@@ -31,6 +28,7 @@ import kotlinx.android.synthetic.main.activity_fix_item.*
 import org.techtown.testrecyclerview.R
 
 class FixItemActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_fix_item)
@@ -87,13 +85,14 @@ class FixItemActivity : AppCompatActivity() {
         val registerBtn3 = findViewById<Button>(R.id.button_3)
 
         registerBtn1.setOnClickListener {
-            val mDialogView = LayoutInflater.from(this).inflate(R.layout.custom_dialog, null)
+            val mDialogView = LayoutInflater.from(this).inflate(R.layout.custom_dialog_fixver, null)
             val mBuilder = AlertDialog.Builder(this)
                 .setView(mDialogView)
 
             val mAlertDialog = mBuilder.show()
             mAlertDialog.window!!.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
             mAlertDialog.window!!.setGravity(Gravity.BOTTOM)
+            mAlertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
             val breakfast = mDialogView.findViewById<AppCompatButton>(R.id.breakfast)
             val brunch = mDialogView.findViewById<AppCompatButton>(R.id.brunch)
@@ -237,13 +236,14 @@ class FixItemActivity : AppCompatActivity() {
             }
         }
         registerBtn2.setOnClickListener {
-            val mDialogView = LayoutInflater.from(this).inflate(R.layout.custom_dialog, null)
+            val mDialogView = LayoutInflater.from(this).inflate(R.layout.custom_dialog_fixver, null)
             val mBuilder = AlertDialog.Builder(this)
                 .setView(mDialogView)
 
             val mAlertDialog = mBuilder.show()
             mAlertDialog.window!!.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
             mAlertDialog.window!!.setGravity(Gravity.BOTTOM)
+            mAlertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
             val breakfast = mDialogView.findViewById<AppCompatButton>(R.id.breakfast)
             val brunch = mDialogView.findViewById<AppCompatButton>(R.id.brunch)
@@ -387,13 +387,14 @@ class FixItemActivity : AppCompatActivity() {
             }
         }
         registerBtn3.setOnClickListener {
-            val mDialogView = LayoutInflater.from(this).inflate(R.layout.custom_dialog, null)
+            val mDialogView = LayoutInflater.from(this).inflate(R.layout.custom_dialog_fixver, null)
             val mBuilder = AlertDialog.Builder(this)
                 .setView(mDialogView)
 
             val mAlertDialog = mBuilder.show()
             mAlertDialog.window!!.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
             mAlertDialog.window!!.setGravity(Gravity.BOTTOM)
+            mAlertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
             val breakfast = mDialogView.findViewById<AppCompatButton>(R.id.breakfast)
             val brunch = mDialogView.findViewById<AppCompatButton>(R.id.brunch)

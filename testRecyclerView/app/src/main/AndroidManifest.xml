@@ -29,9 +29,11 @@
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".settings.TanDanJiSetting"
+            android:windowSoftInputMode="stateVisible"
             android:parentActivityName=".settings.SettingActivity" />
         <activity
             android:name=".settings.WaterSetting"
+            android:windowSoftInputMode="stateVisible"
             android:parentActivityName=".settings.SettingActivity" />
         <activity
             android:name=".settings.SettingActivity"
