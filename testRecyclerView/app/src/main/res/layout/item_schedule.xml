@@ -5,9 +5,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/calendar_background">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
         <androidx.cardview.widget.CardView
             android:layout_width="32dp"
@@ -19,12 +19,12 @@
             android:background="#F7F7F7"
             app:cardElevation="0dp">
 
-            <LinearLayout
-                android:id="@+id/dateBox"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:background="#F7F7F7">
+                <LinearLayout
+                    android:id="@+id/dateBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:background="#F7F7F7">
 
                 <TextView
                     android:id="@+id/tv_date"
@@ -39,17 +39,17 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" >
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/tv_test"
-                        android:layout_width="12dp"
-                        android:layout_height="12dp"
-                        app:cardCornerRadius="6dp"
-                        android:layout_centerHorizontal="true"
-                        app:cardElevation="0dp"/>   <!--  카드뷰 그림자 없애기 -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/tv_test"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    app:cardCornerRadius="6dp"
+                    android:layout_centerHorizontal="true"
+                    app:cardElevation="0dp"/>   <!--  카드뷰 그림자 없애기 -->
                 </RelativeLayout>
-            </LinearLayout>
+                </LinearLayout>
 
         </androidx.cardview.widget.CardView>
-    </RelativeLayout>
+        </RelativeLayout>
 
 </LinearLayout>
