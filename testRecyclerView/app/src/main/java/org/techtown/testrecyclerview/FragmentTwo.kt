@@ -1,10 +1,25 @@
 package org.techtown.testrecyclerview
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.GridLayoutManager
+import com.github.mikephil.charting.components.LimitLine
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.components.YAxis
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
+import kotlinx.android.synthetic.main.fragment_two.*
+import org.techtown.testrecyclerview.calendar.BaseCalendar
+import org.techtown.testrecyclerview.calendar.OnSwipeTouchListener
+import org.techtown.testrecyclerview.calendar.RecyclerViewAdapter
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -21,6 +36,17 @@ class FragmentTwo : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    lateinit var scheduleRecyclerViewAdapter: RecyclerViewAdapter
+    lateinit var linelist: ArrayList<Entry>
+    lateinit var lineDataSet: LineDataSet
+    lateinit var lineData: LineData
+
+    var displayMon = 0
+    var displayYear = 0
+
+    var isset = 0
+    var todayMon =0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -33,9 +59,142 @@ class FragmentTwo : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_two, container, false)
+        var V2 : View = inflater.inflate(R.layout.fragment_two, container, false)
+
+        initView()
+
+
+        linelist = ArrayList()
+        linelist.add(Entry(6f, 100f))
+        linelist.add(Entry(11f, 300f))
+        linelist.add(Entry(16f, 200f))
+        linelist.add(Entry(21f, 600f))
+        linelist.add(Entry(26f, 500f))
+        linelist.add(Entry(31f, 900f))
+
+        lineDataSet = LineDataSet(linelist, "Weight")
+        lineData = LineData(lineDataSet)
+        lineChart.data = lineData
+        lineDataSet.color = Color.parseColor("#5CC485")
+
+//        lineDataSet.setColors(*ColorTemplate.JOYFUL_COLORS)
+        lineDataSet.valueTextColor = Color.BLACK
+        lineDataSet.valueTextSize = 16f
+        lineDataSet.setDrawFilled(true)
+        lineDataSet.fillColor = Color.parseColor("#DEF3E7")
+        lineDataSet.lineWidth = 4f
+
+
+        lineChart.run {
+            data = lineData
+            description.isEnabled = false // 하단 Description Label 제거함
+            invalidate() // refresh
+        }
+
+        val maxLine = LimitLine(900f).apply {
+            lineWidth = 1.5F
+            isEnabled = true
+            lineColor = Color.DKGRAY
+        }
+
+        val minLine = LimitLine(100f).apply {
+            lineWidth = 1.5F
+            isEnabled = true
+            lineColor = Color.DKGRAY
+        }
+
+        val averageLine = LimitLine(500f).apply {
+            lineWidth = 1.5F
+            isEnabled = true
+            lineColor = Color.DKGRAY
+
+//            label =
+        }
+
+        // 범례
+        lineChart.legend.apply {
+            isEnabled = false // 사용하지 않음
+        }
+        // Y 축
+        lineChart.axisLeft.apply {
+            // 라벨, 축라인, 그리드 사용하지 않음
+            setDrawLabels(false)
+            setDrawAxisLine(false)
+            setDrawGridLines(false)
+
+            // 한계선 추가
+            removeAllLimitLines()
+            addLimitLine(averageLine)
+            addLimitLine(maxLine)
+            addLimitLine(minLine)
+
+
+            setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART)
+            labelCount = 2
+
+        }
+        lineChart.axisRight.apply {
+            // 우측 Y축은 사용하지 않음
+            isEnabled = false
+        }
+        var yAxis: YAxis = lineChart.getAxisLeft()
+        yAxis.axisMaximum = 900f
+        yAxis.axisMinimum = 100f
+
+        val testToday = 31
+
+        // X 축
+        lineChart.xAxis.apply {
+            // x축 값은 투명으로
+            textColor = Color.BLACK
+            // 축라인, 그리드 사용하지 않음
+            setDrawLabels(true)
+            setDrawAxisLine(true)
+            setDrawGridLines(false)
+            position = XAxis.XAxisPosition.BOTTOM
+
+        }
+
+        return V2
     }
+
+    fun initView() {
+        scheduleRecyclerViewAdapter = RecyclerViewAdapter(this)
+
+        rv_schedule.layoutManager = GridLayoutManager(context, BaseCalendar.DAYS_OF_WEEK)
+        rv_schedule.adapter = scheduleRecyclerViewAdapter
+
+        rv_schedule.setOnTouchListener(object :
+            OnSwipeTouchListener(this@MainActivity) {   // 캘린더 날짜 부분 스와이프 리스너
+            override fun onSwipeLeft() {
+//                  왼쪽에서 오른쪽으로 스와이프 이전달로
+                scheduleRecyclerViewAdapter.changeToNextMonth()
+            }
+
+            override fun onSwipeRight() {
+//                  오른쪽에서 왼쪽으로 스와이프 다음달로
+                scheduleRecyclerViewAdapter.changeToPrevMonth()
+            }
+        })
+    }
+
+        fun testText(str: String) {
+            test.text = str
+        }
+
+        fun refreshCurrentMonth(calendar: Calendar) {
+            val sdf = SimpleDateFormat("yyyy년 MM월", Locale.KOREAN)
+            tv_current_month.text = sdf.format(calendar.time)
+            val sdfMon = SimpleDateFormat("MM", Locale.KOREAN)
+            displayMon = sdfMon.format(calendar.time).toInt()
+            val sdfYear = SimpleDateFormat("yyyy", Locale.KOREAN)
+            displayYear = sdfYear.format(calendar.time).toInt()
+            if (isset == 0 ) {
+                todayMon = displayMon
+                isset = 1
+            }
+            test.text = "${displayMon} / ${todayMon}"   //  현재 달 페이지 상 달 테스트 출력
+        }
 
     companion object {
         /**
