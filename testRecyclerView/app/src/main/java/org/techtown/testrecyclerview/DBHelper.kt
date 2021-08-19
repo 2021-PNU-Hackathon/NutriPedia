@@ -75,4 +75,25 @@ class DBHelper(
         db.close()
         return returnvalue
     }
+    /////////// test
+    fun getColValueTest(columnIndex: Int, colindex: Int, tablename: String): String {
+        var db: SQLiteDatabase = readableDatabase
+        val query = "SELECT * FROM " + tablename
+        var cursor: Cursor = db.rawQuery(query, null)
+        var returnvalue = ""
+
+//        while(cursor.moveToNext()) {
+//            returnvalue = cursor.getString(colindex)
+//        }
+
+        for (i in 0..columnIndex) {
+            cursor.moveToNext()
+            returnvalue = cursor.getString(colindex)
+        }
+        cursor.close()
+        db.close()
+        return returnvalue
+    }
+
+
 }

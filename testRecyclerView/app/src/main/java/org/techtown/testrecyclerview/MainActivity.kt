@@ -3,6 +3,8 @@ package org.techtown.testrecyclerview
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.database.Cursor
+import android.database.sqlite.SQLiteDatabase
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
 import android.net.Uri
@@ -10,7 +12,6 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,23 +27,16 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.card_layout.*
 import kotlinx.android.synthetic.main.search_bar.view.*
-import okhttp3.MediaType
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import org.techtown.testrecyclerview.result.CameraResult
 import org.techtown.testrecyclerview.tutorial.CurrentWeight
-import retrofit2.Call
-import retrofit2.http.Multipart
-import retrofit2.http.POST
-import retrofit2.http.Part
-import retrofit2.http.Path
 import java.io.*
 import java.text.SimpleDateFormat
 import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
-
+    lateinit var dbHelper : DBHelper
+    lateinit var database : SQLiteDatabase
 
     val REQUEST_IMAGE_CAPTURE = 1 //카메라 사진촬영 요청코드
     lateinit var curPhotoPath: String //문자열 형태의 사진 경로 값(초기값을 null로 시작하고 싶을 때)
@@ -66,8 +60,70 @@ class MainActivity : AppCompatActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        ///////////// FoodCalculator - START
+        dbHelper = DBHelper(this, "food_nutri.db", null, 1)
+        database = dbHelper.readableDatabase
+
+        println("현재 몸무게, 목표 몸무게, 키 : ${dbHelper.getColValue(0, "user_info").toInt()}, ${dbHelper.getColValue(1, "user_info").toInt()}, ${dbHelper.getColValue(4, "user_info").toInt()}")
+        // 1. 하루 권장 칼로리 계산
+        var recommendedKcal : Int = recommendedKcal(dbHelper.getColValue(0, "user_info").toInt(), dbHelper.getColValue(1, "user_info").toInt(), dbHelper.getColValue(4, "user_info").toInt())
+        println("하루 권장 칼로리 : ${recommendedKcal}")
+        // 2. "하루 권장 칼로리"를 이용하여 "하루 권장 탄수화물, 단백질, 지방" 계산
+        var nutrientRate : Triple<Int, Int, Int> = nutrientRate(dbHelper.getColValue(0, "user_info").toInt(), dbHelper.getColValue(1, "user_info").toInt(), recommendedKcal)
+        println("하루 권장 탄수화물, 단백질, 지방: ${nutrientRate}")
+        // 3. |'하루 권장 탄, 단, 지' - '이미 섭취한 탄, 단, 지'|를 계산 하여 '부족한 탄, 단, 지(%)' 계산 // 임의의 값 넣어놓은 것
+        var scarceNutrientList:List<Double> = listOf(rateOfScarceNutrient(100.0, 500.0, 200.0).component1(), rateOfScarceNutrient(100.0, 500.0, 200.0).component2(), rateOfScarceNutrient(100.0, 500.0, 200.0).component3())
+        println("비교를 위한 '부족한 영양소 비율(탄, 단, 지)(%)' $scarceNutrientList")
+
+        // *차이값 = '우리가 생각하는 이상적인 음식'과 '현재 존재하는 음식'의 비교값(작을수록 좋음)
+        // 4. 'dictionaryDifferenceName' = 차이값과 음식이름 매칭, 'differences' 차이값이 작은 순으로 정렬
+//        var dictionaryDifferenceName = addTheDataToList(scarceNutrientList).first // MutableMap<Int, String>
+//        var differences = addTheDataToList(scarceNutrientList).second // MutableList<Int>
+//        println("차이값 : 음식이름 => ${dictionaryDifferenceName}")
+//        println("차이값 오름차순 정렬: ${differences}")
+        // differences의 값을 이용해서 '음식 이름'을 가져올 것이기 때문에, differences는 20개면 충분
+//        for (i in 0..4) {
+//            println("${i+1}순위 : ${dictionaryDifferenceName.get(differences[i])}")
+//        }
+        // more test
+        var name : String
+        var cab : Double
+        var pro : Double
+        var fat : Double
+        var differenceAndName = mutableMapOf<Double, String>()
+        var differenceList = mutableListOf<Double>()
+        // 4251
+        for (i in 0..1000) {
+//            println(dbHelper.getColValueTest(i, 1, "real_nutri").toString())
+//            println(dbHelper.getColValueTest(i, 3, "real_nutri").toDouble())
+//            println(dbHelper.getColValueTest(i, 4, "real_nutri").toDouble())
+//            println(dbHelper.getColValueTest(i, 5, "real_nutri").toDouble())
+            name = dbHelper.getColValueTest(i, 1, "real_nutri").toString()
+            cab = dbHelper.getColValueTest(i, 3, "real_nutri").toDouble()
+            pro = dbHelper.getColValueTest(i, 4, "real_nutri").toDouble()
+            fat = dbHelper.getColValueTest(i, 5, "real_nutri").toDouble()
+            var foodNutrientList = listOf(cab, pro, fat, name)
+//            println(foodNutrientList)
 
 
+            differenceAndName.put(comparingForTheBest (scarceNutrientList, foodNutrientList.filterIsInstance<Double>()), foodNutrientList[3].toString())
+            differenceList.add(comparingForTheBest (scarceNutrientList, foodNutrientList.filterIsInstance<Double>()))
+        }
+//        println(differenceAndName)
+//        println(differenceList)
+
+                for (i in 0..4) {
+            println("${i+1}순위 : ${differenceAndName.get(differenceList[i])}")
+        }
+
+//        differenceList.sort() // 차이값 오름차순 정렬
+//        var dictionaryDifferenceName = differenceAndName // MutableMap<Int, String>
+//        var differences = differenceList // MutableList<Int>
+//        println("차이값 : 음식이름 => ${differenceAndName}")
+//        println("차이값 오름차순 정렬: ${differenceList[0]}")
+
+
+        /////////////  FoodCalculator - FINISH
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)

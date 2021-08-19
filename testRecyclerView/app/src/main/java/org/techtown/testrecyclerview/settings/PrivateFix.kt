@@ -1,7 +1,6 @@
 package org.techtown.testrecyclerview.settings
 
 import androidx.appcompat.app.AppCompatActivity
-import android.database.sqlite.SQLiteDatabase
 import android.graphics.Color
 import android.os.Bundle
 import android.view.Menu
@@ -11,7 +10,6 @@ import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_private_fix.*
 import kotlinx.android.synthetic.main.activity_private_fix.manBtn
 import kotlinx.android.synthetic.main.activity_private_fix.womanBtn
-import kotlinx.android.synthetic.main.activity_sex.*
 import org.techtown.testrecyclerview.DBHelper
 import org.techtown.testrecyclerview.R
 
