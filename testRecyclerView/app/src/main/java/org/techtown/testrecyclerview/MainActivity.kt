@@ -75,52 +75,82 @@ class MainActivity : AppCompatActivity() {
         var scarceNutrientList:List<Double> = listOf(rateOfScarceNutrient(100.0, 500.0, 200.0).component1(), rateOfScarceNutrient(100.0, 500.0, 200.0).component2(), rateOfScarceNutrient(100.0, 500.0, 200.0).component3())
         println("비교를 위한 '부족한 영양소 비율(탄, 단, 지)(%)' $scarceNutrientList")
 
-        // *차이값 = '우리가 생각하는 이상적인 음식'과 '현재 존재하는 음식'의 비교값(작을수록 좋음)
-        // 4. 'dictionaryDifferenceName' = 차이값과 음식이름 매칭, 'differences' 차이값이 작은 순으로 정렬
-//        var dictionaryDifferenceName = addTheDataToList(scarceNutrientList).first // MutableMap<Int, String>
-//        var differences = addTheDataToList(scarceNutrientList).second // MutableList<Int>
-//        println("차이값 : 음식이름 => ${dictionaryDifferenceName}")
-//        println("차이값 오름차순 정렬: ${differences}")
-        // differences의 값을 이용해서 '음식 이름'을 가져올 것이기 때문에, differences는 20개면 충분
-//        for (i in 0..4) {
-//            println("${i+1}순위 : ${dictionaryDifferenceName.get(differences[i])}")
-//        }
         // more test
         var name : String
         var cab : Double
         var pro : Double
         var fat : Double
+        var priority : Int
         var differenceAndName = mutableMapOf<Double, String>()
+        var priorityAndName = mutableMapOf<String, Int>()
         var differenceList = mutableListOf<Double>()
         // 4251
-        for (i in 0..1000) {
-//            println(dbHelper.getColValueTest(i, 1, "real_nutri").toString())
-//            println(dbHelper.getColValueTest(i, 3, "real_nutri").toDouble())
-//            println(dbHelper.getColValueTest(i, 4, "real_nutri").toDouble())
-//            println(dbHelper.getColValueTest(i, 5, "real_nutri").toDouble())
+        for (i in 0..100) {
+
             name = dbHelper.getColValueTest(i, 1, "real_nutri").toString()
             cab = dbHelper.getColValueTest(i, 3, "real_nutri").toDouble()
             pro = dbHelper.getColValueTest(i, 4, "real_nutri").toDouble()
             fat = dbHelper.getColValueTest(i, 5, "real_nutri").toDouble()
+            priority = dbHelper.getColValueTest(i, 6, "real_nutri").toInt()
+            listOf(rateOfScarceNutrient(100.0, 500.0, 200.0).component1(), rateOfScarceNutrient(100.0, 500.0, 200.0).component2(), rateOfScarceNutrient(100.0, 500.0, 200.0).component3())
             var foodNutrientList = listOf(cab, pro, fat, name)
+            var foodNutrientListrate :List<Double> = listOf(rateOfScarceNutrient(cab, pro, fat).component1(), rateOfScarceNutrient(cab, pro, fat).component2(), rateOfScarceNutrient(cab, pro, fat).component3())
 //            println(foodNutrientList)
 
 
-            differenceAndName.put(comparingForTheBest (scarceNutrientList, foodNutrientList.filterIsInstance<Double>()), foodNutrientList[3].toString())
-            differenceList.add(comparingForTheBest (scarceNutrientList, foodNutrientList.filterIsInstance<Double>()))
+            differenceAndName.put(comparingForTheBest (scarceNutrientList, foodNutrientListrate), foodNutrientList[3].toString())
+            priorityAndName.put(foodNutrientList[3].toString(), priority)
+            differenceList.add(comparingForTheBest (scarceNutrientList, foodNutrientListrate))
         }
-//        println(differenceAndName)
-//        println(differenceList)
+        println(differenceAndName)
+        differenceList.sort() // 차이값 오름차순 정렬
+        // 우선순위 고려 // priority 5 뽑고, 4 뽑고, 3 뽑아서 5개 채우기
 
-                for (i in 0..4) {
+        var a: Int = 0
+        while(true){
+            for(i in 0..4) {
+                if (priorityAndName.get(differenceAndName.get(differenceList[i])) == 5) {
+                    println("${a + 1}순위 : ${differenceAndName.get(differenceList[i])}")
+                    a = a + 1
+                    if(a == 5)
+                        break;
+                }
+            }
+            if(a == 5)
+                break;
+            for(i in 0..4){
+                if(priorityAndName.get(differenceAndName.get(differenceList[i])) == 4){
+                    println("${a+1}순위 : ${differenceAndName.get(differenceList[i])}")
+                    a = a + 1
+                    if(a == 5)
+                        break;
+                }
+            }
+            if(a == 5)
+                break;
+            for(i in 0..4){
+                if(priorityAndName.get(differenceAndName.get(differenceList[i])) == 3){
+                    println("${a+1}순위 : ${differenceAndName.get(differenceList[i])}")
+                    a = a + 1
+                    if(a == 5)
+                        break;
+                }
+            }
+            println("check///////////")
+            if(a == 5)
+                break;
+        }
+
+
+
+        println(differenceList)
+        for (i in 0..4) {
             println("${i+1}순위 : ${differenceAndName.get(differenceList[i])}")
         }
 
-//        differenceList.sort() // 차이값 오름차순 정렬
-//        var dictionaryDifferenceName = differenceAndName // MutableMap<Int, String>
-//        var differences = differenceList // MutableList<Int>
-//        println("차이값 : 음식이름 => ${differenceAndName}")
-//        println("차이값 오름차순 정렬: ${differenceList[0]}")
+
+
+
 
 
         /////////////  FoodCalculator - FINISH
