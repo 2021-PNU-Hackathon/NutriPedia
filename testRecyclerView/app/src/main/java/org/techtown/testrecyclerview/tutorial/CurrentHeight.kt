@@ -28,7 +28,7 @@ class CurrentHeight : AppCompatActivity() {
         heightNp.wrapSelectorWheel = true
         heightNp.displayedValues = heightStrConvertList.toTypedArray()
         heightNp.value = 40
-        var heightvalue = 0
+        var heightvalue = 40
         heightNp.setOnValueChangedListener { picker, oldVal, newVal ->
             heightvalue = newVal
         }

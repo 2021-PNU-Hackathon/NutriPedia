@@ -29,7 +29,7 @@ class TargetWeight : AppCompatActivity() {
         targetNp.wrapSelectorWheel = true
         targetNp.displayedValues = weightStrConvertList.toTypedArray()
         targetNp.value = 90
-        var targetvalue = 0
+        var targetvalue = 90
         targetNp.setOnValueChangedListener { picker, oldVal, newVal ->
             targetvalue = newVal
         }
