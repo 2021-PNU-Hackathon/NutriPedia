@@ -68,6 +68,7 @@ class CurrentWeight : AppCompatActivity() {
         dbHelper = DBHelper(this, "food_nutri.db", null, 1)
         database = dbHelper.writableDatabase
         dbHelper.insertUserInfo()
+        dbHelper.insertRecord()
 
         val currentWeight = findViewById<TextView>(R.id.infoTv)
         val intentBtn = findViewById<Button>(R.id.intentBtn)
