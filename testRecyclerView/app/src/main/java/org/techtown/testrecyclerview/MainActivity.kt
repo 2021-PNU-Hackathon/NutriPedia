@@ -84,14 +84,14 @@ class MainActivity : AppCompatActivity() {
         var differenceAndName = mutableMapOf<Double, String>()
         var priorityAndName = mutableMapOf<String, Int>()
         var differenceList = mutableListOf<Double>()
-        // 4251
-        for (i in 0..100) {
 
-            name = dbHelper.getColValueTest(i, 1, "real_nutri").toString()
-            cab = dbHelper.getColValueTest(i, 3, "real_nutri").toDouble()
-            pro = dbHelper.getColValueTest(i, 4, "real_nutri").toDouble()
-            fat = dbHelper.getColValueTest(i, 5, "real_nutri").toDouble()
-            priority = dbHelper.getColValueTest(i, 6, "real_nutri").toInt()
+        for (i in 0..90) {
+
+            name = dbHelper.getColValueTest(i, 1, "real_nutri_91").toString()
+            cab = dbHelper.getColValueTest(i, 3, "real_nutri_91").toDouble()
+            pro = dbHelper.getColValueTest(i, 4, "real_nutri_91").toDouble()
+            fat = dbHelper.getColValueTest(i, 5, "real_nutri_91").toDouble()
+            priority = dbHelper.getColValueTest(i, 6, "real_nutri_91").toInt()
             listOf(rateOfScarceNutrient(100.0, 500.0, 200.0).component1(), rateOfScarceNutrient(100.0, 500.0, 200.0).component2(), rateOfScarceNutrient(100.0, 500.0, 200.0).component3())
             var foodNutrientList = listOf(cab, pro, fat, name)
             var foodNutrientListrate :List<Double> = listOf(rateOfScarceNutrient(cab, pro, fat).component1(), rateOfScarceNutrient(cab, pro, fat).component2(), rateOfScarceNutrient(cab, pro, fat).component3())
@@ -136,21 +136,16 @@ class MainActivity : AppCompatActivity() {
                         break;
                 }
             }
-            println("check///////////")
             if(a == 5)
                 break;
         }
 
 
 
-        println(differenceList)
-        for (i in 0..4) {
-            println("${i+1}순위 : ${differenceAndName.get(differenceList[i])}")
-        }
-
-
-
-
+//        println(differenceList)
+//        for (i in 0..4) {
+//            println("${i+1}순위 : ${differenceAndName.get(differenceList[i])}")
+//        }
 
 
         /////////////  FoodCalculator - FINISH
