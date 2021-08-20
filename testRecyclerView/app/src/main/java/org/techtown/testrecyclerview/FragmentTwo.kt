@@ -6,7 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.LimitLine
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
@@ -54,13 +57,18 @@ class FragmentTwo : Fragment() {
             param2 = it.getString(ARG_PARAM2)
         }
     }
-
+    lateinit var current_month : TextView
+    lateinit var Tvtest : TextView
+    lateinit var schedule : RecyclerView
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         var V2 : View = inflater.inflate(R.layout.fragment_two, container, false)
-
+        current_month = V2.findViewById<TextView>(R.id.tv_current_month)
+        Tvtest = V2.findViewById<TextView>(R.id.test)
+        schedule = V2.findViewById<RecyclerView>(R.id.rv_schedule)
+        var linechart = V2.findViewById<LineChart>(R.id.lineChart)
         initView()
 
 
@@ -74,9 +82,9 @@ class FragmentTwo : Fragment() {
 
         lineDataSet = LineDataSet(linelist, "Weight")
         lineData = LineData(lineDataSet)
-        lineChart.data = lineData
-        lineDataSet.color = Color.parseColor("#5CC485")
+        linechart.data = lineData
 
+        lineDataSet.color = Color.parseColor("#5CC485")
 //        lineDataSet.setColors(*ColorTemplate.JOYFUL_COLORS)
         lineDataSet.valueTextColor = Color.BLACK
         lineDataSet.valueTextSize = 16f
@@ -85,7 +93,7 @@ class FragmentTwo : Fragment() {
         lineDataSet.lineWidth = 4f
 
 
-        lineChart.run {
+        linechart.run {
             data = lineData
             description.isEnabled = false // 하단 Description Label 제거함
             invalidate() // refresh
@@ -112,11 +120,11 @@ class FragmentTwo : Fragment() {
         }
 
         // 범례
-        lineChart.legend.apply {
+        linechart.legend.apply {
             isEnabled = false // 사용하지 않음
         }
         // Y 축
-        lineChart.axisLeft.apply {
+        linechart.axisLeft.apply {
             // 라벨, 축라인, 그리드 사용하지 않음
             setDrawLabels(false)
             setDrawAxisLine(false)
@@ -133,18 +141,18 @@ class FragmentTwo : Fragment() {
             labelCount = 2
 
         }
-        lineChart.axisRight.apply {
+        linechart.axisRight.apply {
             // 우측 Y축은 사용하지 않음
             isEnabled = false
         }
-        var yAxis: YAxis = lineChart.getAxisLeft()
+        var yAxis: YAxis = linechart.getAxisLeft()
         yAxis.axisMaximum = 900f
         yAxis.axisMinimum = 100f
 
         val testToday = 31
 
         // X 축
-        lineChart.xAxis.apply {
+        linechart.xAxis.apply {
             // x축 값은 투명으로
             textColor = Color.BLACK
             // 축라인, 그리드 사용하지 않음
@@ -160,12 +168,11 @@ class FragmentTwo : Fragment() {
 
     fun initView() {
         scheduleRecyclerViewAdapter = RecyclerViewAdapter(this)
+        schedule.layoutManager = GridLayoutManager(context, BaseCalendar.DAYS_OF_WEEK)
+        schedule.adapter = scheduleRecyclerViewAdapter
 
-        rv_schedule.layoutManager = GridLayoutManager(context, BaseCalendar.DAYS_OF_WEEK)
-        rv_schedule.adapter = scheduleRecyclerViewAdapter
-
-        rv_schedule.setOnTouchListener(object :
-            OnSwipeTouchListener(this@MainActivity) {   // 캘린더 날짜 부분 스와이프 리스너
+        schedule.setOnTouchListener(object :
+            OnSwipeTouchListener(requireContext()) {   // 캘린더 날짜 부분 스와이프 리스너
             override fun onSwipeLeft() {
 //                  왼쪽에서 오른쪽으로 스와이프 이전달로
                 scheduleRecyclerViewAdapter.changeToNextMonth()
@@ -184,7 +191,7 @@ class FragmentTwo : Fragment() {
 
         fun refreshCurrentMonth(calendar: Calendar) {
             val sdf = SimpleDateFormat("yyyy년 MM월", Locale.KOREAN)
-            tv_current_month.text = sdf.format(calendar.time)
+            current_month.text = sdf.format(calendar.time)
             val sdfMon = SimpleDateFormat("MM", Locale.KOREAN)
             displayMon = sdfMon.format(calendar.time).toInt()
             val sdfYear = SimpleDateFormat("yyyy", Locale.KOREAN)
@@ -193,7 +200,7 @@ class FragmentTwo : Fragment() {
                 todayMon = displayMon
                 isset = 1
             }
-            test.text = "${displayMon} / ${todayMon}"   //  현재 달 페이지 상 달 테스트 출력
+            Tvtest.text = "${displayMon} / ${todayMon}"   //  현재 달 페이지 상 달 테스트 출력
         }
 
     companion object {
