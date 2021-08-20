@@ -6,8 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Button
-import androidx.appcompat.app.ActionBar
 import kotlinx.android.synthetic.main.activity_setting.*
 import org.techtown.testrecyclerview.DBHelper
 import org.techtown.testrecyclerview.R

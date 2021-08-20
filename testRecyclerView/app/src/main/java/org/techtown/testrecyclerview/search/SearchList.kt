@@ -1,6 +1,5 @@
 package org.techtown.testrecyclerview.search
 
-import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import org.techtown.testrecyclerview.R
@@ -8,17 +7,12 @@ import android.content.Intent
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.graphics.Color
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.Menu
 import android.view.View
-import android.widget.AutoCompleteTextView
-import androidx.appcompat.app.ActionBar
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import org.techtown.testrecyclerview.DBHelper
-import org.w3c.dom.Text
 import java.util.*
 import kotlin.collections.ArrayList
 
