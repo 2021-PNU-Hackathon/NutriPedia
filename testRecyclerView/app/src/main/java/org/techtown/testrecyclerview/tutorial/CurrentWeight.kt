@@ -82,7 +82,7 @@ class CurrentWeight : AppCompatActivity() {
         currentNp.wrapSelectorWheel = true
         currentNp.displayedValues = weightStrConvertList.toTypedArray()
         currentNp.value = 90
-        var currentvalue = 0
+        var currentvalue = 90
         currentNp.setOnValueChangedListener { picker, oldVal, newVal ->
             currentvalue = newVal
         }

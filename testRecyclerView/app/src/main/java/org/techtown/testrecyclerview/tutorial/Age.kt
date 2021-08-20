@@ -28,7 +28,7 @@ class Age : AppCompatActivity() {
         ageNp.wrapSelectorWheel = true
         ageNp.displayedValues = ageStrConvertList.toTypedArray()
         ageNp.value = 75
-        var agevalue = 0
+        var agevalue = 75
         ageNp.setOnValueChangedListener { picker, oldVal, newVal ->
             agevalue = newVal
         }
