@@ -80,6 +80,7 @@ class Sex : AppCompatActivity() {
         intentBtn.setOnClickListener {
             db.updateUserInfo("sex", gender)
             db.close()
+
             val intent = Intent(applicationContext, MainActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

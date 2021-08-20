@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.Button
 import android.widget.ImageView
@@ -12,6 +13,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import androidx.core.widget.NestedScrollView
 import kotlinx.android.synthetic.main.activity_camera_result.*
 import org.techtown.testrecyclerview.R
@@ -27,7 +29,11 @@ class CameraResult : AppCompatActivity(){
         supportActionBar?.setTitle("2021년 07월 27일")
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.parseColor("#FFFFFF")))
-
+        val filePath = intent.getStringExtra("path")?.toUri()
+        if (filePath == null) {
+            Log.e("SIbal", "SISISISISISI")
+        }
+        mainIv.setImageURI(filePath)
 
     }
 

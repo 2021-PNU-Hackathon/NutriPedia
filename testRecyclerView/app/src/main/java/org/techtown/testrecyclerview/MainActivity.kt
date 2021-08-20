@@ -37,7 +37,7 @@ import java.util.*
 class MainActivity : AppCompatActivity() {
     lateinit var dbHelper : DBHelper
     lateinit var database : SQLiteDatabase
-
+    lateinit var photoURI: Uri
     val REQUEST_IMAGE_CAPTURE = 1 //카메라 사진촬영 요청코드
     lateinit var curPhotoPath: String //문자열 형태의 사진 경로 값(초기값을 null로 시작하고 싶을 때)
 
@@ -111,7 +111,7 @@ class MainActivity : AppCompatActivity() {
                     null
                 }
                 photofile?.also {
-                    val photoURI: Uri = FileProvider.getUriForFile(
+                    photoURI = FileProvider.getUriForFile(
                         this,
                         "org.techtown.testrecyclerview.fileprovider", //보안 서명
                         it
@@ -123,7 +123,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    public fun createImageFile(): File { // 이미지파일 생성
+    fun createImageFile(): File { // 이미지파일 생성
         val timeStamp: String = SimpleDateFormat("yyyy-MM-dd-HHmmss").format(Date())
         val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         return File.createTempFile("JPEG_${timeStamp}_",".jpg",storageDir)
@@ -134,7 +134,7 @@ class MainActivity : AppCompatActivity() {
     /*
     테드 퍼미션 설정
      */
-    public fun setPermission() {
+    fun setPermission() {
         val permission = object : PermissionListener {
             override fun onPermissionGranted() { // 설정해놓은 권한 들이 허용 되었을 경우
                 Toast.makeText(this@MainActivity, "권한이 허용 되었습니다.", Toast.LENGTH_SHORT).show()
@@ -175,7 +175,6 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
-
 //    @Multipart
 //    @POST("/orders{order_idx}/file")
 //        fun sendFIle(
@@ -200,6 +199,7 @@ class MainActivity : AppCompatActivity() {
         val file = File("/storage/emulated/0/Pictures/${fileName}")
         FileUploadUtils().send2Server(file)
         var cameraIntent = Intent(applicationContext, CameraResult::class.java)
+
         startActivity(cameraIntent)
     }
 
