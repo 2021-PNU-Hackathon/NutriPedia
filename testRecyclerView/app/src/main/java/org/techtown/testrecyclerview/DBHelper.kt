@@ -15,7 +15,7 @@ class DBHelper(
 
 
     override fun onCreate(db: SQLiteDatabase) {
-        var sql : String = "CREATE TABLE if not exists user_info (" +
+        var sql1 : String = "CREATE TABLE if not exists user_info (" +
                 "current_weight integer," +
                 "target_weight integer," +
                 "age integer," +
@@ -23,12 +23,28 @@ class DBHelper(
                 "current_height integer," +
                 "idx integer);";
 
-        db.execSQL(sql)
+        var sql2 : String = "CREATE TABLE if not exists record (" +
+                "date DATE," +
+                "mealtime TEXT," +
+                "foodname TEXT," +
+                "imgPath TEXT," +
+                "photoGuide TEXT," +
+                "amount INT," +
+                "kcal DOUBLE," +
+                "cab DOUBLE," +
+                "pro DOUBLE," +
+                "fat DOUBLE" +
+                ");";
+
+        db.execSQL(sql1)
+        db.execSQL(sql2)
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
-        val sql : String = "DROP TABLE if exists user_info"
-        db.execSQL(sql)
+        val sql1 : String = "DROP TABLE if exists user_info"
+        val sql2 : String = "DROP TABLE if exists Record"
+        db.execSQL(sql1)
+        db.execSQL(sql2)
         onCreate(db)
     }
 
@@ -40,6 +56,12 @@ class DBHelper(
     fun insertUserInfo() {
         var db: SQLiteDatabase = writableDatabase
         var query = "INSERT INTO user_info VALUES ('0', '0', '0', '0', '0', '0');"
+        db.execSQL(query)
+    }
+
+    fun insertRecord() {
+        var db: SQLiteDatabase = writableDatabase
+        var query = "INSERT INTO Record VALUES ((SELECT date('now','localtime')), NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0);"
         db.execSQL(query)
     }
 
