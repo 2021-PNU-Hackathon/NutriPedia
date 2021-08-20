@@ -47,17 +47,15 @@ class SearchList : AppCompatActivity() {
 
         })
     }
-
-
     private fun fillData() {
         var cursor: Cursor = db.rawQuery("SELECT * FROM real_nutri", null)
         while(cursor.moveToNext()) {
             foodList.add(FoodData(cursor.getString(1), cursor.getString(2).toDouble(),100,cursor.getString(3).toDouble(), cursor.getString(4).toDouble(), cursor.getString(5).toDouble()))
 
         }
-        cursor.close()
-        db.close()
-//        foodList.add(FoodData("gimchi",1000,100,100,100,100))
+
+//        foodLiscursor.close()
+//        db.close()t.add(FoodData("gimchi",1000,100,100,100,100))
 //        foodList.add(FoodData("bob",1000,100,100,100,100))
 //        foodList.add(FoodData("banana",1000,100,100,100,100))
 //        foodList.add(FoodData("salad",1000,100,100,100,100))
