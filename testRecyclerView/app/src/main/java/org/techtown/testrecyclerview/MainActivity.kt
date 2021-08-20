@@ -199,7 +199,7 @@ class MainActivity : AppCompatActivity() {
         val file = File("/storage/emulated/0/Pictures/${fileName}")
         FileUploadUtils().send2Server(file)
         var cameraIntent = Intent(applicationContext, CameraResult::class.java)
-
+        cameraIntent.putExtra("uri",photoURI)
         startActivity(cameraIntent)
     }
 

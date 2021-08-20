@@ -3,6 +3,7 @@ package org.techtown.testrecyclerview.result
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -29,11 +30,9 @@ class CameraResult : AppCompatActivity(){
         supportActionBar?.setTitle("2021년 07월 27일")
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.parseColor("#FFFFFF")))
-        val filePath = intent.getStringExtra("path")?.toUri()
-        if (filePath == null) {
-            Log.e("SIbal", "SISISISISISI")
-        }
-        mainIv.setImageURI(filePath)
+        val uri : Uri? = intent.getParcelableExtra<Uri>("uri")
+
+        mainIv.setImageURI(uri)
 
     }
 

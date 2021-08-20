@@ -1,7 +1,9 @@
 package org.techtown.testrecyclerview
 
 import android.content.Context
+import android.database.sqlite.SQLiteDatabase
 import android.renderscript.Sampler
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,18 +19,29 @@ class ViewPagerAdapter: PagerAdapter() {
     fun ViewPagerAdapter(context: Context){
         mContext=context;
     }
+    lateinit var dbHelper : DBHelper
+    lateinit var database : SQLiteDatabase
+
+
+
 
     //position에 해당하는 페이지 생성
+    lateinit var view:View
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
-        val view = if (position == 0) { LayoutInflater.from(container.context).inflate(R.layout.page,container,false) }
-                else { LayoutInflater.from(container.context).inflate(R.layout.pagewater,container,false) }
-        val calPb = view.findViewById<ProgressBar>(R.id.calPb)
-        val tanPb = view.findViewById<ProgressBar>(R.id.tanPb)
-        val danPb = view.findViewById<ProgressBar>(R.id.danPb)
-        val giPb = view.findViewById<ProgressBar>(R.id.giPb)
-        val value = 30 * position
+        dbHelper = DBHelper(container.context, "food_nutri.db", null, 1)
+        database = dbHelper.writableDatabase
 
-//        calPb.progress = value
+
+        if (position == 0) {
+            view = LayoutInflater.from(container.context).inflate(R.layout.page,container,false)
+            val title = view.findViewById<TextView>(R.id.title)
+            title.text = dbHelper.getColValue(0,"user_info") + "kg"
+        }
+                else { view = LayoutInflater.from(container.context).inflate(R.layout.pagewater,container,false)
+                }
+
+
+
 
 //        tanPb.progress = value
 

@@ -24,6 +24,7 @@ import androidx.viewpager.widget.ViewPager
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
 import kotlinx.android.synthetic.main.fragment_one.*
+import kotlinx.android.synthetic.main.page.*
 import kotlinx.android.synthetic.main.search_bar.*
 import kotlinx.android.synthetic.main.search_bar.view.*
 import org.techtown.testrecyclerview.recommend.RecommendList
@@ -32,6 +33,7 @@ import org.techtown.testrecyclerview.result.CameraResult
 import org.techtown.testrecyclerview.result.FixItemActivity
 import org.techtown.testrecyclerview.search.SearchList
 import org.techtown.testrecyclerview.settings.SettingActivity
+import org.w3c.dom.Text
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -80,6 +82,7 @@ class FragmentOne : Fragment() {
         val pagerTest = v.findViewById<ViewPager>(R.id.pager)
         pagerTest.adapter = viewAdapter
         pagerTest.pageMargin = 30
+
 
         val arrayAdapter = ArrayAdapter<String>(requireContext(), android.R.layout.simple_dropdown_item_1line, wordList)
         var searchView = v.findViewById<View>(R.id.search_bar1)
