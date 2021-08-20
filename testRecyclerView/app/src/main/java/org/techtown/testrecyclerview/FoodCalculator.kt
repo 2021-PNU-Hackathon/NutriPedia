@@ -19,7 +19,7 @@ fun recommendedKcal(currentWeight: Int, targetWeight: Int, height: Int): Int {
 
 
 
-    var Kcal:Int = standardWeight.toInt() + forChange
+    var Kcal:Int = (standardWeight + forChange).toInt()
     return Kcal
 }
 

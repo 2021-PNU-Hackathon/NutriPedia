@@ -9,6 +9,7 @@ import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_setting.*
 import org.techtown.testrecyclerview.DBHelper
 import org.techtown.testrecyclerview.R
+import org.techtown.testrecyclerview.recommendedKcal
 
 class SettingActivity : AppCompatActivity() {
     lateinit var dbHelper : DBHelper
@@ -40,7 +41,7 @@ class SettingActivity : AppCompatActivity() {
         infoTv.text = dbHelper.getColValue(4, "user_info") + "cm | " + gender + " | " + dbHelper.getColValue(2,"user_info") + "세"
         cWeight.text = dbHelper.getColValue(0,"user_info") + "kg"
         tWeight.text = dbHelper.getColValue(1,"user_info") + "kg"
-
+        recokcal.text = recommendedKcal(dbHelper.getColValue(0, "user_info").toInt() , dbHelper.getColValue(1, "user_info").toInt(), dbHelper.getColValue(4, "user_info").toInt()).toString() + "kcal"
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
