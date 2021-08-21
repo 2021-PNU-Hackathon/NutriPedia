@@ -5,6 +5,10 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.os.Build
+import androidx.annotation.RequiresApi
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 class DBHelper(
     context: Context?,
@@ -89,15 +93,35 @@ class DBHelper(
         db.close()
     }
 
-    fun updatewater(field: String, value: Int, year: String, month: String, day: String
+    fun updatewater(field: String, value: Int, date: String
     ) {
         var db: SQLiteDatabase = writableDatabase
 
         db.execSQL(
-            "UPDATE user_info SET " + field + "= " + value  + " WHERE date = " + year + "-" + month + "-" + day + ";"
+            "UPDATE water SET " + field + " = " + value  + " WHERE date = '" + date + "';"
         )
 
         db.close()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun getWater(): Int {
+        var now = LocalDate.now()
+        var Strnow = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+        var db: SQLiteDatabase = readableDatabase
+        val query = "SELECT * FROM water"
+        var cursor: Cursor = db.rawQuery(query, null)
+        var returnvalue = 0
+
+        while(cursor.moveToNext()) {
+            if (cursor.getString(0) == Strnow) {
+                returnvalue = cursor.getString(1).toInt()
+            }
+        }
+
+        cursor.close()
+        db.close()
+        return returnvalue
     }
 
     fun getColValue(colindex: Int, tablename: String): String {
