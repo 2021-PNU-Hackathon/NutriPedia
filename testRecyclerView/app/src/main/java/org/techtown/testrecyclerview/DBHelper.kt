@@ -76,6 +76,32 @@ class DBHelper(
         db.close()
     }
 
+    // 좋아요 기능(START)
+    // name은 해당하는 음식의 이름
+    fun updatePriorityUp(name: String) {
+        var db: SQLiteDatabase = writableDatabase
+        var originPriority = "SELECT priority from real_nutri_91 where name = " + name + ";"
+        var newPriority = originPriority.toInt() + 1
+        db.execSQL(
+            "UPDATE real_nutri_91 SET " + "priority" + "= " + newPriority  + " WHERE name = " + name + ";"
+        )
+        db.close()
+    }
+    // 좋아요 기능(FINISH)
+
+    // 싫어요 기능(START)
+    fun updatePriorityDown(name: String) {
+        var db: SQLiteDatabase = writableDatabase
+        var originPriority = "SELECT priority from real_nutri_91 where name = " + name + ";"
+        var newPriority = originPriority.toInt() - 1
+        db.execSQL(
+            "UPDATE real_nutri_91 SET " + "priority" + "= " + newPriority  + " WHERE name = " + name + ";"
+        )
+        db.close()
+    }
+    // 싫어요 기능(FINISH)
+
+
     fun selectUserInfo(field: String, tablename: String) {
         var db: SQLiteDatabase = writableDatabase
         db.execSQL(

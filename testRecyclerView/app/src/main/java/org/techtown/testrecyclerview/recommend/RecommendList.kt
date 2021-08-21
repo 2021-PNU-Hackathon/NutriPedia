@@ -5,6 +5,7 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log // Log test
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -94,49 +95,39 @@ class RecommendList : AppCompatActivity() {
         }
 //        println(differenceAndName)
         differenceList.sort() // 차이값 오름차순 정렬
-        // 우선순위 고려 // priority 5 뽑고, 4 뽑고, 3 뽑아서 5개 채우기
 
-//        var a: Int = 0
-//        while(true){
-//            for(i in 0..4) {
-//                if (priorityAndName.get(differenceAndName.get(differenceList[i])) == 5) {
-//                    println("${a + 1}순위 : ${differenceAndName.get(differenceList[i])}")
-//                    a = a + 1
-//                    if(a == 5)
-//                        break;
-//                }
-//            }
-//            if(a == 5)
-//                break;
-//            for(i in 0..4){
-//                if(priorityAndName.get(differenceAndName.get(differenceList[i])) == 4){
-//                    println("${a+1}순위 : ${differenceAndName.get(differenceList[i])}")
-//                    a = a + 1
-//                    if(a == 5)
-//                        break;
-//                }
-//            }
-//            if(a == 5)
-//                break;
-//            for(i in 0..4){
-//                if(priorityAndName.get(differenceAndName.get(differenceList[i])) == 3){
-//                    println("${a+1}순위 : ${differenceAndName.get(differenceList[i])}")
-//                    a = a + 1
-//                    if(a == 5)
-//                        break;
-//                }
-//            }
-//            if(a == 5)
-//                break;
-//        }
 
         dbHelper = DBHelper(this, "food_nutri.db", null, 1)
         db = dbHelper.readableDatabase
 
+        // Priority 고려 (START)
+        var times: Int = 0
+        var foodName : String
+        var Top5Food: Array<String> = arrayOf()
+        while(true){
+            for(pri in 5 downTo 0) {
+                for (i in 0..4) {
+                    if (priorityAndName.get(differenceAndName.get(differenceList[i])) == pri) {
+                        foodName = differenceAndName.get(differenceList[i]).toString()
+                        Top5Food = Top5Food.plus(foodName)
+                        times = times + 1
+                        if (times == 6)
+                            break;
+                    }
+                }
+                if (times == 6)
+                    break;
+            }
+            if (times == 6)
+                break;
+        }
+        // Priority 고려 (FINISH)
+
         for(i in 0..5) {
             var cursor: Cursor = db.rawQuery("SELECT * FROM real_nutri_91", null)
             while (cursor.moveToNext()) {
-                if (cursor.getString(1) == differenceAndName.get(differenceList[i]))
+//                if (cursor.getString(1) == differenceAndName.get(differenceList[i])) // origin
+                if (cursor.getString(1) == Top5Food[i])
                     foodList.add(
                         FoodData(
                             cursor.getString(1),
