@@ -23,9 +23,6 @@
             android:name=".previous.PreviousActivity"
             android:exported="true" />
         <activity
-            android:name=".PreviousActivity"
-            android:exported="true" />
-        <activity
             android:name=".settings.PrivateFix"
             android:parentActivityName=".settings.SettingActivity" />
         <activity android:name=".result.FixItemActivity" />

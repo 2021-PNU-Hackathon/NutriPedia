@@ -75,7 +75,7 @@ class FragmentOne : Fragment() {
         var recommendBtn = v.findViewById<Button>(R.id.recommendBtn)
         var layoutManager = LinearLayoutManager(context)
         recyclerView.layoutManager = layoutManager
-        var adapter = MainActivity.MyAdapter(MainActivity.gContext())
+        var adapter = MainActivity.MyAdapter(MainActivity.gContext(),1)
         recyclerView.adapter = adapter
 
         val viewAdapter= ViewPagerAdapter()
