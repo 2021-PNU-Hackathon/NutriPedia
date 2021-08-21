@@ -35,7 +35,7 @@ class PreviousActivity : AppCompatActivity() {
 
         var layoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = layoutManager
-        var adapter = MainActivity.MyAdapter(MainActivity.gContext())
+        var adapter = MainActivity.MyAdapter(MainActivity.gContext(),0)
         recyclerView.adapter = adapter
 
         val viewAdapter= ViewPagerAdapterPre()
