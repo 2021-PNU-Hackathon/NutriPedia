@@ -19,13 +19,13 @@ class CurrentWeight : AppCompatActivity() {
     lateinit var dbHelper : DBHelper
     lateinit var database : SQLiteDatabase
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_current_weight)
         dbHelper = DBHelper(this, "food_nutri.db", null, 1)
         database = dbHelper.writableDatabase
         dbHelper.insertUserInfo()
         dbHelper.insertRecord()
-        dbHelper.insertWater()
 
         val currentWeight = findViewById<TextView>(R.id.infoTv)
         val intentBtn = findViewById<Button>(R.id.intentBtn)
