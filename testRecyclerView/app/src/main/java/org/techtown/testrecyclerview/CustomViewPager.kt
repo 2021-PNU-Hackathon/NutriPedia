@@ -7,6 +7,7 @@ import androidx.viewpager.widget.ViewPager
 import kotlinx.android.synthetic.main.pagewater.view.*
 
 class CustomViewPager : ViewPager {
+    lateinit var dbHelper : DBHelper
     constructor(context: Context?) : super(context!!) {}
     constructor(context: Context?, attrs: AttributeSet?) : super(
         context!!,
@@ -16,23 +17,32 @@ class CustomViewPager : ViewPager {
 
     override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean {
         btn100.setOnClickListener {
+//            dbHelper.updatewater("amount", dbHelper.getColValue(1, "water").toInt(), date())
             var setProg = calPb2.getProgress()
             setProg += 100
             calPb2.setProgress(setProg)
             splitArray = waterTv.text.split("/").toTypedArray()
             var water = splitArray[0].toInt()
             water += 100
-            waterTv.text =water.toString() + "/" +splitArray[1]
+            waterTv.text = water.toString() + "/" + splitArray[1]
         }
         btn250.setOnClickListener {
             var setProg = calPb2.getProgress()
             setProg += 250
             calPb2.setProgress(setProg)
+            splitArray = waterTv.text.split("/").toTypedArray()
+            var water = splitArray[0].toInt()
+            water += 250
+            waterTv.text = water.toString() + "/" + splitArray[1]
         }
         btn500.setOnClickListener {
             var setProg = calPb2.getProgress()
             setProg += 500
             calPb2.setProgress(setProg)
+            splitArray = waterTv.text.split("/").toTypedArray()
+            var water = splitArray[0].toInt()
+            water += 500
+            waterTv.text = water.toString() + "/" + splitArray[1]
         }
         return super.onInterceptTouchEvent(ev)
     }

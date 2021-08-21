@@ -15,7 +15,7 @@ import org.techtown.testrecyclerview.R
 
 
 class PrivateFix : AppCompatActivity() {
-    val db = DBHelper(this, "food.db", null, 1)
+    val db = DBHelper(this, "food_nutri.db", null, 1)
     var clicked : Boolean = false
     var idCheck : AppCompatButton?= null
     var gender : Int = 0
