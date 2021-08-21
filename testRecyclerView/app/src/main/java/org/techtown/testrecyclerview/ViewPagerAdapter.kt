@@ -37,8 +37,11 @@ class ViewPagerAdapter: PagerAdapter() {
             val title = view.findViewById<TextView>(R.id.title)
             title.text = dbHelper.getColValue(0,"user_info") + "kg"
         }
-                else { view = LayoutInflater.from(container.context).inflate(R.layout.pagewater,container,false)
-                }
+        else {
+            view = LayoutInflater.from(container.context).inflate(R.layout.pagewater,container,false)
+            val waterTv = view.findViewById<TextView>(R.id.waterTv)
+            waterTv.text = dbHelper.getColValue(1,"water") + "/" + dbHelper.getColValue(6, "user_info") + "ml"
+        }
 
 
 

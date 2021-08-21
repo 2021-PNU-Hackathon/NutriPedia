@@ -12,6 +12,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,6 +36,50 @@ import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
+    private val DB_PATH = "/data/data/org.techtown.testrecyclerview/databases/"
+    private val DB_NAME = "food_nutri.db"
+
+    private fun copyDataBaseFromAssets(context: Context) {
+
+        var myInput: InputStream? = null
+        var myOutput: OutputStream? = null
+        try {
+
+            val folder = context.getDatabasePath("databases")
+
+            if (!folder.exists()) {
+                if (folder.mkdirs()) folder.delete()
+            }
+
+            myInput = context.assets.open("$DB_NAME")
+            val outFileName = DB_PATH + DB_NAME
+            Log.e("Log1", outFileName)
+            val f = File(outFileName)
+            if (f.exists()){
+                Log.e("Log1", "Log ----- 이미 COPY 완료")
+                return
+            }
+            myOutput = FileOutputStream(outFileName)
+
+            //transfer bytes from the inputfile to the outputfile
+            val buffer = ByteArray(1024)
+            var length: Int = myInput.read(buffer)
+
+            while (length > 0) {
+                myOutput!!.write(buffer, 0, length)
+                length = myInput.read(buffer)
+            }
+            //Close the streams
+            myOutput!!.flush()
+            myOutput.close()
+            myInput.close()
+
+
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+        Log.e("Log1", "Log ----- 외부 DB COPY 완료")
+    }
     lateinit var dbHelper : DBHelper
     lateinit var database : SQLiteDatabase
     lateinit var photoURI: Uri
@@ -64,6 +109,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setPermission()// 권한을 체크하는 메소드 수행
+
         supportFragmentManager.beginTransaction().add(fl.id,FragmentOne()).commit()
         supportActionBar!!.hide()
 
@@ -86,6 +132,7 @@ class MainActivity : AppCompatActivity() {
         if (!firstViewShow) {
             editor.putBoolean("First",true).apply()
             var firstIntent = Intent(applicationContext,CurrentWeight::class.java)
+            copyDataBaseFromAssets(this)
             startActivity(firstIntent)
         }
 
