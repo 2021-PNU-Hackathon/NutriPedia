@@ -2,6 +2,7 @@ package org.techtown.testrecyclerview
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
+import android.os.Build
 import android.renderscript.Sampler
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.viewpager.widget.PagerAdapter
 import org.techtown.testrecyclerview.R
 
@@ -27,6 +29,7 @@ class ViewPagerAdapter: PagerAdapter() {
 
     //position에 해당하는 페이지 생성
     lateinit var view:View
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         dbHelper = DBHelper(container.context, "food_nutri.db", null, 1)
         database = dbHelper.writableDatabase
@@ -37,13 +40,12 @@ class ViewPagerAdapter: PagerAdapter() {
             val title = view.findViewById<TextView>(R.id.title)
             title.text = dbHelper.getColValue(0,"user_info") + "kg"
         }
+
         else {
             view = LayoutInflater.from(container.context).inflate(R.layout.pagewater,container,false)
             val waterTv = view.findViewById<TextView>(R.id.waterTv)
-            waterTv.text = dbHelper.getColValue(1,"water") + "/" + dbHelper.getColValue(6, "user_info") + "ml"
+            waterTv.text = dbHelper.getWater().toString() + "/" + dbHelper.getColValue(6, "user_info") + "ml"
         }
-
-
 
 
 //        tanPb.progress = value

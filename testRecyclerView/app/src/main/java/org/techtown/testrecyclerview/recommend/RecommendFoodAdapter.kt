@@ -2,6 +2,7 @@ package org.techtown.testrecyclerview.recommend
 
 import android.content.Context
 import android.content.Intent
+import android.database.sqlite.SQLiteDatabase
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,11 +10,14 @@ import android.widget.Filterable
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import org.techtown.testrecyclerview.DBHelper
 import org.techtown.testrecyclerview.R
 import org.techtown.testrecyclerview.search.FoodData
 
 class RecommendFoodAdapter (val context: Context, var foodList: ArrayList<FoodData>) :
     RecyclerView.Adapter<RecommendFoodAdapter.CustomViewHolder>() {
+    lateinit var dbHelper : DBHelper
+    lateinit var db : SQLiteDatabase
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.recommend_row_item, parent, false)
@@ -63,6 +67,7 @@ class RecommendFoodAdapter (val context: Context, var foodList: ArrayList<FoodDa
         var thumbDownClicked : Boolean = false
 
         fun bind (foodData:FoodData, context: Context) {
+//            dbHelper = DBHelper(context, "food_nutri.db", null, 1)
             /* 나머지 TextView와 String 데이터를 연결한다. */
             foodTitle.text = foodData.foodName
             kcalTv.text = foodData.calorie.toString()+" | "+foodData.amount.toString()+"g 기준"
@@ -75,10 +80,13 @@ class RecommendFoodAdapter (val context: Context, var foodList: ArrayList<FoodDa
                     thumbCount--
                     thumbUpClicked = false
                     thumbUp.setImageResource(R.drawable.icons8_thumbs_up_24)
+//                    dbHelper.updatePriorityDown("해물찜")
+
                 } else if (thumbUpClicked == false && thumbDownClicked == false) {
                     thumbCount++
                     thumbUpClicked = true
                     thumbUp.setImageResource(R.drawable.icons8_thumbs_up_filled_24)
+//                    dbHelper.updatePriorityUp("해물찜")
                 }
             }
             thumbDown.setOnClickListener {
@@ -86,11 +94,13 @@ class RecommendFoodAdapter (val context: Context, var foodList: ArrayList<FoodDa
                     thumbCount++
                     thumbDownClicked = false
                     thumbDown.setImageResource(R.drawable.icons8_thumbs_down_24)
+//                    dbHelper.updatePriorityUp(foodData.foodName)
                 }
                 else if (thumbUpClicked == false && thumbDownClicked == false) {
                     thumbCount--
                     thumbDownClicked = true
                     thumbDown.setImageResource(R.drawable.icons8_thumbs_down_filled_24)
+//                    dbHelper.updatePriorityDown(foodData.foodName)
                 }
             }
 

@@ -7,12 +7,15 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
+import android.media.Image
+import android.media.audiofx.DynamicsProcessing
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,6 +38,7 @@ import org.techtown.testrecyclerview.tutorial.CurrentWeight
 import java.io.*
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class MainActivity : AppCompatActivity() {
@@ -43,6 +47,7 @@ class MainActivity : AppCompatActivity() {
     val copy = copyDB()
     val REQUEST_IMAGE_CAPTURE = 1 //카메라 사진촬영 요청코드
     lateinit var curPhotoPath: String //문자열 형태의 사진 경로 값(초기값을 null로 시작하고 싶을 때)
+    val REQUEST_CODE = 0
 
     init {
         instance = this
@@ -71,6 +76,16 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction().add(fl.id,FragmentOne()).commit()
         supportActionBar!!.hide()
 
+        val preferences = getSharedPreferences("a", MODE_PRIVATE)
+        var editor = preferences.edit()
+        var firstViewShow : Boolean = preferences.getBoolean("First", false)
+
+        if (!firstViewShow) {
+            editor.putBoolean("First",true).apply()
+            var firstIntent = Intent(applicationContext,CurrentWeight::class.java)
+            startActivity(firstIntent)
+        }
+
         bn.setOnNavigationItemSelectedListener {
             replaceFragment(
                 when (it.itemId) {
@@ -83,9 +98,6 @@ class MainActivity : AppCompatActivity() {
         }
 //
 //        FileUploadUtils().receiveFromServer() // 받는 부분은 일단 구현 안함
-        val preferences = getSharedPreferences("a", MODE_PRIVATE)
-        var editor = preferences.edit()
-        var firstViewShow : Boolean = preferences.getBoolean("First", false)
 
         if (!firstViewShow) {
             editor.putBoolean("First",true).apply()
@@ -98,8 +110,26 @@ class MainActivity : AppCompatActivity() {
         bottomNavigationView.menu.getItem(1).isEnabled = false
 
         fab.setOnClickListener {
-            takeCapture()
+            showSelectCameraOrImage()
         }
+    }
+
+    fun gallery() {
+        var intent = Intent()
+        intent.setType("image/*")
+        intent.setAction(Intent.ACTION_GET_CONTENT)
+        startActivityForResult(intent,REQUEST_CODE)
+    }
+
+    private fun showSelectCameraOrImage() {
+        CameraOrImageSelectDialog(object: CameraOrImageSelectDialog.OnClickSelectListener {
+            override fun onClickCamera() {
+                takeCapture()
+            }
+            override fun onClickImage() {
+                gallery()
+            }
+        }).show(supportFragmentManager, "CameraOrImageSelectDialog")
     }
     private fun replaceFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction().replace(fl.id, fragment).commit()
@@ -174,9 +204,14 @@ class MainActivity : AppCompatActivity() {
                     Uri.fromFile(file)
                 )
                 bitmap = ImageDecoder.decodeBitmap(decode)
-                //ivPhoto.setImageBitmap(bitmap)
             }
             savePhoto(bitmap)
+        }
+        if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK ) {
+            var uri = data?.data
+            var cameraIntent = Intent(applicationContext, CameraResult::class.java)
+            cameraIntent.putExtra("uri", uri)
+            startActivity(cameraIntent)
         }
 
     }
@@ -208,9 +243,8 @@ class MainActivity : AppCompatActivity() {
         startActivity(cameraIntent)
     }
 
-
     class MyAdapter(val context: Context, var foodList: ArrayList<RecordFoodData>): RecyclerView.Adapter<MyAdapter.MyViewHolder>(){
-
+      
         override fun onCreateViewHolder(viewgroup: ViewGroup, position: Int): MyViewHolder {
             var v: View = LayoutInflater.from(viewgroup.context).inflate(R.layout.card_layout, viewgroup, false)
             return MyViewHolder(v)
