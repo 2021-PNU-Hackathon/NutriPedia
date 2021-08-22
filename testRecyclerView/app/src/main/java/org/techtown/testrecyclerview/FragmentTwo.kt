@@ -1,7 +1,9 @@
 package org.techtown.testrecyclerview
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -9,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.LimitLine
@@ -51,6 +54,8 @@ class FragmentTwo : Fragment() {
 
     var isset = 0
     var todayMon =0
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -99,6 +104,7 @@ class FragmentTwo : Fragment() {
 //            }
 //
 //        })
+
 
         linelist = ArrayList()
         linelist.add(Entry(6f, 100f))
@@ -203,6 +209,7 @@ class FragmentTwo : Fragment() {
         scheduleRecyclerViewAdapter = RecyclerViewAdapter(this)
         schedule.layoutManager = GridLayoutManager(context, BaseCalendar.DAYS_OF_WEEK)
         schedule.adapter = scheduleRecyclerViewAdapter
+
 
         schedule.setOnTouchListener(object :
             OnSwipeTouchListener(requireContext()) {   // 캘린더 날짜 부분 스와이프 리스너

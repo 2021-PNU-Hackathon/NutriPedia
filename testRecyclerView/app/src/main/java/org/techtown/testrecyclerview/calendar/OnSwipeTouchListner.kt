@@ -21,6 +21,7 @@ open class OnSwipeTouchListener(ctx: Context) : View.OnTouchListener {
 
     override fun onTouch(v: View?, event: MotionEvent?): Boolean {
         try {
+
             return gestureDetector.onTouchEvent(event)
         } catch (e: Exception) {
             // Error Handling
@@ -31,19 +32,24 @@ open class OnSwipeTouchListener(ctx: Context) : View.OnTouchListener {
     private inner class GestureListener : GestureDetector.SimpleOnGestureListener() {
 
 
-        override fun onDown(e: MotionEvent): Boolean {
-            return true
-        }
+        //override fun onDown(e: MotionEvent): Boolean {
+          //  Log.e("touch","touch!!!")
+            //return true
+        //}
+
+
 
         override fun onFling(e1: MotionEvent, e2: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
             var result = false
             try {
                 val diffY = e2.y - e1.y
                 val diffX = e2.x - e1.x
+                Log.e("test", "${diffX},${diffY}")
                 if (Math.abs(diffX) >= Math.abs(diffY)) {
                     if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
                         if (diffX > 0) {
                             Log.d("MainActivity: ","--------------plz-------------------")
+
                             onSwipeRight()
                         } else {
                             Log.d("MainActivity: ","--------------plz-------------------")

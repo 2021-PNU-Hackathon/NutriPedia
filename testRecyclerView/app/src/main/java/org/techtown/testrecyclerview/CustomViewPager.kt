@@ -25,8 +25,9 @@ class CustomViewPager : ViewPager {
             var now = LocalDate.now()
             var Strnow = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
             var setProg = calPb2.getProgress()
+            
             setProg += 100
-            calPb2.setProgress(setProg)
+            calPb2.progress = setProg
             splitArray = waterTv.text.split("/").toTypedArray()
             var water = dbHelper.getColValue(1, "water").toInt()
             water += 100
@@ -57,7 +58,6 @@ class CustomViewPager : ViewPager {
             water += 500
             waterTv.text = water.toString() + "/" + splitArray[1]
             dbHelper.updatewater("amount", dbHelper.getColValue(1, "water").toInt()+500, Strnow)
-
         }
         return super.onInterceptTouchEvent(ev)
     }
