@@ -44,6 +44,8 @@ class SettingActivity : AppCompatActivity() {
         recokcal.text = recommendedKcal(dbHelper.getColValue(0, "user_info").toInt() ,
             dbHelper.getColValue(1, "user_info").toInt(),
             dbHelper.getColValue(4, "user_info").toInt()).toString() + "kcal"
+        twater.text = dbHelper.getColValue(6,"user_info") + "ml"
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

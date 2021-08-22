@@ -21,6 +21,7 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import kotlinx.android.synthetic.main.fragment_two.*
+import kotlinx.android.synthetic.main.pagewater.view.*
 import org.techtown.testrecyclerview.calendar.BaseCalendar
 import org.techtown.testrecyclerview.calendar.OnSwipeTouchListener
 import org.techtown.testrecyclerview.calendar.RecyclerViewAdapter
@@ -64,7 +65,7 @@ class FragmentTwo : Fragment() {
         }
     }
     lateinit var current_month : TextView
-    lateinit var Tvtest : TextView
+
     lateinit var schedule : RecyclerView
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -72,38 +73,37 @@ class FragmentTwo : Fragment() {
     ): View? {
         var V2 : View = inflater.inflate(R.layout.fragment_two, container, false)
         current_month = V2.findViewById<TextView>(R.id.tv_current_month)
-        Tvtest = V2.findViewById<TextView>(R.id.test)
+
         schedule = V2.findViewById<RecyclerView>(R.id.rv_schedule)
         var linechart = V2.findViewById<LineChart>(R.id.lineChart)
         initView()
 
-        schedule.onFlingListener=null
-
-        schedule.addOnItemTouchListener(object: RecyclerView.OnItemTouchListener {
-            override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
-                schedule.setOnTouchListener(object :
-                    OnSwipeTouchListener(MainActivity.gContext()) {   // 캘린더 날짜 부분 스와이프 리스너
-                    override fun onSwipeLeft() {
-                        //                  왼쪽에서 오른쪽으로 스와이프 이전달로
-                        scheduleRecyclerViewAdapter.changeToNextMonth()
-                        Log.e("left","lllllllllllllllll")
-                    }
-                    override fun onSwipeRight() {
-                        //                  오른쪽에서 왼쪽으로 스와이프 다음달로
-                        scheduleRecyclerViewAdapter.changeToPrevMonth()
-                        Log.e("right","rrrrrrrrrrrrrrrrrrr")
-                    }
-                })
-                return true
-            }
-            override fun onTouchEvent(rv: RecyclerView, e: MotionEvent) {
-            }
-            override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {
-            }
-        })
-
-
-
+//        schedule.addOnItemTouchListener(object: RecyclerView.OnItemTouchListener {
+//            override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
+//                schedule.setOnTouchListener(object :
+//                    OnSwipeTouchListener(requireContext()) {   // 캘린더 날짜 부분 스와이프 리스너
+//                    override fun onSwipeLeft() {
+//        //                  왼쪽에서 오른쪽으로 스와이프 이전달로
+//                        scheduleRecyclerViewAdapter.changeToNextMonth()
+//                    }
+//
+//                    override fun onSwipeRight() {
+//        //                  오른쪽에서 왼쪽으로 스와이프 다음달로
+//                        scheduleRecyclerViewAdapter.changeToPrevMonth()
+//                    }
+//                })
+//                return onInterceptTouchEvent(rv,e)
+//            }
+//
+//            override fun onTouchEvent(rv: RecyclerView, e: MotionEvent) {
+//
+//            }
+//
+//            override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {
+//
+//            }
+//
+//        })
 
 
         linelist = ArrayList()
@@ -117,6 +117,7 @@ class FragmentTwo : Fragment() {
         lineDataSet = LineDataSet(linelist, "Weight")
         lineData = LineData(lineDataSet)
         linechart.data = lineData
+
 
         lineDataSet.color = Color.parseColor("#5CC485")
 //        lineDataSet.setColors(*ColorTemplate.JOYFUL_COLORS)
@@ -151,6 +152,10 @@ class FragmentTwo : Fragment() {
             lineColor = Color.DKGRAY
 
 //            label =
+        }
+
+        linechart.apply {
+            setTouchEnabled(false)
         }
 
         // 범례
@@ -190,7 +195,7 @@ class FragmentTwo : Fragment() {
             // x축 값은 투명으로
             textColor = Color.BLACK
             // 축라인, 그리드 사용하지 않음
-            setDrawLabels(true)
+            setDrawLabels(false)
             setDrawAxisLine(true)
             setDrawGridLines(false)
             position = XAxis.XAxisPosition.BOTTOM
@@ -205,11 +210,25 @@ class FragmentTwo : Fragment() {
         schedule.layoutManager = GridLayoutManager(context, BaseCalendar.DAYS_OF_WEEK)
         schedule.adapter = scheduleRecyclerViewAdapter
 
+
+        schedule.setOnTouchListener(object :
+            OnSwipeTouchListener(requireContext()) {   // 캘린더 날짜 부분 스와이프 리스너
+            override fun onSwipeLeft() {
+//                  왼쪽에서 오른쪽으로 스와이프 이전달로
+                scheduleRecyclerViewAdapter.changeToNextMonth()
+            }
+
+            override fun onSwipeRight() {
+//                  오른쪽에서 왼쪽으로 스와이프 다음달로
+                scheduleRecyclerViewAdapter.changeToPrevMonth()
+            }
+        })
+
     }
 
-        fun testText(str: String) {
-            test.text = str
-        }
+//        fun testText(str: String) {
+//            test.text = str
+//        }
 
         fun refreshCurrentMonth(calendar: Calendar) {
             val sdf = SimpleDateFormat("yyyy년 MM월", Locale.KOREAN)
@@ -222,7 +241,7 @@ class FragmentTwo : Fragment() {
                 todayMon = displayMon
                 isset = 1
             }
-            Tvtest.text = "${displayMon} / ${todayMon}"   //  현재 달 페이지 상 달 테스트 출력
+//            Tvtest.text = "${displayMon} / ${todayMon}"   //  현재 달 페이지 상 달 테스트 출력
         }
 
     companion object {

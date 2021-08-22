@@ -14,7 +14,8 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
-import android.util.Config
+import android.util.Log
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,12 +43,14 @@ class MainActivity : AppCompatActivity() {
     lateinit var dbHelper : DBHelper
     lateinit var database : SQLiteDatabase
     lateinit var photoURI: Uri
+    val copy = copyDB()
     val REQUEST_IMAGE_CAPTURE = 1 //카메라 사진촬영 요청코드
     lateinit var curPhotoPath: String //문자열 형태의 사진 경로 값(초기값을 null로 시작하고 싶을 때)
     val REQUEST_CODE = 0
 
     init {
         instance = this
+
     }
     companion object {
         var instance: MainActivity? = null
@@ -95,6 +98,12 @@ class MainActivity : AppCompatActivity() {
 //
 //        FileUploadUtils().receiveFromServer() // 받는 부분은 일단 구현 안함
 
+        if (!firstViewShow) {
+            editor.putBoolean("First",true).apply()
+            var firstIntent = Intent(applicationContext,CurrentWeight::class.java)
+            copy.copyDataBaseFromAssets(this)
+            startActivity(firstIntent)
+        }
 
         bottomNavigationView.background = null
         bottomNavigationView.menu.getItem(1).isEnabled = false
@@ -233,10 +242,7 @@ class MainActivity : AppCompatActivity() {
         startActivity(cameraIntent)
     }
 
-
-
-
-    class MyAdapter(context: Context): RecyclerView.Adapter<MyAdapter.MyViewHolder>(){
+    class MyAdapter(context: Context, page:Int): RecyclerView.Adapter<MyAdapter.MyViewHolder>(){
 
         var titles = arrayOf("one", "two", "three", "four", "five")
         var details = arrayOf("Item one", "Item two", "Item three", "Item four", "Itme five")

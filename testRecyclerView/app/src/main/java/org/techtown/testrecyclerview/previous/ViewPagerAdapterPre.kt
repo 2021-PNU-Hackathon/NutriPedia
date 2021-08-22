@@ -1,52 +1,34 @@
-package org.techtown.testrecyclerview
+package org.techtown.testrecyclerview.previous
 
 import android.content.Context
-import android.database.sqlite.SQLiteDatabase
-import android.os.Build
 import android.renderscript.Sampler
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
-import androidx.annotation.RequiresApi
 import androidx.viewpager.widget.PagerAdapter
 import org.techtown.testrecyclerview.R
 
 
-class ViewPagerAdapter: PagerAdapter() {
+class ViewPagerAdapterPre: PagerAdapter() {
     private var mContext: Context?=null
 
     fun ViewPagerAdapter(context: Context){
         mContext=context;
     }
-    lateinit var dbHelper : DBHelper
-    lateinit var database : SQLiteDatabase
-
-
-
 
     //position에 해당하는 페이지 생성
-    lateinit var view:View
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
-        dbHelper = DBHelper(container.context, "food_nutri.db", null, 1)
-        database = dbHelper.writableDatabase
+        val view = if (position == 0) { LayoutInflater.from(container.context).inflate(R.layout.page,container,false) }
+                else { LayoutInflater.from(container.context).inflate(R.layout.pagewater_pre,container,false) }
+        val calPb = view.findViewById<ProgressBar>(R.id.calPb)
+        val tanPb = view.findViewById<ProgressBar>(R.id.tanPb)
+        val danPb = view.findViewById<ProgressBar>(R.id.danPb)
+        val giPb = view.findViewById<ProgressBar>(R.id.giPb)
+        val value = 30 * position
 
-
-        if (position == 0) {
-            view = LayoutInflater.from(container.context).inflate(R.layout.page,container,false)
-            val title = view.findViewById<TextView>(R.id.title)
-            title.text = dbHelper.getColValue(0,"user_info") + "kg"
-        }
-
-        else {
-            view = LayoutInflater.from(container.context).inflate(R.layout.pagewater,container,false)
-            val waterTv = view.findViewById<TextView>(R.id.waterTv)
-            waterTv.text = dbHelper.getWater().toString() + "/" + dbHelper.getColValue(6, "user_info") + "ml"
-        }
-
+//        calPb.progress = value
 
 //        tanPb.progress = value
 
