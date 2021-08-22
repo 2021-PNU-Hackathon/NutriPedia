@@ -9,6 +9,7 @@ import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_setting.*
 import org.techtown.testrecyclerview.DBHelper
 import org.techtown.testrecyclerview.R
+import org.techtown.testrecyclerview.nutrientRate
 import org.techtown.testrecyclerview.recommendedKcal
 
 class SettingActivity : AppCompatActivity() {
@@ -45,6 +46,15 @@ class SettingActivity : AppCompatActivity() {
             dbHelper.getColValue(1, "user_info").toInt(),
             dbHelper.getColValue(4, "user_info").toInt()).toString() + "kcal"
         twater.text = dbHelper.getColValue(6,"user_info") + "ml"
+        var recommendedKcal : Int = recommendedKcal(
+            dbHelper.getColValue(0, "user_info").toInt(),
+            dbHelper.getColValue(1, "user_info").toInt(),
+            dbHelper.getColValue(4, "user_info").toInt()
+        )
+        var triple : Triple<Int, Int, Int> = nutrientRate(dbHelper.getColValue(0, "user_info").toInt(),
+            dbHelper.getColValue(1, "user_info").toInt(),
+            recommendedKcal)
+        nrate.text = triple.first.toString() + ":" + triple.second.toString() + ":" + triple.third.toString()
 
     }
 

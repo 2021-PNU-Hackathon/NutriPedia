@@ -143,6 +143,7 @@
                 android:text="탄단지 비율" />
 
             <TextView
+                android:id="@+id/nrate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
