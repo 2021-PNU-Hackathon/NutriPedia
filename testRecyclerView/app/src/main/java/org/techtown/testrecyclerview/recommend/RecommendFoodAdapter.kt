@@ -16,7 +16,7 @@ import org.techtown.testrecyclerview.search.FoodData
 
 class RecommendFoodAdapter (val context: Context, var foodList: ArrayList<FoodData>) :
     RecyclerView.Adapter<RecommendFoodAdapter.CustomViewHolder>() {
-    lateinit var dbHelper : DBHelper
+    val dbHelper = DBHelper(context, "food_nutri.db", null, 1)
     lateinit var db : SQLiteDatabase
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
@@ -27,7 +27,6 @@ class RecommendFoodAdapter (val context: Context, var foodList: ArrayList<FoodDa
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         //holder.bind(foodList[position], context)
         val item = foodList[position]
-
         holder.itemView.setOnClickListener {
             itemClickListner.onClick(it,position)
         }
@@ -52,7 +51,7 @@ class RecommendFoodAdapter (val context: Context, var foodList: ArrayList<FoodDa
 
 
 
-    class CustomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class CustomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         val foodTitle = itemView.findViewById<TextView>(R.id.titleTv)
         val kcalTv = itemView.findViewById<TextView>(R.id.kcalTv)
@@ -67,7 +66,7 @@ class RecommendFoodAdapter (val context: Context, var foodList: ArrayList<FoodDa
         var thumbDownClicked : Boolean = false
 
         fun bind (foodData:FoodData, context: Context) {
-//            dbHelper = DBHelper(context, "food_nutri.db", null, 1)
+
             /* 나머지 TextView와 String 데이터를 연결한다. */
             foodTitle.text = foodData.foodName
             kcalTv.text = foodData.calorie.toString()+" | "+foodData.amount.toString()+"g 기준"
@@ -80,13 +79,13 @@ class RecommendFoodAdapter (val context: Context, var foodList: ArrayList<FoodDa
                     thumbCount--
                     thumbUpClicked = false
                     thumbUp.setImageResource(R.drawable.icons8_thumbs_up_24)
-//                    dbHelper.updatePriorityDown("해물찜")
+                    dbHelper.updatePriorityUp(foodData.foodName)
 
                 } else if (thumbUpClicked == false && thumbDownClicked == false) {
                     thumbCount++
                     thumbUpClicked = true
                     thumbUp.setImageResource(R.drawable.icons8_thumbs_up_filled_24)
-//                    dbHelper.updatePriorityUp("해물찜")
+                    dbHelper.updatePriorityUp(foodData.foodName)
                 }
             }
             thumbDown.setOnClickListener {
@@ -94,13 +93,13 @@ class RecommendFoodAdapter (val context: Context, var foodList: ArrayList<FoodDa
                     thumbCount++
                     thumbDownClicked = false
                     thumbDown.setImageResource(R.drawable.icons8_thumbs_down_24)
-//                    dbHelper.updatePriorityUp(foodData.foodName)
+                    dbHelper.updatePriorityUp(foodData.foodName)
                 }
                 else if (thumbUpClicked == false && thumbDownClicked == false) {
                     thumbCount--
                     thumbDownClicked = true
                     thumbDown.setImageResource(R.drawable.icons8_thumbs_down_filled_24)
-//                    dbHelper.updatePriorityDown(foodData.foodName)
+                    dbHelper.updatePriorityDown(foodData.foodName)
                 }
             }
 
