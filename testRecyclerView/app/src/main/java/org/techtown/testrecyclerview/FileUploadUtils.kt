@@ -18,7 +18,7 @@ public class FileUploadUtils {
             .build()
 
         var request = Request.Builder()
-            .url("http://49.50.165.171:5000")
+            .url("http://180.69.118.29:7777")
             .post(requestBody)
             .build()
 
@@ -48,6 +48,7 @@ public class FileUploadUtils {
                         nameArr.get(i).toString())
                     serverData.add(sample)
                 }
+                Log.e("food",serverData[0].name)
             }
         })
     }

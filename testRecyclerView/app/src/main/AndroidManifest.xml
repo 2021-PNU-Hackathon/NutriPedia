@@ -38,11 +38,16 @@
         <activity
             android:name=".settings.SettingActivity"
             android:parentActivityName=".MainActivity" />
-        <activity android:name=".tutorial.Sex" />
-        <activity android:name=".tutorial.Age" />
-        <activity android:name=".tutorial.CurrentHeight" />
-        <activity android:name=".tutorial.TargetWeight" />
-        <activity android:name=".tutorial.CurrentWeight" /> <!-- <activity -->
+        <activity android:name=".tutorial.Sex"
+            android:theme="@style/Theme.TestRecyclerView.NoActionBar"/>
+        <activity android:name=".tutorial.Age"
+            android:theme="@style/Theme.TestRecyclerView.NoActionBar"/>
+        <activity android:name=".tutorial.CurrentHeight"
+            android:theme="@style/Theme.TestRecyclerView.NoActionBar"/>
+        <activity android:name=".tutorial.TargetWeight"
+            android:theme="@style/Theme.TestRecyclerView.NoActionBar"/>
+        <activity android:name=".tutorial.CurrentWeight"
+            android:theme="@style/Theme.TestRecyclerView.NoActionBar"/> <!-- <activity -->
         <!-- android:name=".MainActivity" -->
         <!-- android:label="@string/title_activity_main" -->
         <!-- android:theme="@style/Theme.TestRecyclerView.NoActionBar" /> -->

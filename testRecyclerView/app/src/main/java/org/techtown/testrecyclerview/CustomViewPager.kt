@@ -16,23 +16,31 @@ class CustomViewPager : ViewPager {
 
     override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean {
         btn100.setOnClickListener {
-            var setProg = calPb2.getProgress()
+            var setProg = calPb2.progress
             setProg += 100
-            calPb2.setProgress(setProg)
+            calPb2.progress = setProg
             splitArray = waterTv.text.split("/").toTypedArray()
             var water = splitArray[0].toInt()
             water += 100
-            waterTv.text =water.toString() + "/" +splitArray[1]
+            waterTv.text = water.toString() + "/" +splitArray[1]
         }
         btn250.setOnClickListener {
-            var setProg = calPb2.getProgress()
+            var setProg = calPb2.progress
             setProg += 250
             calPb2.setProgress(setProg)
+            splitArray = waterTv.text.split("/").toTypedArray()
+            var water = splitArray[0].toInt()
+            water += 250
+            waterTv.text = water.toString() + "/" +splitArray[1]
         }
         btn500.setOnClickListener {
-            var setProg = calPb2.getProgress()
+            var setProg = calPb2.progress
             setProg += 500
-            calPb2.setProgress(setProg)
+            calPb2.progress = setProg
+            splitArray = waterTv.text.split("/").toTypedArray()
+            var water = splitArray[0].toInt()
+            water += 500
+            waterTv.text = water.toString() + "/" +splitArray[1]
         }
         return super.onInterceptTouchEvent(ev)
     }

@@ -1,13 +1,17 @@
 package org.techtown.testrecyclerview
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.LimitLine
@@ -50,6 +54,8 @@ class FragmentTwo : Fragment() {
     var isset = 0
     var todayMon =0
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -70,6 +76,34 @@ class FragmentTwo : Fragment() {
         schedule = V2.findViewById<RecyclerView>(R.id.rv_schedule)
         var linechart = V2.findViewById<LineChart>(R.id.lineChart)
         initView()
+
+        schedule.onFlingListener=null
+
+        schedule.addOnItemTouchListener(object: RecyclerView.OnItemTouchListener {
+            override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
+                schedule.setOnTouchListener(object :
+                    OnSwipeTouchListener(MainActivity.gContext()) {   // 캘린더 날짜 부분 스와이프 리스너
+                    override fun onSwipeLeft() {
+                        //                  왼쪽에서 오른쪽으로 스와이프 이전달로
+                        scheduleRecyclerViewAdapter.changeToNextMonth()
+                        Log.e("left","lllllllllllllllll")
+                    }
+                    override fun onSwipeRight() {
+                        //                  오른쪽에서 왼쪽으로 스와이프 다음달로
+                        scheduleRecyclerViewAdapter.changeToPrevMonth()
+                        Log.e("right","rrrrrrrrrrrrrrrrrrr")
+                    }
+                })
+                return true
+            }
+            override fun onTouchEvent(rv: RecyclerView, e: MotionEvent) {
+            }
+            override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {
+            }
+        })
+
+
+
 
 
         linelist = ArrayList()
@@ -171,18 +205,6 @@ class FragmentTwo : Fragment() {
         schedule.layoutManager = GridLayoutManager(context, BaseCalendar.DAYS_OF_WEEK)
         schedule.adapter = scheduleRecyclerViewAdapter
 
-        schedule.setOnTouchListener(object :
-            OnSwipeTouchListener(requireContext()) {   // 캘린더 날짜 부분 스와이프 리스너
-            override fun onSwipeLeft() {
-//                  왼쪽에서 오른쪽으로 스와이프 이전달로
-                scheduleRecyclerViewAdapter.changeToNextMonth()
-            }
-
-            override fun onSwipeRight() {
-//                  오른쪽에서 왼쪽으로 스와이프 다음달로
-                scheduleRecyclerViewAdapter.changeToPrevMonth()
-            }
-        })
     }
 
         fun testText(str: String) {
