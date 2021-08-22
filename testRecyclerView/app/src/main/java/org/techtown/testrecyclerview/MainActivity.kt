@@ -18,6 +18,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
@@ -29,6 +30,7 @@ import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.card_layout.*
 import kotlinx.android.synthetic.main.search_bar.view.*
 import org.techtown.testrecyclerview.result.CameraResult
+import org.techtown.testrecyclerview.search.FoodData
 import org.techtown.testrecyclerview.tutorial.CurrentWeight
 import java.io.*
 import java.text.SimpleDateFormat
@@ -36,8 +38,7 @@ import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
-    lateinit var dbHelper : DBHelper
-    lateinit var database : SQLiteDatabase
+
     lateinit var photoURI: Uri
     val copy = copyDB()
     val REQUEST_IMAGE_CAPTURE = 1 //카메라 사진촬영 요청코드
@@ -208,15 +209,41 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    class MyAdapter(context: Context, page:Int): RecyclerView.Adapter<MyAdapter.MyViewHolder>(){
+    class MyAdapter(val context: Context, var foodList: ArrayList<RecordFoodData>): RecyclerView.Adapter<MyAdapter.MyViewHolder>(){
 
-        var titles = arrayOf("one", "two", "three", "four", "five")
-        var details = arrayOf("Item one", "Item two", "Item three", "Item four", "Itme five")
-        var images = intArrayOf(R.drawable.ic_launcher_foreground,
-            R.drawable.ic_launcher_foreground,
-            R.drawable.ic_launcher_foreground,
-            R.drawable.ic_launcher_foreground,
-            R.drawable.ic_launcher_foreground)
+        override fun onCreateViewHolder(viewgroup: ViewGroup, position: Int): MyViewHolder {
+            var v: View = LayoutInflater.from(viewgroup.context).inflate(R.layout.card_layout, viewgroup, false)
+            return MyViewHolder(v)
+        }
+
+        override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+
+            val item = foodList[position]
+            holder.itemView.setOnClickListener {
+                itemClickListner.onClick(it,position)
+            }
+            holder.cameraIb.setOnClickListener {
+                var activity : MainActivity = instance!!
+                activity.takeCapture()
+            }
+
+            holder.apply {
+                bind(item,context)
+            }
+
+        }
+
+        override fun getItemCount(): Int {
+            return foodList.size
+        }
+        interface OnItemClickListner {
+            fun onClick(v:View, position: Int)
+        }
+        private lateinit var itemClickListner: OnItemClickListner
+
+        fun setItemClickListner(itemClickListner: OnItemClickListner) {
+            this.itemClickListner = itemClickListner
+        }
 
         class MyViewHolder(itemview: View) : RecyclerView.ViewHolder(itemview) {
             var itemimage: ImageView = itemview.findViewById(R.id.item_image)
@@ -226,41 +253,14 @@ class MainActivity : AppCompatActivity() {
             var cardTanTv: TextView = itemview.findViewById(R.id.cardTanTv)
             var cardDanTv: TextView = itemview.findViewById(R.id.cardDanTv)
             var cardJiTv: TextView = itemview.findViewById(R.id.cardJiTv)
-        }
-
-        override fun onCreateViewHolder(viewgroup: ViewGroup, position: Int): MyViewHolder {
-            var v: View = LayoutInflater.from(viewgroup.context).inflate(R.layout.card_layout, viewgroup, false)
-
-            return MyViewHolder(v)
-        }
-
-        override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-            holder.itemtitle.setText(titles.get(position))
-            holder.itemimage.setImageResource(images.get(position))
-            holder.itemdetail.setText(details.get(position))
-            holder.itemView.setOnClickListener {
-                itemClickListner.onClick(it,position)
+            fun bind (foodData:RecordFoodData, context: Context) {
+                itemtitle.text = foodData.mealTime +" | "+foodData.calorie.toString()+"Kcal"
+                itemdetail.text = foodData.foodName
+                itemimage.setImageResource(R.drawable.ic_launcher_foreground)
+                cardTanTv.text = "탄 "+foodData.nutri1.toString()+"g"
+                cardDanTv.text = "단 "+foodData.nutri2.toString()+"g"
+                cardJiTv.text = "지 "+foodData.nutri3.toString()+"g"
             }
-            holder.cameraIb.setOnClickListener {
-                var activity : MainActivity = instance!!
-                activity.takeCapture()
-            }
-//        holder.cardTanTv.setText()
-//        holder.cardDanTv.setText()
-//        holder.cardJiTv.setText()
-
-        }
-
-        override fun getItemCount(): Int {
-            return titles.size
-        }
-        interface OnItemClickListner {
-            fun onClick(v:View, position: Int)
-        }
-        private lateinit var itemClickListner: OnItemClickListner
-
-        fun setItemClickListner(itemClickListner: OnItemClickListner) {
-            this.itemClickListner = itemClickListner
         }
     }
 }

@@ -3,6 +3,8 @@ package org.techtown.testrecyclerview
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.database.Cursor
+import android.database.sqlite.SQLiteDatabase
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
 import android.net.Uri
@@ -10,11 +12,13 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.FileProvider
@@ -31,6 +35,7 @@ import org.techtown.testrecyclerview.recommend.RecommendList
 import org.techtown.testrecyclerview.recommend.RecommendResult
 import org.techtown.testrecyclerview.result.CameraResult
 import org.techtown.testrecyclerview.result.FixItemActivity
+import org.techtown.testrecyclerview.search.FoodData
 import org.techtown.testrecyclerview.search.SearchList
 import org.techtown.testrecyclerview.settings.SettingActivity
 import org.w3c.dom.Text
@@ -38,6 +43,8 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 // TODO: Rename parameter arguments, choose names that match
@@ -55,9 +62,13 @@ class FragmentOne : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
-    val wordList = mutableListOf<String>()
     val REQUEST_IMAGE_CAPTURE = 1 //카메라 사진촬영 요청코드
     lateinit var curPhotoPath: String //문자열 형태의 사진 경로 값(초기값을 null로 시작하고 싶을 때)
+    var mealtime = arrayOf("아침","아점","점심","점저","저녁","간식")
+    lateinit var dbHelper : DBHelper
+    lateinit var db : SQLiteDatabase
+    var foodList = arrayListOf<RecordFoodData>()
+    val displayList = ArrayList<RecordFoodData>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -68,15 +79,32 @@ class FragmentOne : Fragment() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         var v :View = inflater.inflate(R.layout.fragment_one,container,false)
+
+        dbHelper = DBHelper(context, "food_nutri.db", null, 1)
+        db = dbHelper.readableDatabase
+
         var recyclerView = v.findViewById<RecyclerView>(R.id.recyclerview_main) // recyclerview id
+
+
+        var now = LocalDate.now()
+        var strnow :String = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+
+        fillFoodData(strnow)
+
         var recommendBtn = v.findViewById<Button>(R.id.recommendBtn)
         var layoutManager = LinearLayoutManager(context)
         recyclerView.layoutManager = layoutManager
-        var adapter = MainActivity.MyAdapter(MainActivity.gContext(),1)
+
+        recyclerView.setHasFixedSize(true)
+        displayList.addAll(foodList)
+
+        var adapter = MainActivity.MyAdapter(MainActivity.gContext(),displayList)
         recyclerView.adapter = adapter
+
 
         val viewAdapter= ViewPagerAdapter()
         val pagerTest = v.findViewById<ViewPager>(R.id.pager)
@@ -84,7 +112,6 @@ class FragmentOne : Fragment() {
         pagerTest.pageMargin = 30
 
 
-        val arrayAdapter = ArrayAdapter<String>(requireContext(), android.R.layout.simple_dropdown_item_1line, wordList)
         var searchView = v.findViewById<View>(R.id.search_bar1)
         var searchTv = searchView.findViewById<TextView>(R.id.search_tv)
         var searchIv = searchView.findViewById<ImageView>(R.id.search_image)
@@ -125,6 +152,50 @@ class FragmentOne : Fragment() {
 
         return v
     }
+
+    fun fillFoodData(time: String) {
+        for(i in 0..5) {
+            Log.d("Log1",time)
+            Log.d("Log1",mealtime[i])
+            var cursor: Cursor = db.rawQuery("SELECT * FROM record where date = '${time}' and mealtime = '${mealtime[i]}'", null)
+            var mealKcal : Int = 0
+            var mealCab : Int =0
+            var mealPro:Int =0
+            var mealFat:Int =0
+            var cnt : Int = 0
+            var names = arrayListOf<String>()
+            while (cursor.moveToNext()) {
+                mealKcal += cursor.getString(6).toInt()
+                mealCab += cursor.getString(7).toInt()
+                mealPro += cursor.getString(8).toInt()
+                mealFat += cursor.getString(9).toInt()
+                names.add(cursor.getString(2))
+                cnt++
+            }
+            if (cnt>0) {
+                Log.d("Log1","good")
+                var nameStr: String = ""
+                for (i in 0..cnt - 2) {
+                    nameStr += names[i]
+                    nameStr += ","
+                }
+                nameStr += names[cnt - 1]
+                //            if (nameStr.length >15)
+                foodList.add(
+                    RecordFoodData(
+                        mealtime[i],
+                        nameStr,
+                        "1",
+                        mealKcal,
+                        mealCab,
+                        mealPro,
+                        mealFat
+                    )
+                )
+            }
+        }
+    }
+
     fun takeCapture() { //카메라 촬영
         // 기본 카메라 앱 실행
         Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
@@ -214,79 +285,6 @@ class FragmentOne : Fragment() {
         Toast.makeText(requireContext(), "사진이 앨범에 저장되었습니다.", Toast.LENGTH_SHORT).show()
         var cameraIntent = Intent(requireContext(), CameraResult::class.java)
         startActivity(cameraIntent)
-    }
-
-    private fun fillData() {
-        wordList.add("김치")
-        wordList.add("밥")
-        wordList.add("국")
-        wordList.add("멸치")
-        wordList.add("꽁치")
-        wordList.add("소고기")
-        wordList.add("돼지고기")
-        wordList.add("콩나물")
-        wordList.add("제육볶음")
-        wordList.add("라볶이")
-        wordList.add("라면")
-
-    }
-
-    class MyAdapter(context: Context): RecyclerView.Adapter<MyAdapter.MyViewHolder>(){
-
-        var titles = arrayOf("one", "two", "three", "four", "five")
-        var details = arrayOf("Item one", "Item two", "Item three", "Item four", "Itme five")
-        var images = intArrayOf(R.drawable.ic_launcher_foreground,
-            R.drawable.ic_launcher_foreground,
-            R.drawable.ic_launcher_foreground,
-            R.drawable.ic_launcher_foreground,
-            R.drawable.ic_launcher_foreground)
-        val mcontext : Context = context
-
-
-        class MyViewHolder(itemview: View) : RecyclerView.ViewHolder(itemview) {
-            var itemimage: ImageView = itemview.findViewById(R.id.item_image)
-            var itemtitle: TextView = itemview.findViewById(R.id.item_title)
-            var itemdetail: TextView = itemview.findViewById(R.id.item_detail)
-            var cameraIb: ImageButton = itemview.findViewById(R.id.cameraIb)
-            var cardTanTv: TextView = itemview.findViewById(R.id.cardTanTv)
-            var cardDanTv: TextView = itemview.findViewById(R.id.cardDanTv)
-            var cardJiTv: TextView = itemview.findViewById(R.id.cardJiTv)
-        }
-
-        override fun onCreateViewHolder(viewgroup: ViewGroup, position: Int): MyViewHolder {
-            var v: View = LayoutInflater.from(viewgroup.context).inflate(R.layout.card_layout, viewgroup, false)
-
-            return MyViewHolder(v)
-        }
-
-        override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-            holder.itemtitle.setText(titles.get(position))
-            holder.itemimage.setImageResource(images.get(position))
-            holder.itemdetail.setText(details.get(position))
-            holder.itemView.setOnClickListener {
-                itemClickListner.onClick(it,position)
-            }
-            holder.cameraIb.setOnClickListener {
-                var activity : MainActivity = MainActivity.instance!!
-                activity.takeCapture()
-            }
-//        holder.cardTanTv.setText()
-//        holder.cardDanTv.setText()
-//        holder.cardJiTv.setText()
-
-        }
-
-        override fun getItemCount(): Int {
-            return titles.size
-        }
-        interface OnItemClickListner {
-            fun onClick(v:View, position: Int)
-        }
-        private lateinit var itemClickListner: OnItemClickListner
-
-        fun setItemClickListner(itemClickListner: OnItemClickListner) {
-            this.itemClickListner = itemClickListner
-        }
     }
 
 

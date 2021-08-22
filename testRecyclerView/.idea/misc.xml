@@ -36,8 +36,15 @@
         <entry key="..\:/Users/jhl81/OneDrive/NutriPedia/testRecyclerView/app/src/main/res/menu/setting_detail.xml" value="0.2111111111111111" />
         <entry key="..\:/Users/wogud/androidProject/NutriPedia/testRecyclerView/app/src/main/res/layout/activity_private_fix.xml" value="0.20606884057971014" />
         <entry key="..\:/Users/wogud/androidProject/NutriPedia/testRecyclerView/app/src/main/res/layout/activity_setting.xml" value="0.17481884057971014" />
+        <entry key="app/src/main/res/layout/activity_fix_search_result.xml" value="0.5635416666666667" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.6163083713436269" />
         <entry key="app/src/main/res/layout/activity_previous.xml" value="0.3375" />
+        <entry key="app/src/main/res/layout/activity_recommend_list.xml" value="0.3582427536231884" />
+        <entry key="app/src/main/res/layout/activity_recommend_result.xml" value="0.5635416666666667" />
+        <entry key="app/src/main/res/layout/activity_result_search.xml" value="0.5635416666666667" />
+        <entry key="app/src/main/res/layout/activity_search_list.xml" value="0.5635416666666667" />
+        <entry key="app/src/main/res/layout/activity_search_result.xml" value="0.5635416666666667" />
+        <entry key="app/src/main/res/layout/card_layout.xml" value="0.5635416666666667" />
         <entry key="app/src/main/res/layout/clicked_date_dialog.xml" value="0.2740628166160081" />
         <entry key="app/src/main/res/layout/custom_dialog.xml" value="0.5635416666666667" />
         <entry key="app/src/main/res/layout/custom_dialog_fixver.xml" value="0.5635416666666667" />
@@ -47,6 +54,9 @@
         <entry key="app/src/main/res/layout/page.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/layout/pagewater.xml" value="0.5635416666666667" />
         <entry key="app/src/main/res/layout/pagewater_pre.xml" value="0.5635416666666667" />
+        <entry key="app/src/main/res/layout/pre_card_layout.xml" value="0.29257246376811596" />
+        <entry key="app/src/main/res/layout/recommend_row_item.xml" value="0.3134057971014493" />
+        <entry key="app/src/main/res/layout/row_item.xml" value="0.5635416666666667" />
       </map>
     </option>
   </component>
