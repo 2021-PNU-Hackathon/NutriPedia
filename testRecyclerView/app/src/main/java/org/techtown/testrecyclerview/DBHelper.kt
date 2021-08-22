@@ -109,14 +109,29 @@ class DBHelper(
         var now = LocalDate.now()
         var Strnow = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
         var db: SQLiteDatabase = readableDatabase
+
         val query = "SELECT * FROM water"
         var cursor: Cursor = db.rawQuery(query, null)
         var returnvalue = 0
+        var exist = 0
 
         while(cursor.moveToNext()) {
             if (cursor.getString(0) == Strnow) {
                 returnvalue = cursor.getString(1).toInt()
+                exist = 1
             }
+        }
+
+        if (exist == 0) {
+            insertWater()
+            var cursor1: Cursor = db.rawQuery(query, null)
+            while(cursor1.moveToNext()) {
+                if (cursor1.getString(0) == Strnow) {
+                    returnvalue = cursor1.getString(1).toInt()
+                    exist = 1
+                }
+            }
+            cursor1.close()
         }
 
         cursor.close()
