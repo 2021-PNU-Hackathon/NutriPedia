@@ -71,36 +71,28 @@ class RecyclerViewAdapter(val mainActivity: FragmentTwo) : RecyclerView.Adapter<
 //        else holder.tv_test.setCardBackgroundColor(Color.parseColor("#DF4943"))
 
         holder.dateBox.setOnClickListener {
+            var month : String
+            var day : String
+            if (baseCalendar.data[position] < 10) day = "0"+baseCalendar.data[position].toString()
+            else day = baseCalendar.data[position].toString()
+
+            var previousIntent: Intent = Intent( mainActivity.context , PreviousActivity::class.java)
+            previousIntent.putExtra("년", mainActivity.displayYear)
+            var box : Int
             if (position < baseCalendar.prevMonthTailOffset) {
-//                holder.test.text = "${mainActivity.displayMon - 1}  /  ${baseCalendar.data[position]}"
-//                mainActivity.testText("${mainActivity.displayMon - 1}  /  ${baseCalendar.data[position]}")
-//                mainActivity.bottomSheetDialog("${mainActivity.displayMon - 1}  /  ${baseCalendar.data[position]}")
-                var previousIntent: Intent = Intent( mainActivity.context , PreviousActivity::class.java)
-                previousIntent.putExtra("년", mainActivity.displayYear)
-                previousIntent.putExtra("월",mainActivity.displayMon -1 )
-                previousIntent.putExtra("일", baseCalendar.data[position])
-                mainActivity.startActivity(previousIntent)
+                box = mainActivity.displayMon-1
             }
             else if(position >= baseCalendar.prevMonthTailOffset + baseCalendar.currentMonthMaxDate) {
-                //holder.test.text = "${mainActivity.displayMon +1}  /  ${baseCalendar.data[position]}"
-//                mainActivity.testText("${mainActivity.displayMon +1}  /  ${baseCalendar.data[position]}")
-//                mainActivity.bottomSheetDialog("${mainActivity.displayMon - 1}  /  ${baseCalendar.data[position]}")
-                var previousIntent: Intent = Intent( mainActivity.context , PreviousActivity::class.java)
-                previousIntent.putExtra("년", mainActivity.displayYear)
-                previousIntent.putExtra("월",mainActivity.displayMon + 1 )
-                previousIntent.putExtra("일", baseCalendar.data[position])
-                mainActivity.startActivity(previousIntent)
+                box = mainActivity.displayMon + 1
             }
             else {
-                //holder.test.text = "${mainActivity.displayMon}  /  ${baseCalendar.data[position]}"
-//                mainActivity.testText("${mainActivity.displayMon}  /  ${baseCalendar.data[position]}")
-//                mainActivity.bottomSheetDialog("${mainActivity.displayMon - 1}  /  ${baseCalendar.data[position]}")
-                var previousIntent: Intent = Intent( mainActivity.context , PreviousActivity::class.java)
-                previousIntent.putExtra("년", mainActivity.displayYear)
-                previousIntent.putExtra("월",mainActivity.displayMon)
-                previousIntent.putExtra("일", baseCalendar.data[position])
-                mainActivity.startActivity(previousIntent)
+                box = mainActivity.displayMon
             }
+            if (box < 10) month = "0"+box.toString()
+            else month = box.toString()
+            previousIntent.putExtra("월",month )
+            previousIntent.putExtra("일", day)
+            mainActivity.startActivity(previousIntent)
 
         }
     }
