@@ -79,14 +79,13 @@ class RecommendFoodAdapter (val context: Context, var foodList: ArrayList<FoodDa
                     thumbCount--
                     thumbUpClicked = false
                     thumbUp.setImageResource(R.drawable.icons8_thumbs_up_24)
-                    dbHelper.updatePriorityUp(foodData.foodName)
+                    dbHelper.updatePriorityDown(foodData.foodName)
 
                 } else if (thumbUpClicked == false && thumbDownClicked == false) {
                     thumbCount++
                     thumbUpClicked = true
                     thumbUp.setImageResource(R.drawable.icons8_thumbs_up_filled_24)
-                    dbHelper.updatePriorityUp(foodData.foodName)
-                }
+                    dbHelper.updatePriorityUp(foodData.foodName)                }
             }
             thumbDown.setOnClickListener {
                 if (thumbUpClicked == false && thumbDownClicked == true) {
