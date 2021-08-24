@@ -114,6 +114,13 @@ class DBHelper(
         db.execSQL(query)
     }
 
+    fun insertFoodRecord(_mealtime: String?, _foodname: String) {
+        var db: SQLiteDatabase = writableDatabase
+        var query =
+            "INSERT INTO record VALUES ((SELECT date('now','localtime')), _mealtime, _foodname, NULL, NULL, 0, 0, 0, 0, 0);"
+        db.execSQL(query)
+    }
+
     fun insertWater() {
         var db: SQLiteDatabase = writableDatabase
         var query = "INSERT INTO water VALUES ((SELECT date('now','localtime')), 0);"

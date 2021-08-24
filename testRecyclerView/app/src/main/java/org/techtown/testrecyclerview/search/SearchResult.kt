@@ -1,5 +1,6 @@
 package org.techtown.testrecyclerview.search
 
+import android.database.sqlite.SQLiteDatabase
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
@@ -11,12 +12,29 @@ import android.widget.Button
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.ContextCompat
+import org.techtown.testrecyclerview.DBHelper
 import org.techtown.testrecyclerview.R
 
 class SearchResult : AppCompatActivity() {
+    lateinit var dbHelper : DBHelper
+    lateinit var db : SQLiteDatabase
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_result)
+        dbHelper = DBHelper(this, "food_nutri.db", null, 1)
+
+        val name = intent.getStringExtra("name")
+        val calorie = intent.getIntExtra("calorie", 0)
+        val nutri1 = intent.getIntExtra("nutri1", 0)
+        val nutri2 = intent.getIntExtra("nutri2", 0)
+        val nutri3 = intent.getIntExtra("nutri3", 0)
+
+        some_id.text = name
+        kcal.text = calorie.toString() + "Kcal"
+        nutri1_Tv.text = nutri1.toString() + "g"
+        nutri2_Tv.text = nutri2.toString() + "g"
+        nutri3_Tv.text = nutri3.toString() + "g"
+        total.text = calorie.toString() + "Kcal"
 
         val registerBtn: Button = findViewById(R.id.registerBtn)
         registerBtn.setOnClickListener {
@@ -278,6 +296,17 @@ class SearchResult : AppCompatActivity() {
 
             register.setOnClickListener {
                 mAlertDialog.dismiss()
+                var mt: String? = null
+                when(idCheck.toString()) {
+                    "breakfast" -> mt = "아침"
+                    "brunch" -> mt = "아점"
+                    "lunch" -> mt = "점심"
+                    "linner" -> mt = "점저"
+                    "dinner" -> mt = "저녁"
+                    "snack" -> mt = "간식"
+                    else -> null
+                }
+                dbHelper.insertFoodRecord(mt, )
                 finish()
             }
         }
