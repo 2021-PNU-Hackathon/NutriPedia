@@ -126,14 +126,15 @@ class RecommendList : AppCompatActivity() {
             var cursor: Cursor = db.rawQuery("SELECT * FROM real_nutri_91", null)
             while (cursor.moveToNext()) {
                 if (cursor.getString(1) == differenceAndName.get(differenceList[i]))
+                    foodList.clear()
                     foodList.add(
                         FoodData(
                             cursor.getString(1),
-                            cursor.getString(2).toDouble(),
+                            cursor.getString(2).toInt(),
                             100,
-                            cursor.getString(3).toDouble(),
-                            cursor.getString(4).toDouble(),
-                            cursor.getString(5).toDouble()
+                            cursor.getString(3).toInt(),
+                            cursor.getString(4).toInt(),
+                            cursor.getString(5).toInt()
                         )
                     )
             }

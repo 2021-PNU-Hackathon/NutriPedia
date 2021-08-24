@@ -1,11 +1,8 @@
 package org.techtown.testrecyclerview
 
-import android.graphics.Color
 import android.util.Log
 import okhttp3.*
-import org.json.JSONArray
 import org.json.JSONObject
-import org.techtown.testrecyclerview.search.FoodResult
 import java.io.File
 import java.io.IOException
 
