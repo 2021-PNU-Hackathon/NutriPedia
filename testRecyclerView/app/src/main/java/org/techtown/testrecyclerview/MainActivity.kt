@@ -1,8 +1,10 @@
 package org.techtown.testrecyclerview
 
 import android.app.Activity
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.graphics.Bitmap
@@ -49,6 +51,8 @@ class MainActivity : AppCompatActivity() {
     val REQUEST_IMAGE_CAPTURE = 1 //카메라 사진촬영 요청코드
     lateinit var curPhotoPath: String //문자열 형태의 사진 경로 값(초기값을 null로 시작하고 싶을 때)
     val REQUEST_CODE = 0
+
+    lateinit var br: BroadcastReceiver
 
     init {
         instance = this
@@ -113,6 +117,21 @@ class MainActivity : AppCompatActivity() {
         fab.setOnClickListener {
             showSelectCameraOrImage()
         }
+    }
+
+    // 브로드캐스트리시버 필터 추가 & 등록
+    override fun onResume() {
+        br = MyBroadcastReceiver()
+        var filter = IntentFilter()
+        filter.addAction(Intent.ACTION_DATE_CHANGED)
+        registerReceiver(br, filter)
+        super.onResume()
+    }
+
+    // 등록 삭제
+    override fun onPause() {
+        unregisterReceiver(br)
+        super.onPause()
     }
 
     fun gallery() {

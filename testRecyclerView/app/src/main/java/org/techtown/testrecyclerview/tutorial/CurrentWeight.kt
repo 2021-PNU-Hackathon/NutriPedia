@@ -15,7 +15,6 @@ import java.io.*
 
 class CurrentWeight : AppCompatActivity() {
 
-
     lateinit var dbHelper : DBHelper
     lateinit var database : SQLiteDatabase
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,8 +24,7 @@ class CurrentWeight : AppCompatActivity() {
         dbHelper = DBHelper(this, "food_nutri.db", null, 1)
         database = dbHelper.writableDatabase
         dbHelper.insertUserInfo()
-        dbHelper.insertRecord()
-        dbHelper.insertWater()
+//        dbHelper.insertRecord()
 
         val currentWeight = findViewById<TextView>(R.id.infoTv)
         val intentBtn = findViewById<Button>(R.id.intentBtn)
@@ -53,6 +51,7 @@ class CurrentWeight : AppCompatActivity() {
 
 
         intentBtn.setOnClickListener {
+            dbHelper.updateUserInfo("first_weight", 150 - currentvalue)
             dbHelper.updateUserInfo("current_weight", 150 - currentvalue)
             dbHelper.close()
             val intent = Intent( this, TargetWeight::class.java)

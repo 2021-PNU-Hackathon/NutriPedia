@@ -58,7 +58,7 @@ class PreviousActivity : AppCompatActivity() {
         recyclerView.adapter = adapter
 
 
-        val viewAdapter= ViewPagerAdapterPre()
+        val viewAdapter= ViewPagerAdapterPre(now)
         val pagerTest = findViewById<ViewPager>(R.id.pager)
         pagerTest.adapter = viewAdapter
         pagerTest.pageMargin = 30
