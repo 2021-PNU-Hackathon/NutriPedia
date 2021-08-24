@@ -293,7 +293,17 @@ class SearchResult : AppCompatActivity() {
 
             register.setOnClickListener {
                 mAlertDialog.dismiss()
-
+                var mt: String? = null
+                when(idCheck.toString()) {
+                    "breakfast" -> mt = "아침"
+                    "brunch" -> mt = "아점"
+                    "lunch" -> mt = "점심"
+                    "linner" -> mt = "점저"
+                    "dinner" -> mt = "저녁"
+                    "snack" -> mt = "간식"
+                    else -> null
+                }
+                dbHelper.insertFoodRecord(mt, )
                 finish()
             }
         }
