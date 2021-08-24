@@ -26,6 +26,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.gun0912.tedpermission.PermissionListener
@@ -34,6 +35,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.card_layout.*
 import kotlinx.android.synthetic.main.search_bar.view.*
+import org.techtown.testrecyclerview.databinding.ActivityAddResultBinding.inflate
 import org.techtown.testrecyclerview.result.CameraResult
 import org.techtown.testrecyclerview.result.FoodResult
 import org.techtown.testrecyclerview.search.FoodData
@@ -134,6 +136,8 @@ class MainActivity : AppCompatActivity() {
         unregisterReceiver(br)
         super.onPause()
     }
+
+
 
     fun gallery() {
         var intent = Intent()

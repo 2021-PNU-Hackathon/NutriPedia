@@ -163,6 +163,7 @@
             android:orientation="vertical"
             android:layout_weight="1">
             <TextView
+                android:id="@+id/nutri1_Tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
@@ -171,6 +172,7 @@
                 android:text="100g"/>
 
             <TextView
+                android:id="@+id/nutri2_Tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
@@ -179,6 +181,7 @@
                 android:text="100g"/>
 
             <TextView
+                android:id="@+id/nutri3_Tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
@@ -208,6 +211,7 @@
             />
 
         <TextView
+            android:id="@+id/total"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="532Kcal"
