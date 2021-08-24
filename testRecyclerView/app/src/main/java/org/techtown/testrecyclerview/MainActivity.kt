@@ -43,7 +43,8 @@ import kotlin.collections.ArrayList
 
 
 class MainActivity : AppCompatActivity() {
-
+    lateinit var dbHelper : DBHelper
+    lateinit var db : SQLiteDatabase
     lateinit var photoURI: Uri
     val copy = copyDB()
     val REQUEST_IMAGE_CAPTURE = 1 //카메라 사진촬영 요청코드
@@ -247,15 +248,17 @@ class MainActivity : AppCompatActivity() {
         //cameraIntent.putExtra("serverdata",serverData)
         startActivity(cameraIntent)
     }
-    //    fun dataTOUse(serverData: ArrayList<ServerData>)  : ArrayList<FoodResult>?{
-//        var arrayUse : ArrayList<FoodResult>
-//        if (serverData.size != 0) {
-//            for (i in 0 until serverData.size) {
-//                arrayUse.add(FoodResult(serverData[i].name,))
-//            }
-//            return arrayUse
-//        }
-//    }
+    fun dataTOUse(serverData: ArrayList<ServerData>)  : ArrayList<FoodResult>?{
+        dbHelper = DBHelper(this, "food_nutri.db", null, 1)
+        var arrayUse : ArrayList<FoodResult> = ArrayList<FoodResult>()
+        if (serverData.size != 0) {
+            for (i in 0 until serverData.size) {
+                val foodname = serverData[i].name
+                arrayUse.add(dbHelper.getFoodInfo(foodname))
+            }
+        }
+            return arrayUse
+    }
 
     class MyAdapter(val context: Context, var foodList: ArrayList<RecordFoodData>): RecyclerView.Adapter<MyAdapter.MyViewHolder>(){
       
