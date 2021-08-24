@@ -19,8 +19,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TestRecyclerView"
         android:usesCleartextTraffic="true">
-        <activity android:name=".settings.PrivateFix"
-            android:parentActivityName=".settings.SettingActivity"></activity>
+        <activity
+            android:name=".result.AddResult"
+            android:exported="true" />
+        <activity
+            android:name=".settings.PrivateFix"
+            android:parentActivityName=".settings.SettingActivity" />
         <activity android:name=".result.FixItemActivity" />
         <activity android:name=".result.FixSearchResult" />
         <activity android:name=".result.ResultSearchActivity" />
@@ -29,25 +33,30 @@
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".settings.TanDanJiSetting"
-            android:windowSoftInputMode="stateVisible"
-            android:parentActivityName=".settings.SettingActivity" />
+            android:parentActivityName=".settings.SettingActivity"
+            android:windowSoftInputMode="stateVisible" />
         <activity
             android:name=".settings.WaterSetting"
-            android:windowSoftInputMode="stateVisible"
-            android:parentActivityName=".settings.SettingActivity" />
+            android:parentActivityName=".settings.SettingActivity"
+            android:windowSoftInputMode="stateVisible" />
         <activity
             android:name=".settings.SettingActivity"
             android:parentActivityName=".MainActivity" />
-        <activity android:name=".tutorial.Sex"
-            android:theme="@style/Theme.TestRecyclerView.NoActionBar"/>
-        <activity android:name=".tutorial.Age"
-            android:theme="@style/Theme.TestRecyclerView.NoActionBar"/>
-        <activity android:name=".tutorial.CurrentHeight"
-            android:theme="@style/Theme.TestRecyclerView.NoActionBar"/>
-        <activity android:name=".tutorial.TargetWeight"
-            android:theme="@style/Theme.TestRecyclerView.NoActionBar"/>
-        <activity android:name=".tutorial.CurrentWeight"
-            android:theme="@style/Theme.TestRecyclerView.NoActionBar"/> <!-- <activity -->
+        <activity
+            android:name=".tutorial.Sex"
+            android:theme="@style/Theme.TestRecyclerView.NoActionBar" />
+        <activity
+            android:name=".tutorial.Age"
+            android:theme="@style/Theme.TestRecyclerView.NoActionBar" />
+        <activity
+            android:name=".tutorial.CurrentHeight"
+            android:theme="@style/Theme.TestRecyclerView.NoActionBar" />
+        <activity
+            android:name=".tutorial.TargetWeight"
+            android:theme="@style/Theme.TestRecyclerView.NoActionBar" />
+        <activity
+            android:name=".tutorial.CurrentWeight"
+            android:theme="@style/Theme.TestRecyclerView.NoActionBar" /> <!-- <activity -->
         <!-- android:name=".MainActivity" -->
         <!-- android:label="@string/title_activity_main" -->
         <!-- android:theme="@style/Theme.TestRecyclerView.NoActionBar" /> -->

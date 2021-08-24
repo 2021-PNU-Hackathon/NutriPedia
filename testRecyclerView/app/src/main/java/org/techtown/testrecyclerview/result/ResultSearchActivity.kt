@@ -1,68 +1,135 @@
 package org.techtown.testrecyclerview.result
 
-import android.content.Context
-import android.content.Intent
+import android.app.Activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.widget.ArrayAdapter
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.core.content.ContentProviderCompat.requireContext
-import kotlinx.android.synthetic.main.search_bar.*
-import kotlinx.android.synthetic.main.search_bar.view.*
 import org.techtown.testrecyclerview.R
-import org.techtown.testrecyclerview.settings.SettingActivity
+import android.content.Intent
+import android.database.Cursor
+import android.database.sqlite.SQLiteDatabase
+import android.graphics.Camera
+import android.graphics.Color
+import android.util.Log
+import android.view.Menu
+import android.view.View
+import androidx.appcompat.widget.SearchView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import org.techtown.testrecyclerview.DBHelper
+import org.techtown.testrecyclerview.search.FoodAdapter
+import org.techtown.testrecyclerview.search.FoodData
+import org.techtown.testrecyclerview.search.SearchResult
+import java.util.*
+import kotlin.collections.ArrayList
 
 class ResultSearchActivity : AppCompatActivity() {
+    lateinit var dbHelper : DBHelper
+    lateinit var db : SQLiteDatabase
+    var foodList = arrayListOf<FoodData>()
+    lateinit var recyclerView : RecyclerView
+    val displayList = ArrayList<FoodData>()
+    val mAdapter = FoodAdapter(this,displayList)
+    lateinit var foodName: String
 
-    val wordList = mutableListOf<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_result_search)
+        dbHelper = DBHelper(this, "food_nutri.db", null, 1)
+        db = dbHelper.readableDatabase
 
-        val arrayAdapter = ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, wordList)
-        var searchView = findViewById<View>(R.id.result_search_bar)
-        var searchTv = searchView.findViewById<TextView>(R.id.search_tv)
-        var searchIv = searchView.findViewById<ImageView>(R.id.search_image)
-        var settingBtn = searchView.findViewById<ImageView>(R.id.setting)
-//        searchTv.auto_tv.setAdapter(arrayAdapter)
-//        searchTv.auto_tv.threshold = 0
+        recyclerView = findViewById(R.id.mRecyclerView)
         fillData()
 
-        searchIv.setOnClickListener {
-//            //if
-//            searchTv.auto_tv.setText("")
-        }
-        settingBtn.setOnClickListener {
-            var settingIntent: Intent = Intent(this, SettingActivity::class.java)
-            startActivity(settingIntent)
-        }
+        recyclerView.adapter = mAdapter
+        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false)
+        recyclerView.setHasFixedSize(true)
+        displayList.addAll(foodList)
 
-//        searchTv.auto_tv.setOnItemClickListener { parent, view, position, id ->
-//            //if
-//            searchTv.auto_tv.setText("")
-//        }
-        searchTv.setOnClickListener {
-            //코딩 해야함 ****일치 시 있는 데이터 자료 띄움 없을 시 토스트 메세지 출력
-            finish()
-        }
+
+        var calorie : Double = 0.0
+        var amount : Int = 0
+        var nutri1 : Double = 0.0
+        var nutri2 : Double = 0.0
+        var nutri3 : Double = 0.0
+        mAdapter.setItemClickListner(object : FoodAdapter.OnItemClickListner{
+            override fun onClick(v: View, position: Int) {
+                //val intent = Intent(applicationContext, AddResult::class.java)
+
+                foodName = foodList[position].foodName
+                calorie = foodList[position].calorie
+                amount = foodList[position].amount
+                nutri1 = foodList[position].nutri1
+                nutri2 = foodList[position].nutri2
+                nutri3 = foodList[position].nutri3
+
+                CameraResult.imageArray.add(
+                    CameraResult.imageArray.size-1,FoodResult(foodName,calorie,amount,nutri1,nutri2,nutri3,null,true)
+                )
+
+
+                intent.putExtra("foodName",foodName)
+                intent.putExtra("calorie",calorie)
+                intent.putExtra("amount",amount)
+                intent.putExtra("nutri1",nutri1)
+                intent.putExtra("nutri2",nutri2)
+                intent.putExtra("nutri3",nutri3)
+                Log.e("size", "${CameraResult.imageArray.size}")
+               // startActivityForResult(intent,101)
+                finish()
+            }
+
+        })
     }
+
+
 
     private fun fillData() {
-        wordList.add("김치")
-        wordList.add("밥")
-        wordList.add("국")
-        wordList.add("멸치")
-        wordList.add("꽁치")
-        wordList.add("소고기")
-        wordList.add("돼지고기")
-        wordList.add("콩나물")
-        wordList.add("제육볶음")
-        wordList.add("라볶이")
-        wordList.add("라면")
+        var cursor: Cursor = db.rawQuery("SELECT * FROM real_nutri", null)
+        while(cursor.moveToNext()) {
+            foodList.add(FoodData(cursor.getString(1), cursor.getString(2).toDouble(),100,cursor.getString(3).toDouble(), cursor.getString(4).toDouble(), cursor.getString(5).toDouble()))
 
+        }
     }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu,menu)
+        supportActionBar?.title = "음식 검색"
+        val menuItem = menu!!.findItem(R.id.action_search)
+        if(menuItem != null) {
+            val searchView = menuItem.actionView as SearchView
+            searchView.queryHint = "칼로리가 궁금한 음식을 검색해보세요."
+            searchView.setBackgroundColor(Color.WHITE)
+            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    return true
+                }
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+
+                    if (newText!!.isNotEmpty()) {
+                        displayList.clear()
+                        val search = newText.toLowerCase(Locale.getDefault())
+                        foodList.forEach {
+                            if (it.foodName.toLowerCase(Locale.getDefault()).contains(search)) {
+                                displayList.add(it)
+                            }
+                        }
+                        recyclerView.adapter!!.notifyDataSetChanged()
+                    }
+                    else {
+                        displayList.clear()
+                        displayList.addAll(foodList)
+                        recyclerView.adapter!!.notifyDataSetChanged()
+                    }
+
+                    return true
+                }
+
+            })
+        }
+        return super.onCreateOptionsMenu(menu)
+    }
+
 
 }

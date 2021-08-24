@@ -11,7 +11,9 @@
         <entry key="..\:/Users/jhl81/OneDrive/NutriPedia/testRecyclerView/app/src/main/res/drawable/pager_backgrount.xml" value="0.2537037037037037" />
         <entry key="..\:/Users/jhl81/OneDrive/NutriPedia/testRecyclerView/app/src/main/res/drawable/progressbar.xml" value="0.2537037037037037" />
         <entry key="..\:/Users/jhl81/OneDrive/NutriPedia/testRecyclerView/app/src/main/res/drawable/progressbar2.xml" value="0.2537037037037037" />
-        <entry key="..\:/Users/jhl81/OneDrive/NutriPedia/testRecyclerView/app/src/main/res/layout/activity_camera_result.xml" value="0.10208333333333333" />
+        <entry key="..\:/Users/jhl81/OneDrive/NutriPedia/testRecyclerView/app/src/main/res/drawable/result_item_border.xml" value="0.21435897435897436" />
+        <entry key="..\:/Users/jhl81/OneDrive/NutriPedia/testRecyclerView/app/src/main/res/layout/activity_add_result.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/jhl81/OneDrive/NutriPedia/testRecyclerView/app/src/main/res/layout/activity_camera_result.xml" value="0.22" />
         <entry key="..\:/Users/jhl81/OneDrive/NutriPedia/testRecyclerView/app/src/main/res/layout/activity_current_height.xml" value="0.10208333333333333" />
         <entry key="..\:/Users/jhl81/OneDrive/NutriPedia/testRecyclerView/app/src/main/res/layout/activity_current_weight.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/jhl81/OneDrive/NutriPedia/testRecyclerView/app/src/main/res/layout/activity_fix_item.xml" value="0.1" />
@@ -19,6 +21,8 @@
         <entry key="..\:/Users/jhl81/OneDrive/NutriPedia/testRecyclerView/app/src/main/res/layout/activity_main.xml" value="0.13333333333333333" />
         <entry key="..\:/Users/jhl81/OneDrive/NutriPedia/testRecyclerView/app/src/main/res/layout/activity_private_fix.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/jhl81/OneDrive/NutriPedia/testRecyclerView/app/src/main/res/layout/activity_recommend_result.xml" value="0.322463768115942" />
+        <entry key="..\:/Users/jhl81/OneDrive/NutriPedia/testRecyclerView/app/src/main/res/layout/activity_result_search.xml" value="0.190625" />
+        <entry key="..\:/Users/jhl81/OneDrive/NutriPedia/testRecyclerView/app/src/main/res/layout/activity_search_list.xml" value="0.190625" />
         <entry key="..\:/Users/jhl81/OneDrive/NutriPedia/testRecyclerView/app/src/main/res/layout/activity_search_result.xml" value="0.20677083333333332" />
         <entry key="..\:/Users/jhl81/OneDrive/NutriPedia/testRecyclerView/app/src/main/res/layout/activity_setting.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/jhl81/OneDrive/NutriPedia/testRecyclerView/app/src/main/res/layout/activity_sex.xml" value="0.3333333333333333" />
@@ -34,6 +38,9 @@
         <entry key="..\:/Users/jhl81/OneDrive/NutriPedia/testRecyclerView/app/src/main/res/layout/fragment_two.xml" value="0.33605072463768115" />
         <entry key="..\:/Users/jhl81/OneDrive/NutriPedia/testRecyclerView/app/src/main/res/layout/page.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/jhl81/OneDrive/NutriPedia/testRecyclerView/app/src/main/res/layout/pagewater.xml" value="0.33605072463768115" />
+        <entry key="..\:/Users/jhl81/OneDrive/NutriPedia/testRecyclerView/app/src/main/res/layout/recommend_row_item.xml" value="0.2015625" />
+        <entry key="..\:/Users/jhl81/OneDrive/NutriPedia/testRecyclerView/app/src/main/res/layout/result1.xml" value="0.1" />
+        <entry key="..\:/Users/jhl81/OneDrive/NutriPedia/testRecyclerView/app/src/main/res/layout/result_rv_item.xml" value="1.0" />
         <entry key="..\:/Users/jhl81/OneDrive/NutriPedia/testRecyclerView/app/src/main/res/menu/setting_detail.xml" value="0.2111111111111111" />
         <entry key="..\:/Users/wogud/androidProject/NutriPedia/testRecyclerView/app/src/main/res/layout/activity_private_fix.xml" value="0.20606884057971014" />
         <entry key="..\:/Users/wogud/androidProject/NutriPedia/testRecyclerView/app/src/main/res/layout/activity_setting.xml" value="0.17481884057971014" />

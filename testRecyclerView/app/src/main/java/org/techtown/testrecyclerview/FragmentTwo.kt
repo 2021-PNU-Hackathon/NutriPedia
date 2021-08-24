@@ -77,34 +77,6 @@ class FragmentTwo : Fragment() {
         var linechart = V2.findViewById<LineChart>(R.id.lineChart)
         initView()
 
-        schedule.onFlingListener=null
-
-        schedule.addOnItemTouchListener(object: RecyclerView.OnItemTouchListener {
-            override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
-                schedule.setOnTouchListener(object :
-                    OnSwipeTouchListener(MainActivity.gContext()) {   // 캘린더 날짜 부분 스와이프 리스너
-                    override fun onSwipeLeft() {
-                        //                  왼쪽에서 오른쪽으로 스와이프 이전달로
-                        scheduleRecyclerViewAdapter.changeToNextMonth()
-                        Log.e("left","lllllllllllllllll")
-                    }
-                    override fun onSwipeRight() {
-                        //                  오른쪽에서 왼쪽으로 스와이프 다음달로
-                        scheduleRecyclerViewAdapter.changeToPrevMonth()
-                        Log.e("right","rrrrrrrrrrrrrrrrrrr")
-                    }
-                })
-                return true
-            }
-            override fun onTouchEvent(rv: RecyclerView, e: MotionEvent) {
-            }
-            override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {
-            }
-        })
-
-
-
-
 
         linelist = ArrayList()
         linelist.add(Entry(6f, 100f))
