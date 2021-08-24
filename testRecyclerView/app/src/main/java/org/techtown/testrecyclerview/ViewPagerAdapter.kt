@@ -49,6 +49,10 @@ class ViewPagerAdapter: PagerAdapter() {
             view = LayoutInflater.from(container.context).inflate(R.layout.pagewater,container,false)
             val waterTv = view.findViewById<TextView>(R.id.waterTv)
             waterTv.text = dbHelper.getWater().toString() + "/" + dbHelper.getColValue(6, "user_info") + "ml"
+
+            val calPb2 = view.findViewById<ProgressBar>(R.id.calPb2)
+            calPb2.progress = dbHelper.getWater()
+
         }
 
 
