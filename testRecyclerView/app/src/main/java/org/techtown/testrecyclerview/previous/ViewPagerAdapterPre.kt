@@ -44,7 +44,9 @@ class ViewPagerAdapterPre(date:String): PagerAdapter() {
         else {
             view = LayoutInflater.from(container.context).inflate(R.layout.pagewater,container,false)
             val waterTv = view.findViewById<TextView>(R.id.waterTv)
+
             waterTv.text = dbHelper.getPreWater(time).toString() + "/" + dbHelper.getColValue(6, "user_info") + "ml"
+
         }
 
 

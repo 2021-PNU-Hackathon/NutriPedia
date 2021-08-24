@@ -22,6 +22,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.FileProvider
+import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
@@ -31,6 +32,8 @@ import kotlinx.android.synthetic.main.fragment_one.*
 import kotlinx.android.synthetic.main.page.*
 import kotlinx.android.synthetic.main.search_bar.*
 import kotlinx.android.synthetic.main.search_bar.view.*
+import org.techtown.testrecyclerview.databinding.ActivityAddResultBinding.inflate
+import org.techtown.testrecyclerview.databinding.ChangeWeightBinding.inflate
 import org.techtown.testrecyclerview.recommend.RecommendList
 import org.techtown.testrecyclerview.recommend.RecommendResult
 import org.techtown.testrecyclerview.result.CameraResult
@@ -119,8 +122,8 @@ class FragmentOne : Fragment() {
         val viewAdapter= ViewPagerAdapter()
         val pagerTest = v.findViewById<ViewPager>(R.id.pager)
         pagerTest.adapter = viewAdapter
+        val dapter = pagerTest.adapter
         pagerTest.pageMargin = 30
-
 
         var searchView = v.findViewById<View>(R.id.search_bar1)
         var searchTv = searchView.findViewById<TextView>(R.id.search_tv)
@@ -159,9 +162,9 @@ class FragmentOne : Fragment() {
             var intentRecommend = Intent(context, RecommendList::class.java)
             startActivity(intentRecommend)
         }
-
         return v
     }
+
 
     fun fillFoodData(time: String) {
         for(i in 0..5) {

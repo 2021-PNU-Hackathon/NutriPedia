@@ -47,18 +47,19 @@ class ResultSearchActivity : AppCompatActivity() {
         displayList.addAll(foodList)
 
 
+
         var calorie : Int = 0
         var amount : Int = 0
         var nutri1 : Int = 0
         var nutri2 : Int = 0
         var nutri3 : Int = 0
+
         mAdapter.setItemClickListner(object : FoodAdapter.OnItemClickListner{
             override fun onClick(v: View, position: Int) {
                 //val intent = Intent(applicationContext, AddResult::class.java)
 
                 foodName = foodList[position].foodName
                 calorie = foodList[position].calorie
-                amount = foodList[position].amount
                 nutri1 = foodList[position].nutri1
                 nutri2 = foodList[position].nutri2
                 nutri3 = foodList[position].nutri3
@@ -70,7 +71,6 @@ class ResultSearchActivity : AppCompatActivity() {
 
                 intent.putExtra("foodName",foodName)
                 intent.putExtra("calorie",calorie)
-                intent.putExtra("amount",amount)
                 intent.putExtra("nutri1",nutri1)
                 intent.putExtra("nutri2",nutri2)
                 intent.putExtra("nutri3",nutri3)

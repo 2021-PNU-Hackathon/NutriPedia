@@ -46,6 +46,9 @@ class CameraResult : AppCompatActivity(){
         val uri : Uri? = intent.getParcelableExtra<Uri>("uri")
 
         mainIv.setImageURI(uri)
+
+        imageArray.clear()
+
         imageArray.add(FoodResult("hyun",100,100,100,100,uri,true))
         imageArray.add(imageArray.size,FoodResult("add",0,0,0,0,null,false))
 
@@ -76,10 +79,20 @@ class CameraResult : AppCompatActivity(){
             override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
                 val child = addRecyclerView.findChildViewUnder(e.x, e.y)
                 val position = addRecyclerView.getChildAdapterPosition(child!!)
-                if (position == imageArray.size-1) {
+                if (position == imageArray.size-1) { // 마지막거
 
                 } else if (imageArray[position].uri != null) {
-
+                    mainIv.setImageURI(imageArray[position].uri)
+                    foodTv1.text = imageArray[position].foodName
+                    kcalTv.text = imageArray[position].calorie.toString() + "Kcal"
+                    nutri1_Tv.text = imageArray[position].nutri1.toString() + "g"
+                    nutri2_Tv.text = imageArray[position].nutri2.toString() + "g"
+                    nutri3_Tv.text = imageArray[position].nutri3.toString() + "g"
+                    var total : Double = 0.0
+                    for (i in 0 until imageArray.size) {
+                        total += imageArray[i].calorie
+                    }
+                    totalCal.text = total.toString() + "Kcal"
                 } else
                  {
                     mainIv.setImageResource(R.drawable.ic_no_image)

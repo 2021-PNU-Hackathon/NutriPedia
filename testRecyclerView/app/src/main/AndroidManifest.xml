@@ -47,6 +47,7 @@
             android:windowSoftInputMode="stateVisible" />
         <activity
             android:name=".settings.SettingActivity"
+            android:theme="@style/Theme.Dark"
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".tutorial.Sex"
