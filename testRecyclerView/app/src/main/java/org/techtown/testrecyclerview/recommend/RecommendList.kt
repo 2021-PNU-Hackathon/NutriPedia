@@ -39,6 +39,7 @@ class RecommendList : AppCompatActivity() {
         mAdapter.setItemClickListner(object : RecommendFoodAdapter.OnItemClickListner {
             override fun onClick(v: View, position: Int) {
                 val intent = Intent(applicationContext, RecommendResult::class.java)
+                finish()
                 startActivityForResult(intent, 101)
             }
 
