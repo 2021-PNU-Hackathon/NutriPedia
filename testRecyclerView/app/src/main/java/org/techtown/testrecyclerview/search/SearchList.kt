@@ -42,6 +42,7 @@ class SearchList : AppCompatActivity() {
         mAdapter.setItemClickListner(object : FoodAdapter.OnItemClickListner{
             override fun onClick(v: View, position: Int) {
                 val intent = Intent(applicationContext,SearchResult::class.java)
+                finish()
                 startActivityForResult(intent,101)
             }
 

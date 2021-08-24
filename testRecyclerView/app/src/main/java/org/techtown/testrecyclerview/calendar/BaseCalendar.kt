@@ -17,8 +17,11 @@ class BaseCalendar {
 
     var data = arrayListOf<Int>()
 
+    var max : Int =0
+
     init {
         calendar.time = Date()
+        getMaxDate(calendar)
     }
 
     /**
@@ -26,6 +29,10 @@ class BaseCalendar {
      */
     fun initBaseCalendar(refreshCallback: (Calendar) -> Unit) {
         makeMonthDate(refreshCallback)
+    }
+
+    fun getMaxDate(calendar: Calendar) {
+        max = calendar.getActualMaximum(Calendar.DATE)
     }
 
     /**

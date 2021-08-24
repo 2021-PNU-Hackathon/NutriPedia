@@ -1,12 +1,23 @@
 package org.techtown.testrecyclerview
 
 import android.content.Context
+import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.util.AttributeSet
+import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.MotionEvent
+import android.view.WindowManager
+import android.widget.NumberPicker
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.AppCompatButton
 import androidx.viewpager.widget.ViewPager
+import kotlinx.android.synthetic.main.page.view.*
 import kotlinx.android.synthetic.main.pagewater.view.*
+import org.techtown.testrecyclerview.tutorial.TargetWeight
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -20,6 +31,39 @@ class CustomViewPager : ViewPager {
     val dbHelper = DBHelper(context, "food_nutri.db", null, 1)
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean {
+
+        title.setOnClickListener {
+            val mDialogView = LayoutInflater.from(context).inflate(R.layout.activity_current_weight, null)
+            val mBuilder = AlertDialog.Builder(context)
+                .setView(mDialogView)
+            val mAlertDialog = mBuilder.show()
+            mAlertDialog.window!!.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
+            mAlertDialog.window!!.setGravity(Gravity.BOTTOM)
+//            mAlertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+            var weightList: List<Int> = (150 downTo 35).toList()
+            var weightStrConvertList = weightList.map { it.toString() }
+
+            val changeNp = mDialogView.findViewById<NumberPicker>(R.id.infoNp)
+            val fix = mDialogView.findViewById<AppCompatButton>(R.id.intentBtn)
+
+            changeNp.maxValue = weightStrConvertList.size - 1
+            changeNp.wrapSelectorWheel = true
+            changeNp.displayedValues = weightStrConvertList.toTypedArray()
+
+            changeNp.value = 150 - (dbHelper.getColValue(0,"user_info").toInt())
+            var currentvalue = 150 - (dbHelper.getColValue(0,"user_info").toInt())
+            changeNp.setOnValueChangedListener { picker, oldVal, newVal ->
+                currentvalue = newVal
+            }
+            fix.setOnClickListener {
+                if (dbHelper.isEmpty("change")) dbHelper.insertChange()
+                dbHelper.updateUserInfo("current_weight",150 - currentvalue)
+                dbHelper.updateChange(150 - currentvalue)
+                dbHelper.close()
+                mAlertDialog.dismiss()
+            }
+        }
 
         btn100.setOnClickListener {
             var now = LocalDate.now()

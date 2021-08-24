@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.net.Uri
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import org.techtown.testrecyclerview.result.FoodResult
 import java.time.LocalDate
@@ -28,7 +29,8 @@ class DBHelper(
                 "sex integer," +
                 "current_height integer," +
                 "idx integer," +
-                "target_water INT" +
+                "target_water integer," +
+                "first_weight integer" +
                 ");"
 
 
@@ -50,9 +52,21 @@ class DBHelper(
                 "amount INT" +
                 ");"
 
+        var sql4 : String = "CREATE TABLE if not exists success (" +
+                "date DATE," +
+                "issuccess INT" +
+                ");"
+
+        var sql5 : String = "CREATE TABLE if not exists change (" +
+                "date DATE," +
+                "weight INT" +
+                ");"
+
         db.execSQL(sql1)
         db.execSQL(sql2)
         db.execSQL(sql3)
+        db.execSQL(sql4)
+        db.execSQL(sql5)
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
@@ -65,10 +79,31 @@ class DBHelper(
         onCreate(db)
     }
 
+    fun isEmpty(tablename : String): Boolean {
+        var db: SQLiteDatabase = writableDatabase
+        var query ="SELECT * FROM "+tablename+" where date = (SELECT date('now','localtime'))"
+        var cursor: Cursor = db.rawQuery(query, null)
+        var cnt = 0
+        var ret = true
+        while(cursor.moveToNext()) {
+            cnt++
+        }
+
+        cursor.close()
+        db.close()
+        if (cnt > 0) ret = false
+        return ret
+    }
+
+    fun insertChange() {
+        var db: SQLiteDatabase = writableDatabase
+        var query = "INSERT INTO change VALUES ((SELECT date('now','localtime')), 0);"
+        db.execSQL(query)
+    }
 
     fun insertUserInfo() {
         var db: SQLiteDatabase = writableDatabase
-        var query = "INSERT INTO user_info VALUES ('0', '0', '0', '0', '0', '0', 2000);"
+        var query = "INSERT INTO user_info VALUES ('0', '0', '0', '0', '0', '0', 2000,'0');"
         db.execSQL(query)
     }
 
@@ -85,9 +120,26 @@ class DBHelper(
         db.execSQL(query)
     }
 
-    fun updateUserInfo(
-        field: String, value: Int
-    ) {
+    fun insertSuccess(time : String, value: Int) {
+        var db: SQLiteDatabase = writableDatabase
+
+
+        var query = "INSERT INTO success VALUES ('${time}',${value});"
+        Log.d("check",query)
+        db.execSQL(query)
+    }
+
+    fun updateChange( value: Int) {
+        var db: SQLiteDatabase = writableDatabase
+
+        db.execSQL(
+            "UPDATE change SET weight = " + value  + " WHERE date = (SELECT date('now','localtime'));"
+        )
+
+        db.close()
+    }
+
+    fun updateUserInfo(field: String, value: Int) {
         var db: SQLiteDatabase = writableDatabase
 
         db.execSQL(
@@ -137,6 +189,52 @@ class DBHelper(
                 }
             }
             cursor1.close()
+        }
+
+        cursor.close()
+        db.close()
+        return returnvalue
+    }
+
+    fun getPreWeight(date: String): Int {
+        var db: SQLiteDatabase = readableDatabase
+        val query = "SELECT * FROM change where date <= '${date}' ORDER by date desc"
+        var cursor: Cursor = db.rawQuery(query, null)
+        var returnvalue :Int = 0
+
+        while(cursor.moveToNext()) {
+            returnvalue += cursor.getString(1).toInt()
+            break
+        }
+
+        cursor.close()
+        db.close()
+        return returnvalue
+    }
+
+    fun getSuccess(year:String, month:String) :Int {
+        var db: SQLiteDatabase = readableDatabase
+        val query = "SELECT * FROM success where date BETWEEN '${year}-${month}-01' AND '${year}-${month}-31'"
+        var cursor: Cursor = db.rawQuery(query, null)
+        var returnvalue :Int = 0
+
+        while(cursor.moveToNext()) {
+            if (cursor.getInt(1) == 1) returnvalue++
+        }
+
+        cursor.close()
+        db.close()
+        return returnvalue
+    }
+
+    fun getKcal(date: String): Int {
+        var db: SQLiteDatabase = readableDatabase
+        val query = "SELECT * FROM record where date = '${date}'"
+        var cursor: Cursor = db.rawQuery(query, null)
+        var returnvalue :Int = 0
+
+        while(cursor.moveToNext()) {
+            returnvalue += cursor.getString(6).toInt()
         }
 
         cursor.close()

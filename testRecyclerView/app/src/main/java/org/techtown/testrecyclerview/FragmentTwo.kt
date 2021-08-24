@@ -1,7 +1,10 @@
 package org.techtown.testrecyclerview
 
 import android.annotation.SuppressLint
+import android.database.sqlite.SQLiteDatabase
 import android.graphics.Color
+import android.media.Image
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -9,7 +12,9 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -26,6 +31,8 @@ import org.techtown.testrecyclerview.calendar.BaseCalendar
 import org.techtown.testrecyclerview.calendar.OnSwipeTouchListener
 import org.techtown.testrecyclerview.calendar.RecyclerViewAdapter
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -49,6 +56,9 @@ class FragmentTwo : Fragment() {
     lateinit var lineDataSet: LineDataSet
     lateinit var lineData: LineData
 
+    lateinit var dbHelper : DBHelper
+    lateinit var database : SQLiteDatabase
+
     var displayMon = 0
     var displayYear = 0
 
@@ -67,16 +77,42 @@ class FragmentTwo : Fragment() {
     lateinit var current_month : TextView
 
     lateinit var schedule : RecyclerView
+    lateinit var back : ImageButton
+    lateinit var forward : ImageButton
+    lateinit var successDate : TextView
+    lateinit var changeWeight : TextView
+
+    val baseCalendar = BaseCalendar()
+
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        dbHelper = DBHelper(context, "food_nutri.db", null, 1)
+        database = dbHelper.readableDatabase
+
         var V2 : View = inflater.inflate(R.layout.fragment_two, container, false)
         current_month = V2.findViewById<TextView>(R.id.tv_current_month)
 
         schedule = V2.findViewById<RecyclerView>(R.id.rv_schedule)
+        back = V2.findViewById<ImageButton>(R.id.backIb)
+        forward = V2.findViewById<ImageButton>(R.id.forwardIb)
+
+        successDate = V2.findViewById<TextView>(R.id.successTv)
+        changeWeight = V2.findViewById<TextView>(R.id.changeWeightTv)
         var linechart = V2.findViewById<LineChart>(R.id.lineChart)
         initView()
+
+
+        var now = LocalDate.now()
+        var year :String = now.format(DateTimeFormatter.ofPattern("yyyy"))
+        var month :String = now.format(DateTimeFormatter.ofPattern("MM"))
+
+        val fir : Int = dbHelper.getColValue(7,"user_info").toInt()
+        val cur : Int = dbHelper.getColValue(0,"user_info").toInt()
+        changeWeight.text = (cur - fir).toString()+"kg"
+        successDate.text = dbHelper.getSuccess(year,month).toString()+" / "+baseCalendar.max.toString()
 
         linelist = ArrayList()
         linelist.add(Entry(6f, 100f))
@@ -181,7 +217,7 @@ class FragmentTwo : Fragment() {
         scheduleRecyclerViewAdapter = RecyclerViewAdapter(this)
         schedule.layoutManager = GridLayoutManager(context, BaseCalendar.DAYS_OF_WEEK)
         schedule.adapter = scheduleRecyclerViewAdapter
-
+//        val swip = OnSwipeTouchListener(requireContext())
 
         schedule.setOnTouchListener(object :
             OnSwipeTouchListener(requireContext()) {   // 캘린더 날짜 부분 스와이프 리스너
@@ -196,6 +232,28 @@ class FragmentTwo : Fragment() {
             }
         })
 
+        back.setOnClickListener {
+            scheduleRecyclerViewAdapter.changeToPrevMonth()
+        }
+
+        forward.setOnClickListener {
+            scheduleRecyclerViewAdapter.changeToNextMonth()
+        }
+
+
+//        back.setOnClickListener(object :
+//            OnSwipeTouchListener(requireContext()) {
+//            override fun onSwipeLeft() {
+////                  왼쪽에서 오른쪽으로 스와이프 이전달로
+//                scheduleRecyclerViewAdapter.changeToNextMonth()
+//            }
+//        })
+//
+//        forward.setOnClickListener {
+//            fun swip.onSwipeRight() {
+//                scheduleRecyclerViewAdapter.changeToPrevMonth()
+//            }
+//        }
     }
 
 //        fun testText(str: String) {
