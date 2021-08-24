@@ -13,6 +13,8 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.viewpager.widget.PagerAdapter
 import org.techtown.testrecyclerview.R
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 
 class ViewPagerAdapter: PagerAdapter() {
@@ -34,6 +36,8 @@ class ViewPagerAdapter: PagerAdapter() {
         dbHelper = DBHelper(container.context, "food_nutri.db", null, 1)
         database = dbHelper.writableDatabase
 
+        var now = LocalDate.now()
+        var strnow :String = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
 
         if (position == 0) {
             view = LayoutInflater.from(container.context).inflate(R.layout.page,container,false)
@@ -44,7 +48,7 @@ class ViewPagerAdapter: PagerAdapter() {
         else {
             view = LayoutInflater.from(container.context).inflate(R.layout.pagewater,container,false)
             val waterTv = view.findViewById<TextView>(R.id.waterTv)
-            waterTv.text = dbHelper.getWater().toString() + "/" + dbHelper.getColValue(6, "user_info") + "ml"
+            waterTv.text = dbHelper.getWater(strnow).toString() + "/" + dbHelper.getColValue(6, "user_info") + "ml"
         }
 
 

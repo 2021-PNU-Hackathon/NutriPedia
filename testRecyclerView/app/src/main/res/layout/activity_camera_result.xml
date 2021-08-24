@@ -807,10 +807,10 @@
                 <HorizontalScrollView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:scrollbars="none"
                     app:layout_constraintBottom_toTopOf="@+id/textView10_3"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/foodTv1_3"
-                    android:scrollbars="none">
+                    app:layout_constraintTop_toBottomOf="@+id/foodTv1_3">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -983,33 +983,6 @@
                         android:gravity="center"
                         android:text="접시" />
 
-
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/nutriDetail_3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="24dp"
-                    android:text="영양 성분"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/npLl_3" />
-
-                <LinearLayout
-                    android:id="@+id/nutriLl_3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="25dp"
-                    android:background="#03EDECEC"
-                    android:orientation="horizontal"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.32"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/nutriDetail_3">
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -1039,6 +1012,33 @@
 
 
                     </LinearLayout>
+
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/nutriDetail_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="24dp"
+                    android:text="영양 성분"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/npLl_3" />
+
+                <LinearLayout
+                    android:id="@+id/nutriLl_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="25dp"
+                    android:background="#03EDECEC"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.32"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/nutriDetail_3">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -1101,8 +1101,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="191dp"
                         android:background="#5CC485"
-                        android:textColor="@color/white"
-                        android:text="등록하기" />
+                        android:text="등록하기"
+                        android:textColor="@color/white" />
 
 
                 </LinearLayout>
