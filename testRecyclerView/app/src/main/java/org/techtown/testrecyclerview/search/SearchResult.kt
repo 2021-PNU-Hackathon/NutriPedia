@@ -11,12 +11,27 @@ import android.widget.Button
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.ContextCompat
+import kotlinx.android.synthetic.main.activity_search_result.*
 import org.techtown.testrecyclerview.R
 
 class SearchResult : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_result)
+
+        val name = intent.getStringExtra("name")
+        val calorie = intent.getIntExtra("calorie", 0)
+        val nutri1 = intent.getIntExtra("nutri1", 0)
+        val nutri2 = intent.getIntExtra("nutri2", 0)
+        val nutri3 = intent.getIntExtra("nutri3", 0)
+
+        some_id.text = name
+        kcal.text = calorie.toString() + "Kcal"
+        nutri1_Tv.text = nutri1.toString() + "g"
+        nutri2_Tv.text = nutri2.toString() + "g"
+        nutri3_Tv.text = nutri3.toString() + "g"
+        total.text = calorie.toString() + "Kcal"
+
 
         val registerBtn: Button = findViewById(R.id.registerBtn)
         registerBtn.setOnClickListener {
@@ -278,6 +293,7 @@ class SearchResult : AppCompatActivity() {
 
             register.setOnClickListener {
                 mAlertDialog.dismiss()
+
                 finish()
             }
         }

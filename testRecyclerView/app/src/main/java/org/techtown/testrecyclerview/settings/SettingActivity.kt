@@ -22,7 +22,8 @@ class SettingActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         dbHelper = DBHelper(this, "food_nutri.db", null, 1)
         database = dbHelper.writableDatabase
-
+        supportActionBar?.title = "정보수정"
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back)
         tanDanJi.setOnClickListener {
             var tanDanJiIntent = Intent(applicationContext,TanDanJiSetting::class.java)
             startActivityForResult(tanDanJiIntent,10)
@@ -56,6 +57,32 @@ class SettingActivity : AppCompatActivity() {
             recommendedKcal)
         nrate.text = triple.first.toString() + ":" + triple.second.toString() + ":" + triple.third.toString()
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        var gender : String
+        if (dbHelper.getColValue(3,"user_info")=="0")
+            gender = "남자"
+        else
+            gender = "여자"
+
+        infoTv.text = dbHelper.getColValue(4, "user_info") + "cm | " + gender + " | " + dbHelper.getColValue(2,"user_info") + "세"
+        cWeight.text = dbHelper.getColValue(0,"user_info") + "kg"
+        tWeight.text = dbHelper.getColValue(1,"user_info") + "kg"
+        recokcal.text = recommendedKcal(dbHelper.getColValue(0, "user_info").toInt() ,
+            dbHelper.getColValue(1, "user_info").toInt(),
+            dbHelper.getColValue(4, "user_info").toInt()).toString() + "kcal"
+        twater.text = dbHelper.getColValue(6,"user_info") + "ml"
+        var recommendedKcal : Int = recommendedKcal(
+            dbHelper.getColValue(0, "user_info").toInt(),
+            dbHelper.getColValue(1, "user_info").toInt(),
+            dbHelper.getColValue(4, "user_info").toInt()
+        )
+        var triple : Triple<Int, Int, Int> = nutrientRate(dbHelper.getColValue(0, "user_info").toInt(),
+            dbHelper.getColValue(1, "user_info").toInt(),
+            recommendedKcal)
+        nrate.text = triple.first.toString() + ":" + triple.second.toString() + ":" + triple.third.toString()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

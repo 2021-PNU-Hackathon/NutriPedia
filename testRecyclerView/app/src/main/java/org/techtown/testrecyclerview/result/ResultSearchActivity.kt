@@ -47,30 +47,27 @@ class ResultSearchActivity : AppCompatActivity() {
         displayList.addAll(foodList)
 
 
-        var calorie : Double = 0.0
-        var amount : Int = 0
-        var nutri1 : Double = 0.0
-        var nutri2 : Double = 0.0
-        var nutri3 : Double = 0.0
+        var calorie  = 0
+        var nutri1 = 0
+        var nutri2 = 0
+        var nutri3 = 0
         mAdapter.setItemClickListner(object : FoodAdapter.OnItemClickListner{
             override fun onClick(v: View, position: Int) {
                 //val intent = Intent(applicationContext, AddResult::class.java)
 
                 foodName = foodList[position].foodName
                 calorie = foodList[position].calorie
-                amount = foodList[position].amount
                 nutri1 = foodList[position].nutri1
                 nutri2 = foodList[position].nutri2
                 nutri3 = foodList[position].nutri3
 
                 CameraResult.imageArray.add(
-                    CameraResult.imageArray.size-1,FoodResult(foodName,calorie,amount,nutri1,nutri2,nutri3,null,true)
+                    CameraResult.imageArray.size-1,FoodResult(foodName,calorie,nutri1,nutri2,nutri3,null,true)
                 )
 
 
                 intent.putExtra("foodName",foodName)
                 intent.putExtra("calorie",calorie)
-                intent.putExtra("amount",amount)
                 intent.putExtra("nutri1",nutri1)
                 intent.putExtra("nutri2",nutri2)
                 intent.putExtra("nutri3",nutri3)
@@ -87,7 +84,7 @@ class ResultSearchActivity : AppCompatActivity() {
     private fun fillData() {
         var cursor: Cursor = db.rawQuery("SELECT * FROM real_nutri", null)
         while(cursor.moveToNext()) {
-            foodList.add(FoodData(cursor.getString(1), cursor.getString(2).toDouble(),100,cursor.getString(3).toDouble(), cursor.getString(4).toDouble(), cursor.getString(5).toDouble()))
+            foodList.add(FoodData(cursor.getString(1), cursor.getString(2).toInt(),100,cursor.getString(3).toInt(), cursor.getString(4).toInt(), cursor.getString(5).toInt()))
 
         }
     }
