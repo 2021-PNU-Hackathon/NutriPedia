@@ -11,7 +11,9 @@ import java.io.IOException
 
 public class FileUploadUtils {
 
-    fun send2Server(file : File){
+    fun send2Server(file : File) : ArrayList<ServerData>{
+        var serverData = arrayListOf<ServerData>()
+
         var requestBody:RequestBody = MultipartBody.Builder()
             .setType(MultipartBody.FORM)
             .addFormDataPart("file",file.name, RequestBody.create(MediaType.parse("image/*"),file))
@@ -39,7 +41,7 @@ public class FileUploadUtils {
                 val y2Arr = jsonObject.getJSONArray("y2_arr")
                 val nameArr = jsonObject.getJSONArray("name")
                 val num = jsonObject.getInt("num")
-                var serverData = arrayListOf<ServerData>()
+
                 for (i in 0 until num) {
                     val sample : ServerData = ServerData(x1Arr.get(i).toString().toDouble(),
                         x2Arr.get(i).toString().toDouble(),
@@ -51,6 +53,7 @@ public class FileUploadUtils {
                 Log.e("food",serverData[0].name)
             }
         })
+        return serverData
     }
 
 //    fun receiveFromServer() : ArrayList<ServerData> {
@@ -100,6 +103,6 @@ public class FileUploadUtils {
 //    }
 
     //Data model
-    data class ServerData(var x1 : Double ,var x2 : Double, var y1: Double,
-                          var y2 : Double, var name: String)
+    //data class ServerData(var x1 : Double ,var x2 : Double, var y1: Double,
+    //                      var y2 : Double, var name: String)
 }

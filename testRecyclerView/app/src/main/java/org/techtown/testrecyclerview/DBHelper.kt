@@ -259,11 +259,18 @@ class DBHelper(
     // name은 해당하는 음식의 이름
     fun updatePriorityUp(name: String) {
         var db: SQLiteDatabase = writableDatabase
-        var originPriority = "SELECT priority from real_nutri_91 WHERE name = '" + name + "';"
-        var newPriority = originPriority.toInt() + 1
-        db.execSQL(
-            "UPDATE real_nutri_91 SET " + "priority" + " = " + newPriority  + " WHERE name = '" + name + "';"
-        )
+        var query = "SELECT * FROM real_nutri_91"
+        var cursor: Cursor = db.rawQuery(query, null)
+        while(cursor.moveToNext()) {
+            if (name == cursor.getString(1)) {
+                val value = cursor.getString(6).toInt() + 1
+                db.execSQL(
+                    "UPDATE real_nutri_91 SET " + "priority" + " = " + value  + " WHERE name = '" + name + "';"
+                )
+                break
+            }
+        }
+        cursor.close()
         db.close()
     }
     // 좋아요 기능(FINISH)
@@ -271,11 +278,18 @@ class DBHelper(
     // 싫어요 기능(START)
     fun updatePriorityDown(name: String) {
         var db: SQLiteDatabase = writableDatabase
-        var originPriority = "SELECT priority from real_nutri_91 WHERE name = '" + name + "';"
-        var newPriority = originPriority.toInt() - 1
-        db.execSQL(
-            "UPDATE real_nutri_91 SET " + "priority" + " = " + newPriority  + " WHERE name = '" + name + "';"
-        )
+        var query = "SELECT * FROM real_nutri_91"
+        var cursor: Cursor = db.rawQuery(query, null)
+        while(cursor.moveToNext()) {
+            if (name == cursor.getString(1)) {
+                val value = cursor.getString(6).toInt() - 1
+                db.execSQL(
+                    "UPDATE real_nutri_91 SET " + "priority" + " = " + value  + " WHERE name = '" + name + "';"
+                )
+                break
+            }
+        }
+        cursor.close()
         db.close()
     }
     // 싫어요 기능(FINISH)

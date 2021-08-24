@@ -12,20 +12,10 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_camera_result.*
 import kotlinx.android.synthetic.main.activity_camera_result.View1
-import kotlinx.android.synthetic.main.activity_camera_result.View2
-import kotlinx.android.synthetic.main.activity_camera_result.View3
-import kotlinx.android.synthetic.main.activity_camera_result.button
-import kotlinx.android.synthetic.main.activity_camera_result.smallIv1_2
-import kotlinx.android.synthetic.main.activity_camera_result.smallIv1_3
-import kotlinx.android.synthetic.main.activity_camera_result.smallIv2
-import kotlinx.android.synthetic.main.activity_camera_result.smallIv2_3
-import kotlinx.android.synthetic.main.activity_camera_result.smallIv3
-import kotlinx.android.synthetic.main.activity_camera_result.smallIv3_2
-import kotlinx.android.synthetic.main.activity_camera_result.smallIv4
-import kotlinx.android.synthetic.main.activity_camera_result.smallIv4_2
-import kotlinx.android.synthetic.main.activity_camera_result.smallIv4_3
+
 import kotlinx.android.synthetic.main.activity_fix_item.*
 import org.techtown.testrecyclerview.R
+import org.techtown.testrecyclerview.result.ResultSearchActivity
 
 class FixItemActivity : AppCompatActivity() {
 
@@ -71,7 +61,7 @@ class FixItemActivity : AppCompatActivity() {
             View3.visibility = View.INVISIBLE
         }
         smallIv4.setOnClickListener {
-            val intent = Intent(applicationContext,ResultSearchActivity::class.java)
+            val intent = Intent(applicationContext, ResultSearchActivity::class.java)
             startActivity(intent)
         }
         smallIv4_2.setOnClickListener {

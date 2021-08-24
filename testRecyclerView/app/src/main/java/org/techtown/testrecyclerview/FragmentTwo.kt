@@ -104,6 +104,7 @@ class FragmentTwo : Fragment() {
         var linechart = V2.findViewById<LineChart>(R.id.lineChart)
         initView()
 
+
         var now = LocalDate.now()
         var year :String = now.format(DateTimeFormatter.ofPattern("yyyy"))
         var month :String = now.format(DateTimeFormatter.ofPattern("MM"))
@@ -112,34 +113,6 @@ class FragmentTwo : Fragment() {
         val cur : Int = dbHelper.getColValue(0,"user_info").toInt()
         changeWeight.text = (cur - fir).toString()+"kg"
         successDate.text = dbHelper.getSuccess(year,month).toString()+" / "+baseCalendar.max.toString()
-
-//        schedule.addOnItemTouchListener(object: RecyclerView.OnItemTouchListener {
-//            override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
-//                schedule.setOnTouchListener(object :
-//                    OnSwipeTouchListener(requireContext()) {   // 캘린더 날짜 부분 스와이프 리스너
-//                    override fun onSwipeLeft() {
-//        //                  왼쪽에서 오른쪽으로 스와이프 이전달로
-//                        scheduleRecyclerViewAdapter.changeToNextMonth()
-//                    }
-//
-//                    override fun onSwipeRight() {
-//        //                  오른쪽에서 왼쪽으로 스와이프 다음달로
-//                        scheduleRecyclerViewAdapter.changeToPrevMonth()
-//                    }
-//                })
-//                return onInterceptTouchEvent(rv,e)
-//            }
-//
-//            override fun onTouchEvent(rv: RecyclerView, e: MotionEvent) {
-//
-//            }
-//
-//            override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {
-//
-//            }
-//
-//        })
-
 
         linelist = ArrayList()
         linelist.add(Entry(6f, 100f))
