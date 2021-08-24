@@ -5,6 +5,10 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.os.Build
+import androidx.annotation.RequiresApi
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 class DBHelper(
     context: Context?,
@@ -21,7 +25,10 @@ class DBHelper(
                 "age integer," +
                 "sex integer," +
                 "current_height integer," +
-                "idx integer);";
+                "idx integer," +
+                "target_water INT" +
+                ");"
+
 
         var sql2 : String = "CREATE TABLE if not exists record (" +
                 "date DATE," +
@@ -34,34 +41,44 @@ class DBHelper(
                 "cab DOUBLE," +
                 "pro DOUBLE," +
                 "fat DOUBLE" +
-                ");";
+                ");"
+
+        var sql3 : String = "CREATE TABLE if not exists water (" +
+                "date DATE," +
+                "amount INT" +
+                ");"
 
         db.execSQL(sql1)
         db.execSQL(sql2)
+        db.execSQL(sql3)
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         val sql1 : String = "DROP TABLE if exists user_info"
-        val sql2 : String = "DROP TABLE if exists Record"
+        val sql2 : String = "DROP TABLE if exists record"
+        val sql3 : String = "DROP TABLE if exists water"
         db.execSQL(sql1)
         db.execSQL(sql2)
+        db.execSQL(sql3)
         onCreate(db)
     }
 
-    /* fun insertUserInfo(db: SQLiteDatabase) {
-        var query = "INSERT INTO user_info('current_weight','target_weight','age','sex','current_height','idx') values(0,0,0,0,0,0);"
-        db.execSQL(query)
-    } */
 
     fun insertUserInfo() {
         var db: SQLiteDatabase = writableDatabase
-        var query = "INSERT INTO user_info VALUES ('0', '0', '0', '0', '0', '0');"
+        var query = "INSERT INTO user_info VALUES ('0', '0', '0', '0', '0', '0', 2000);"
         db.execSQL(query)
     }
 
     fun insertRecord() {
         var db: SQLiteDatabase = writableDatabase
-        var query = "INSERT INTO Record VALUES ((SELECT date('now','localtime')), NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0);"
+        var query = "INSERT INTO record VALUES ((SELECT date('now','localtime')), NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0);"
+        db.execSQL(query)
+    }
+
+    fun insertWater() {
+        var db: SQLiteDatabase = writableDatabase
+        var query = "INSERT INTO water VALUES ((SELECT date('now','localtime')), 0);"
         db.execSQL(query)
     }
 
@@ -76,11 +93,50 @@ class DBHelper(
         db.close()
     }
 
-    fun selectUserInfo(field: String, tablename: String) {
+    fun updatewater(field: String, value: Int, date: String
+    ) {
         var db: SQLiteDatabase = writableDatabase
+
         db.execSQL(
-            "SELECT user_info." + field + " from " + tablename + " WHERE idx = " + 0 + ";"
+            "UPDATE water SET " + field + " = " + value  + " WHERE date = '" + date + "';"
         )
+
+        db.close()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun getWater(): Int {
+        var now = LocalDate.now()
+        var Strnow = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+        var db: SQLiteDatabase = readableDatabase
+
+        val query = "SELECT * FROM water"
+        var cursor: Cursor = db.rawQuery(query, null)
+        var returnvalue = 0
+        var exist = 0
+
+        while(cursor.moveToNext()) {
+            if (cursor.getString(0) == Strnow) {
+                returnvalue = cursor.getString(1).toInt()
+                exist = 1
+            }
+        }
+
+        if (exist == 0) {
+            insertWater()
+            var cursor1: Cursor = db.rawQuery(query, null)
+            while(cursor1.moveToNext()) {
+                if (cursor1.getString(0) == Strnow) {
+                    returnvalue = cursor1.getString(1).toInt()
+                    exist = 1
+                }
+            }
+            cursor1.close()
+        }
+
+        cursor.close()
+        db.close()
+        return returnvalue
     }
 
     fun getColValue(colindex: Int, tablename: String): String {
@@ -117,5 +173,42 @@ class DBHelper(
         return returnvalue
     }
 
+    // 좋아요 기능(START)
+    // name은 해당하는 음식의 이름
+    fun updatePriorityUp(name: String) {
+        var db: SQLiteDatabase = writableDatabase
+        var query = "SELECT * FROM real_nutri_91"
+        var cursor: Cursor = db.rawQuery(query, null)
+        while(cursor.moveToNext()) {
+            if (name == cursor.getString(1)) {
+                val value = cursor.getString(6).toInt() + 1
+                db.execSQL(
+                    "UPDATE real_nutri_91 SET " + "priority" + " = " + value  + " WHERE name = '" + name + "';"
+                )
+                break
+            }
+        }
+        cursor.close()
+        db.close()
+    }
+    // 좋아요 기능(FINISH)
 
+    // 싫어요 기능(START)
+    fun updatePriorityDown(name: String) {
+        var db: SQLiteDatabase = writableDatabase
+        var query = "SELECT * FROM real_nutri_91"
+        var cursor: Cursor = db.rawQuery(query, null)
+        while(cursor.moveToNext()) {
+            if (name == cursor.getString(1)) {
+                val value = cursor.getString(6).toInt() - 1
+                db.execSQL(
+                    "UPDATE real_nutri_91 SET " + "priority" + " = " + value  + " WHERE name = '" + name + "';"
+                )
+                break
+            }
+        }
+        cursor.close()
+        db.close()
+    }
+    // 싫어요 기능(FINISH)
 }

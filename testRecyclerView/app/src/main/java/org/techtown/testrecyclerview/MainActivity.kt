@@ -14,12 +14,14 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
-import android.util.Config
+import android.util.Log
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
@@ -32,6 +34,7 @@ import kotlinx.android.synthetic.main.card_layout.*
 import kotlinx.android.synthetic.main.search_bar.view.*
 import org.techtown.testrecyclerview.result.CameraResult
 import org.techtown.testrecyclerview.result.FoodResult
+import org.techtown.testrecyclerview.search.FoodData
 import org.techtown.testrecyclerview.tutorial.CurrentWeight
 import java.io.*
 import java.text.SimpleDateFormat
@@ -40,15 +43,16 @@ import kotlin.collections.ArrayList
 
 
 class MainActivity : AppCompatActivity() {
-    lateinit var dbHelper : DBHelper
-    lateinit var database : SQLiteDatabase
+
     lateinit var photoURI: Uri
+    val copy = copyDB()
     val REQUEST_IMAGE_CAPTURE = 1 //카메라 사진촬영 요청코드
     lateinit var curPhotoPath: String //문자열 형태의 사진 경로 값(초기값을 null로 시작하고 싶을 때)
     val REQUEST_CODE = 0
 
     init {
         instance = this
+
     }
     companion object {
         var instance: MainActivity? = null
@@ -96,6 +100,12 @@ class MainActivity : AppCompatActivity() {
 //
 //        FileUploadUtils().receiveFromServer() // 받는 부분은 일단 구현 안함
 
+        if (!firstViewShow) {
+            editor.putBoolean("First",true).apply()
+            var firstIntent = Intent(applicationContext,CurrentWeight::class.java)
+            copy.copyDataBaseFromAssets(this)
+            startActivity(firstIntent)
+        }
 
         bottomNavigationView.background = null
         bottomNavigationView.menu.getItem(1).isEnabled = false
@@ -247,18 +257,41 @@ class MainActivity : AppCompatActivity() {
 //        }
 //    }
 
+    class MyAdapter(val context: Context, var foodList: ArrayList<RecordFoodData>): RecyclerView.Adapter<MyAdapter.MyViewHolder>(){
+      
+        override fun onCreateViewHolder(viewgroup: ViewGroup, position: Int): MyViewHolder {
+            var v: View = LayoutInflater.from(viewgroup.context).inflate(R.layout.card_layout, viewgroup, false)
+            return MyViewHolder(v)
+        }
 
+        override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
 
+            val item = foodList[position]
+            holder.itemView.setOnClickListener {
+                itemClickListner.onClick(it,position)
+            }
+            holder.cameraIb.setOnClickListener {
+                var activity : MainActivity = instance!!
+                activity.takeCapture()
+            }
 
-    class MyAdapter(context: Context): RecyclerView.Adapter<MyAdapter.MyViewHolder>(){
+            holder.apply {
+                bind(item,context)
+            }
 
-        var titles = arrayOf("one", "two", "three", "four", "five")
-        var details = arrayOf("Item one", "Item two", "Item three", "Item four", "Itme five")
-        var images = intArrayOf(R.drawable.ic_launcher_foreground,
-            R.drawable.ic_launcher_foreground,
-            R.drawable.ic_launcher_foreground,
-            R.drawable.ic_launcher_foreground,
-            R.drawable.ic_launcher_foreground)
+        }
+
+        override fun getItemCount(): Int {
+            return foodList.size
+        }
+        interface OnItemClickListner {
+            fun onClick(v:View, position: Int)
+        }
+        private lateinit var itemClickListner: OnItemClickListner
+
+        fun setItemClickListner(itemClickListner: OnItemClickListner) {
+            this.itemClickListner = itemClickListner
+        }
 
         class MyViewHolder(itemview: View) : RecyclerView.ViewHolder(itemview) {
             var itemimage: ImageView = itemview.findViewById(R.id.item_image)
@@ -268,41 +301,14 @@ class MainActivity : AppCompatActivity() {
             var cardTanTv: TextView = itemview.findViewById(R.id.cardTanTv)
             var cardDanTv: TextView = itemview.findViewById(R.id.cardDanTv)
             var cardJiTv: TextView = itemview.findViewById(R.id.cardJiTv)
-        }
-
-        override fun onCreateViewHolder(viewgroup: ViewGroup, position: Int): MyViewHolder {
-            var v: View = LayoutInflater.from(viewgroup.context).inflate(R.layout.card_layout, viewgroup, false)
-
-            return MyViewHolder(v)
-        }
-
-        override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-            holder.itemtitle.setText(titles.get(position))
-            holder.itemimage.setImageResource(images.get(position))
-            holder.itemdetail.setText(details.get(position))
-            holder.itemView.setOnClickListener {
-                itemClickListner.onClick(it,position)
+            fun bind (foodData:RecordFoodData, context: Context) {
+                itemtitle.text = foodData.mealTime +" | "+foodData.calorie.toString()+"Kcal"
+                itemdetail.text = foodData.foodName
+                itemimage.setImageResource(R.drawable.ic_launcher_foreground)
+                cardTanTv.text = "탄 "+foodData.nutri1.toString()+"g"
+                cardDanTv.text = "단 "+foodData.nutri2.toString()+"g"
+                cardJiTv.text = "지 "+foodData.nutri3.toString()+"g"
             }
-            holder.cameraIb.setOnClickListener {
-                var activity : MainActivity = instance!!
-                activity.takeCapture()
-            }
-//        holder.cardTanTv.setText()
-//        holder.cardDanTv.setText()
-//        holder.cardJiTv.setText()
-
-        }
-
-        override fun getItemCount(): Int {
-            return titles.size
-        }
-        interface OnItemClickListner {
-            fun onClick(v:View, position: Int)
-        }
-        private lateinit var itemClickListner: OnItemClickListner
-
-        fun setItemClickListner(itemClickListner: OnItemClickListner) {
-            this.itemClickListner = itemClickListner
         }
     }
 }

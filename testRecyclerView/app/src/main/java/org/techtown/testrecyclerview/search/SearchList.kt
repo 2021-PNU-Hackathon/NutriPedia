@@ -51,7 +51,6 @@ class SearchList : AppCompatActivity() {
         var cursor: Cursor = db.rawQuery("SELECT * FROM real_nutri", null)
         while(cursor.moveToNext()) {
             foodList.add(FoodData(cursor.getString(1), cursor.getString(2).toDouble(),100,cursor.getString(3).toDouble(), cursor.getString(4).toDouble(), cursor.getString(5).toDouble()))
-
         }
 
 //        foodLiscursor.close()

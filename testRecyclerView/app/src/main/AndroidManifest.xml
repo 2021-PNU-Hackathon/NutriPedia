@@ -20,7 +20,7 @@
         android:theme="@style/Theme.TestRecyclerView"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".result.AddResult"
+            android:name=".previous.PreviousActivity"
             android:exported="true" />
         <activity
             android:name=".settings.PrivateFix"

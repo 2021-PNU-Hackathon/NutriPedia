@@ -10,10 +10,14 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import androidx.activity.result.contract.ActivityResultContracts
+import kotlinx.android.synthetic.main.activity_private_fix.*
 import kotlinx.android.synthetic.main.activity_water_setting.*
+import org.techtown.testrecyclerview.DBHelper
 import org.techtown.testrecyclerview.R
 
 class WaterSetting : AppCompatActivity() {
+    val db = DBHelper(this, "food_nutri.db", null, 1)
+    var clicked : Boolean = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_water_setting)
@@ -23,8 +27,8 @@ class WaterSetting : AppCompatActivity() {
 
         val input1 = findViewById<EditText>(R.id.input1)
         var imm : InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.showSoftInput(input,0)
-        input.requestFocus()
+        imm.showSoftInput(waterinput,0)
+        waterinput.requestFocus()
 
     }
 
@@ -37,7 +41,9 @@ class WaterSetting : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Handle presses on the action bar items
         when(item.itemId){
-            R.id.fixActionBtn -> { finish() }}
+            R.id.fixActionBtn -> {
+                db.updateUserInfo("target_water", waterinput.text.toString().toInt())
+                finish() }}
 
 
         return super.onOptionsItemSelected(item)
