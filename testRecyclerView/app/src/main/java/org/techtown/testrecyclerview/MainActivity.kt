@@ -33,6 +33,7 @@ import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.card_layout.*
 import kotlinx.android.synthetic.main.search_bar.view.*
 import org.techtown.testrecyclerview.result.CameraResult
+import org.techtown.testrecyclerview.result.FoodResult
 import org.techtown.testrecyclerview.search.FoodData
 import org.techtown.testrecyclerview.tutorial.CurrentWeight
 import java.io.*
@@ -223,6 +224,8 @@ class MainActivity : AppCompatActivity() {
 //        ):Call<FileResponse>{
 //        }
 
+
+
     fun savePhoto(bitmap: Bitmap) {
         val folderPath = Environment.getExternalStorageDirectory().absolutePath + "/Pictures/" //사진 폴더에 저장 경로 선언
         val timeStamp: String = SimpleDateFormat("yyyy-MM-dd-HHmmss").format(Date())
@@ -237,11 +240,22 @@ class MainActivity : AppCompatActivity() {
         Toast.makeText(this, "사진이 앨범에 저장되었습니다.", Toast.LENGTH_SHORT).show()
         Toast.makeText(this, folderPath, Toast.LENGTH_SHORT).show()
         val file = File("/storage/emulated/0/Pictures/${fileName}")
-        FileUploadUtils().send2Server(file)
+        val serverData = FileUploadUtils().send2Server(file)
+        //dataTOUse(serverData)
         var cameraIntent = Intent(applicationContext, CameraResult::class.java)
         cameraIntent.putExtra("uri",photoURI)
+        //cameraIntent.putExtra("serverdata",serverData)
         startActivity(cameraIntent)
     }
+    //    fun dataTOUse(serverData: ArrayList<ServerData>)  : ArrayList<FoodResult>?{
+//        var arrayUse : ArrayList<FoodResult>
+//        if (serverData.size != 0) {
+//            for (i in 0 until serverData.size) {
+//                arrayUse.add(FoodResult(serverData[i].name,))
+//            }
+//            return arrayUse
+//        }
+//    }
 
     class MyAdapter(val context: Context, var foodList: ArrayList<RecordFoodData>): RecyclerView.Adapter<MyAdapter.MyViewHolder>(){
       

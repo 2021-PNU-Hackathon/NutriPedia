@@ -42,16 +42,21 @@
         <activity
             android:name=".settings.SettingActivity"
             android:parentActivityName=".MainActivity" />
-        <activity android:name=".tutorial.Sex"
-            android:theme="@style/Theme.TestRecyclerView.NoActionBar"/>
-        <activity android:name=".tutorial.Age"
-            android:theme="@style/Theme.TestRecyclerView.NoActionBar"/>
-        <activity android:name=".tutorial.CurrentHeight"
-            android:theme="@style/Theme.TestRecyclerView.NoActionBar"/>
-        <activity android:name=".tutorial.TargetWeight"
-            android:theme="@style/Theme.TestRecyclerView.NoActionBar"/>
-        <activity android:name=".tutorial.CurrentWeight"
-            android:theme="@style/Theme.TestRecyclerView.NoActionBar"/> <!-- <activity -->
+        <activity
+            android:name=".tutorial.Sex"
+            android:theme="@style/Theme.TestRecyclerView.NoActionBar" />
+        <activity
+            android:name=".tutorial.Age"
+            android:theme="@style/Theme.TestRecyclerView.NoActionBar" />
+        <activity
+            android:name=".tutorial.CurrentHeight"
+            android:theme="@style/Theme.TestRecyclerView.NoActionBar" />
+        <activity
+            android:name=".tutorial.TargetWeight"
+            android:theme="@style/Theme.TestRecyclerView.NoActionBar" />
+        <activity
+            android:name=".tutorial.CurrentWeight"
+            android:theme="@style/Theme.TestRecyclerView.NoActionBar" /> <!-- <activity -->
         <!-- android:name=".MainActivity" -->
         <!-- android:label="@string/title_activity_main" -->
         <!-- android:theme="@style/Theme.TestRecyclerView.NoActionBar" /> -->
