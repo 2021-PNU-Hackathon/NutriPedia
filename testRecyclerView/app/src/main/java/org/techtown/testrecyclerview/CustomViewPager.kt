@@ -1,25 +1,28 @@
 package org.techtown.testrecyclerview
 
 import android.content.Context
-import android.content.Intent
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
+
 import android.os.Build
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.WindowManager
+import android.view.inputmethod.InputMethodManager
 import android.widget.NumberPicker
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatButton
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.viewpager.widget.ViewPager
+import kotlinx.android.synthetic.main.activity_water_setting.*
+import kotlinx.android.synthetic.main.fix_edittext_water.view.*
 import kotlinx.android.synthetic.main.page.view.*
 import kotlinx.android.synthetic.main.pagewater.view.*
-import org.techtown.testrecyclerview.tutorial.TargetWeight
+
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+
 
 class CustomViewPager : ViewPager {
     constructor(context: Context?) : super(context!!) {}
@@ -39,7 +42,6 @@ class CustomViewPager : ViewPager {
             val mAlertDialog = mBuilder.show()
             mAlertDialog.window!!.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
             mAlertDialog.window!!.setGravity(Gravity.BOTTOM)
-//            mAlertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
             var weightList: List<Int> = (150 downTo 35).toList()
             var weightStrConvertList = weightList.map { it.toString() }
@@ -61,6 +63,27 @@ class CustomViewPager : ViewPager {
                 dbHelper.updateUserInfo("current_weight",150 - currentvalue)
                 dbHelper.updateChange(150 - currentvalue)
                 dbHelper.close()
+                mAlertDialog.dismiss()
+            }
+        }
+
+        waterTv.setOnClickListener {
+            val mDialogView = LayoutInflater.from(context).inflate(R.layout.fix_edittext_water, null)
+            val mBuilder = AlertDialog.Builder(context)
+                .setView(mDialogView)
+            val mAlertDialog = mBuilder.show()
+            mAlertDialog.window!!.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
+            mAlertDialog.window!!.setGravity(Gravity.CENTER)
+
+            val fix = mDialogView.findViewById<AppCompatButton>(R.id.intentBtn)
+
+//            var imm : InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+//            imm.showSoftInput(waterInput,0)
+//            waterInput.requestFocus()
+
+
+            fix.setOnClickListener {
+//                dbHelper.updateWater(waterInput.text.toString().toInt())
                 mAlertDialog.dismiss()
             }
         }
@@ -133,3 +156,4 @@ class CustomViewPager : ViewPager {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
     }
 }
+

@@ -46,8 +46,8 @@ class CameraResult : AppCompatActivity(){
         val uri : Uri? = intent.getParcelableExtra<Uri>("uri")
 
         mainIv.setImageURI(uri)
-        imageArray.add(FoodResult("hyun",100.0,100,100.0,100.0,100.0,uri,true))
-        imageArray.add(imageArray.size,FoodResult("add",0.0,0,0.0,0.0,0.0,null,false))
+        imageArray.add(FoodResult("hyun",100,100,100,100,uri,true))
+        imageArray.add(imageArray.size,FoodResult("add",0,0,0,0,null,false))
 
         foodTv1.text = imageArray[0].foodName
         kcalTv.text = imageArray[0].calorie.toString() + "Kcal"

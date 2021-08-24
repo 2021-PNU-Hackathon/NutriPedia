@@ -282,7 +282,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="horizontal"
-                        android:layout_marginTop="10dp">
+                        android:layout_marginTop="22dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp">
 
                         <com.github.mikephil.charting.charts.LineChart
                             android:id="@+id/lineChart"
