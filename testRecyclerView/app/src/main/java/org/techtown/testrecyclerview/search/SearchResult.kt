@@ -1,6 +1,5 @@
 package org.techtown.testrecyclerview.search
 
-import android.database.sqlite.SQLiteDatabase
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
@@ -12,16 +11,13 @@ import android.widget.Button
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.ContextCompat
-import org.techtown.testrecyclerview.DBHelper
+import kotlinx.android.synthetic.main.activity_search_result.*
 import org.techtown.testrecyclerview.R
 
 class SearchResult : AppCompatActivity() {
-    lateinit var dbHelper : DBHelper
-    lateinit var db : SQLiteDatabase
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_result)
-        dbHelper = DBHelper(this, "food_nutri.db", null, 1)
 
         val name = intent.getStringExtra("name")
         val calorie = intent.getIntExtra("calorie", 0)
@@ -35,6 +31,7 @@ class SearchResult : AppCompatActivity() {
         nutri2_Tv.text = nutri2.toString() + "g"
         nutri3_Tv.text = nutri3.toString() + "g"
         total.text = calorie.toString() + "Kcal"
+
 
         val registerBtn: Button = findViewById(R.id.registerBtn)
         registerBtn.setOnClickListener {

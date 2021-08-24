@@ -28,6 +28,7 @@ class RecommendList : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = ""
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back)
         recyclerView = findViewById(R.id.mRecyclerView)
         fillData()
         recyclerView.adapter = mAdapter
@@ -39,8 +40,13 @@ class RecommendList : AppCompatActivity() {
         mAdapter.setItemClickListner(object : RecommendFoodAdapter.OnItemClickListner {
             override fun onClick(v: View, position: Int) {
                 val intent = Intent(applicationContext, RecommendResult::class.java)
-                finish()
+                intent.putExtra("name" ,foodList[position].foodName)
+                intent.putExtra("calorie" ,foodList[position].calorie)
+                intent.putExtra("nutri1" ,foodList[position].nutri1)
+                intent.putExtra("nutri2" ,foodList[position].nutri2)
+                intent.putExtra("nutri3" ,foodList[position].nutri3)
                 startActivityForResult(intent, 101)
+                finish()
             }
 
         })
