@@ -1,23 +1,32 @@
 package org.techtown.testrecyclerview.search
 
+import android.database.sqlite.SQLiteDatabase
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.WindowManager
 import android.widget.Button
+import android.widget.NumberPicker
+import android.widget.NumberPicker.OnValueChangeListener
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_search_result.*
+import org.techtown.testrecyclerview.DBHelper
 import org.techtown.testrecyclerview.R
 
 class SearchResult : AppCompatActivity() {
+    @RequiresApi(Build.VERSION_CODES.Q)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_result)
+        var dbHelper = DBHelper(this, "food_nutri.db", null, 1)
+        lateinit var db : SQLiteDatabase
 
         val name = intent.getStringExtra("name")
         val calorie = intent.getIntExtra("calorie", 0)
@@ -27,11 +36,30 @@ class SearchResult : AppCompatActivity() {
 
         some_id.text = name
         kcal.text = calorie.toString() + "Kcal"
-        nutri1_Tv.text = nutri1.toString() + "g"
-        nutri2_Tv.text = nutri2.toString() + "g"
-        nutri3_Tv.text = nutri3.toString() + "g"
+        nutri1_Tv.text = nutri1.toString() + "kcal"
+        nutri2_Tv.text = nutri2.toString() + "kcal"
+        nutri3_Tv.text = nutri3.toString() + "kcal"
         total.text = calorie.toString() + "Kcal"
 
+        var tempList: List<Int> = (50 downTo 5).toList()
+        var gramList = ArrayList<Int>()
+        for (i in 0 until tempList.size) {
+            gramList.add(tempList[i]*10)
+        }
+        var gramStrConvertList = gramList.map { it.toString() }
+
+
+        val currentNp = findViewById<NumberPicker>(R.id.np_gram)
+
+        currentNp.maxValue = gramStrConvertList.size - 1
+        currentNp.wrapSelectorWheel = true
+        currentNp.displayedValues = gramStrConvertList.toTypedArray()
+        currentNp.value = 40
+        var currentvalue = 40
+
+        currentNp.setOnValueChangedListener { picker, oldVal, newVal ->
+            currentvalue = newVal
+        }
 
 
 
@@ -295,7 +323,18 @@ class SearchResult : AppCompatActivity() {
 
             register.setOnClickListener {
                 mAlertDialog.dismiss()
+                var mt: String? = null
+                mt = when(idCheck.toString()) {
+                    "breakfast" -> "아침"
+                    "brunch" -> "아점"
+                    "lunch" -> "점심"
+                    "linner" -> "점저"
+                    "dinner" -> "저녁"
+                    "snack" -> "간식"
+                    else -> null
+                }
 
+                dbHelper.insertFoodRecord(mt, name, 500-currentvalue*10, calorie, nutri1, nutri2, nutri3)
                 finish()
             }
         }

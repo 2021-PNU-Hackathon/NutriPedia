@@ -55,10 +55,10 @@ class FoodAdapter (val context: Context, var foodList: ArrayList<FoodData>) :
         fun bind (foodData:FoodData, context: Context) {
             /* 나머지 TextView와 String 데이터를 연결한다. */
             foodTitle.text = foodData.foodName
-            kcalTv.text = foodData.calorie.toString()+" | "+foodData.amount.toString()+"g 기준"
-            nutri1.text = foodData.nutri1.toString()+"g"
-            nutri2.text = foodData.nutri2.toString()+"g"
-            nutri3.text = foodData.nutri3.toString()+"g"
+            kcalTv.text = foodData.calorie.toString()+"kcal | "+foodData.amount.toString()+"g 기준"
+            nutri1.text = foodData.nutri1.toString()+"kcal"
+            nutri2.text = foodData.nutri2.toString()+"kcal"
+            nutri3.text = foodData.nutri3.toString()+"kcal"
 
         }
     }

@@ -1,15 +1,18 @@
 package org.techtown.testrecyclerview
 
 import android.annotation.SuppressLint
+import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.net.Uri
 import android.os.Build
+import android.provider.BaseColumns
 import android.util.Log
 import androidx.annotation.RequiresApi
 import org.techtown.testrecyclerview.result.FoodResult
+import org.w3c.dom.Text
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -41,10 +44,10 @@ class DBHelper(
                 "imgPath TEXT," +
                 "photoGuide TEXT," +
                 "amount INT," +
-                "kcal DOUBLE," +
-                "cab DOUBLE," +
-                "pro DOUBLE," +
-                "fat DOUBLE" +
+                "kcal INT," +
+                "cab INT," +
+                "pro INT," +
+                "fat INT" +
                 ");"
 
         var sql3: String = "CREATE TABLE if not exists water (" +
@@ -114,6 +117,13 @@ class DBHelper(
         db.execSQL(query)
     }
 
+    fun insertFoodRecord(_mealtime: String?, _foodname: String?, _amount: Int, _kcal: Int, _cab: Int, _pro: Int, _fat: Int) {
+        var db: SQLiteDatabase = writableDatabase
+        var query =
+            "INSERT INTO record VALUES ((SELECT date('now','localtime')), '${_mealtime}', '${_foodname}', NULL, NULL, '${_amount}', '${_kcal}', '${_cab}', '${_pro}', '${_fat}');"
+        db.execSQL(query)
+    }
+
     fun insertWater() {
         var db: SQLiteDatabase = writableDatabase
         var query = "INSERT INTO water VALUES ((SELECT date('now','localtime')), 0);"
@@ -134,6 +144,16 @@ class DBHelper(
 
         db.execSQL(
             "UPDATE change SET weight = " + value  + " WHERE date = (SELECT date('now','localtime'));"
+        )
+
+        db.close()
+    }
+
+    fun updateWater(value:Int ) {
+        var db: SQLiteDatabase = writableDatabase
+
+        db.execSQL(
+            "UPDATE water SET amount = " + value  + " WHERE date = (SELECT date('now','localtime'));"
         )
 
         db.close()
@@ -167,7 +187,7 @@ class DBHelper(
         var Strnow = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
         var db: SQLiteDatabase = readableDatabase
 
-        val query = "SELECT * FROM water"
+        val query = "SELECT * FROM water where date = '${Strnow}'"
         var cursor: Cursor = db.rawQuery(query, null)
         var returnvalue = 0
         var exist = 0
@@ -196,9 +216,11 @@ class DBHelper(
         return returnvalue
     }
 
-    fun getPreWeight(date: String): Int {
+    fun getPreWater(time : String): Int {
+
         var db: SQLiteDatabase = readableDatabase
-        val query = "SELECT * FROM change where date <= '${date}' ORDER by date desc"
+
+        val query = "SELECT * FROM water where date = '${time}'"
         var cursor: Cursor = db.rawQuery(query, null)
         var returnvalue :Int = 0
 
@@ -210,6 +232,94 @@ class DBHelper(
         cursor.close()
         db.close()
         return returnvalue
+    }
+
+    fun getPreWeight(date: String): Int {
+        var db: SQLiteDatabase = readableDatabase
+        val query = "SELECT * FROM change where date <= '${date}' ORDER by date desc"
+        var cursor: Cursor = db.rawQuery(query, null)
+        var returnvalue :Int = 0
+
+        while(cursor.moveToNext()) {
+            returnvalue += cursor.getString(1).toInt()
+            break
+        }
+        if (returnvalue == 0) returnvalue = getColValue(0,"user_info").toInt()
+
+        cursor.close()
+        db.close()
+        return returnvalue
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun getListChangeWeight() : ArrayList<Float> {
+        var db: SQLiteDatabase = readableDatabase
+        var now = LocalDate.now()
+        var year :String = now.format(DateTimeFormatter.ofPattern("yyyy"))
+        var month :String = now.format(DateTimeFormatter.ofPattern("MM"))
+        var day :String = now.format(DateTimeFormatter.ofPattern("dd"))
+        var strnow :String = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+        var strstart : String = ""
+
+        if (month.toInt()-1 < 10) strstart = "${year}-0${month.toInt()-1}-${day}"
+        else strstart ="${year}-${month.toInt()-1}-${day}"
+
+        var returnList:ArrayList<Float> = ArrayList()
+
+        Log.d("check in dbh",strstart)
+        Log.d("check in dbh","${strnow}")
+
+        var cursor: Cursor = db.rawQuery("SELECT * FROM change where date Between '${strstart}' and '${strnow}' ORDER by date desc", null)
+        while(cursor.moveToNext()) {
+            returnList.add(cursor.getFloat(1))
+            Log.d("check in dbh","123")
+            Log.d("check in dbh",cursor.getString(1))
+        }
+
+        cursor.close()
+        db.close()
+        Log.d("check in dbh",returnList.toString())
+        return returnList
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun getListSuccess(pos : Int) : ArrayList<String> {
+        var db: SQLiteDatabase = readableDatabase
+        var now = LocalDate.now()
+        var year :String = now.format(DateTimeFormatter.ofPattern("yyyy"))
+        var month :String = now.format(DateTimeFormatter.ofPattern("MM"))
+        var strstart : String = ""
+
+
+        if (pos < 10) strstart = "${year}-0${pos}"
+        else strstart = "${year}-${pos}"
+
+//        if(pos == 0) {
+//            if (month.toInt() - 1 < 10) strstart = "${year}-0${month.toInt() - 1}"
+//            else strstart = "${year}-${month.toInt() - 1}"
+//        }
+//        else if(pos == 1) {
+//            if (month.toInt()< 10) strstart = "${year}-0${month.toInt()}"
+//            else strstart = "${year}-${month.toInt()}"
+//        }
+//        else if(pos == 2) {
+//            if (month.toInt() + 1 < 10) strstart = "${year}-0${month.toInt() + 1}"
+//            else strstart = "${year}-${month.toInt() + 1}"
+//        }
+
+        var returnList:ArrayList<String> = ArrayList()
+
+        Log.d("checkk querry",strstart)
+
+        var cursor: Cursor = db.rawQuery("SELECT * FROM success where date Between '${strstart}-01' and '${strstart}-31' and issuccess = 1", null)
+        while(cursor.moveToNext()) {
+            returnList.add(cursor.getString(0))
+        }
+
+        cursor.close()
+        db.close()
+        Log.d("checkk in dbh",returnList.toString())
+        return returnList
     }
 
     fun getSuccess(year:String, month:String) :Int {
@@ -241,6 +351,22 @@ class DBHelper(
         db.close()
         return returnvalue
     }
+
+    fun getNutri(field:Int, date:String) : Int {
+        var db: SQLiteDatabase = readableDatabase
+        val query = "SELECT * FROM record where date = '${date}'"
+        var cursor: Cursor = db.rawQuery(query, null)
+        var returnvalue :Int = 0
+
+        while(cursor.moveToNext()) {
+            returnvalue += cursor.getString(field).toInt()
+        }
+
+        cursor.close()
+        db.close()
+        return returnvalue
+    }
+
 
     fun getColValue(colindex: Int, tablename: String): String {
         var db: SQLiteDatabase = readableDatabase

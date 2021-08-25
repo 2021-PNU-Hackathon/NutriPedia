@@ -51,12 +51,8 @@ class CameraResult : AppCompatActivity(){
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.parseColor("#FFFFFF")))
 
-
-
         imageArray.clear()
         imageArray.addAll(MainActivity.arrayUse)
-
-        //imageArray.add(FoodResult("hyun",100,100,100,100,uri,true))
         imageArray.add(imageArray.size,FoodResult("add",0,0,0,0,null,false))
         Log.e("size","${imageArray.size}")
 

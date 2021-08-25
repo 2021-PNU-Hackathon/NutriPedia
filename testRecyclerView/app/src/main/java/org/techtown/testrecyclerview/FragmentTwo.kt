@@ -1,6 +1,7 @@
 package org.techtown.testrecyclerview
 
 import android.annotation.SuppressLint
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.graphics.Color
 import android.media.Image
@@ -30,6 +31,7 @@ import kotlinx.android.synthetic.main.pagewater.view.*
 import org.techtown.testrecyclerview.calendar.BaseCalendar
 import org.techtown.testrecyclerview.calendar.OnSwipeTouchListener
 import org.techtown.testrecyclerview.calendar.RecyclerViewAdapter
+import org.techtown.testrecyclerview.search.FoodData
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -108,19 +110,38 @@ class FragmentTwo : Fragment() {
         var now = LocalDate.now()
         var year :String = now.format(DateTimeFormatter.ofPattern("yyyy"))
         var month :String = now.format(DateTimeFormatter.ofPattern("MM"))
+        var day :String = now.format(DateTimeFormatter.ofPattern("dd"))
+        var strnow :String = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+
+
 
         val fir : Int = dbHelper.getColValue(7,"user_info").toInt()
         val cur : Int = dbHelper.getColValue(0,"user_info").toInt()
         changeWeight.text = (cur - fir).toString()+"kg"
         successDate.text = dbHelper.getSuccess(year,month).toString()+" / "+baseCalendar.max.toString()
 
+
+        var xindex : Float = 0f
+        var maxWeight : Float = fir.toFloat()
+        var minWeight : Float = fir.toFloat()
+        var halfWeight : Float = 0f
+        var valueList = dbHelper.getListChangeWeight()
         linelist = ArrayList()
-        linelist.add(Entry(6f, 100f))
-        linelist.add(Entry(11f, 300f))
-        linelist.add(Entry(16f, 200f))
-        linelist.add(Entry(21f, 600f))
-        linelist.add(Entry(26f, 500f))
-        linelist.add(Entry(31f, 900f))
+        linelist.add(Entry(xindex, fir.toFloat()))
+
+//        var cursor : Cursor = dbHelper.getListChangeWeight()
+//        while(cursor.moveToNext())
+
+        Log.d("check",valueList.toString())
+//        Log.d("check",valueList[0].toString())
+        for (i in valueList){
+            xindex += 5
+            linelist.add(Entry(xindex, i))
+            if (i >= maxWeight) maxWeight = i
+            if (i <= minWeight) minWeight = i
+            Log.d("check",i.toString())
+        }
+        halfWeight = (maxWeight + minWeight) /2
 
         lineDataSet = LineDataSet(linelist, "Weight")
         lineData = LineData(lineDataSet)
@@ -130,7 +151,7 @@ class FragmentTwo : Fragment() {
         lineDataSet.color = Color.parseColor("#5CC485")
 //        lineDataSet.setColors(*ColorTemplate.JOYFUL_COLORS)
         lineDataSet.valueTextColor = Color.BLACK
-        lineDataSet.valueTextSize = 16f
+        lineDataSet.valueTextSize = 12f
         lineDataSet.setDrawFilled(true)
         lineDataSet.fillColor = Color.parseColor("#DEF3E7")
         lineDataSet.lineWidth = 4f
@@ -142,19 +163,19 @@ class FragmentTwo : Fragment() {
             invalidate() // refresh
         }
 
-        val maxLine = LimitLine(900f).apply {
+        val maxLine = LimitLine(maxWeight).apply {
             lineWidth = 1.5F
             isEnabled = true
             lineColor = Color.DKGRAY
         }
 
-        val minLine = LimitLine(100f).apply {
+        val minLine = LimitLine(minWeight).apply {
             lineWidth = 1.5F
             isEnabled = true
             lineColor = Color.DKGRAY
         }
 
-        val averageLine = LimitLine(500f).apply {
+        val averageLine = LimitLine(halfWeight).apply {
             lineWidth = 1.5F
             isEnabled = true
             lineColor = Color.DKGRAY
@@ -193,8 +214,8 @@ class FragmentTwo : Fragment() {
             isEnabled = false
         }
         var yAxis: YAxis = linechart.getAxisLeft()
-        yAxis.axisMaximum = 900f
-        yAxis.axisMinimum = 100f
+        yAxis.axisMaximum = maxWeight
+        yAxis.axisMinimum = minWeight
 
         val testToday = 31
 

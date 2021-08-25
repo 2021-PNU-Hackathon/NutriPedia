@@ -1,15 +1,14 @@
 package org.techtown.testrecyclerview
 
 import android.content.Context
-import android.content.Intent
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
+
 import android.os.Build
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.WindowManager
+import android.view.inputmethod.InputMethodManager
 import android.widget.NumberPicker
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
@@ -22,9 +21,9 @@ import com.gun0912.tedpermission.TedPermissionActivity.startActivity
 import kotlinx.android.synthetic.main.activity_age.view.*
 import kotlinx.android.synthetic.main.page.view.*
 import kotlinx.android.synthetic.main.pagewater.view.*
-import org.techtown.testrecyclerview.tutorial.TargetWeight
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+
 
 class CustomViewPager : ViewPager {
     constructor(context: Context?) : super(context!!) {}
@@ -37,38 +36,59 @@ class CustomViewPager : ViewPager {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean {
 
-//        title.setOnClickListener {
-//            val mDialogView = LayoutInflater.from(context).inflate(R.layout.activity_current_weight, null)
-//            val mBuilder = AlertDialog.Builder(context)
-//                .setView(mDialogView)
-//            val mAlertDialog = mBuilder.show()
-//            mAlertDialog.window!!.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
-//            mAlertDialog.window!!.setGravity(Gravity.BOTTOM)
-////            mAlertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-//
-//            var weightList: List<Int> = (150 downTo 35).toList()
-//            var weightStrConvertList = weightList.map { it.toString() }
-//
-//            val changeNp = mDialogView.findViewById<NumberPicker>(R.id.infoNp)
-//            val fix = mDialogView.findViewById<AppCompatButton>(R.id.intentBtn)
-//
-//            changeNp.maxValue = weightStrConvertList.size - 1
-//            changeNp.wrapSelectorWheel = true
-//            changeNp.displayedValues = weightStrConvertList.toTypedArray()
-//
-//            changeNp.value = 150 - (dbHelper.getColValue(0,"user_info").toInt())
-//            var currentvalue = 150 - (dbHelper.getColValue(0,"user_info").toInt())
-//            changeNp.setOnValueChangedListener { picker, oldVal, newVal ->
-//                currentvalue = newVal
-//            }
-//            fix.setOnClickListener {
-//                if (dbHelper.isEmpty("change")) dbHelper.insertChange()
-//                dbHelper.updateUserInfo("current_weight",150 - currentvalue)
-//                dbHelper.updateChange(150 - currentvalue)
-//                dbHelper.close()
-//                mAlertDialog.dismiss()
-//            }
-//        }
+
+        title.setOnClickListener {
+            val mDialogView = LayoutInflater.from(context).inflate(R.layout.activity_current_weight, null)
+            val mBuilder = AlertDialog.Builder(context)
+                .setView(mDialogView)
+            val mAlertDialog = mBuilder.show()
+            mAlertDialog.window!!.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
+            mAlertDialog.window!!.setGravity(Gravity.BOTTOM)
+
+            var weightList: List<Int> = (150 downTo 35).toList()
+            var weightStrConvertList = weightList.map { it.toString() }
+
+            val changeNp = mDialogView.findViewById<NumberPicker>(R.id.infoNp)
+            val fix = mDialogView.findViewById<AppCompatButton>(R.id.intentBtn)
+
+            changeNp.maxValue = weightStrConvertList.size - 1
+            changeNp.wrapSelectorWheel = true
+            changeNp.displayedValues = weightStrConvertList.toTypedArray()
+
+            changeNp.value = 150 - (dbHelper.getColValue(0,"user_info").toInt())
+            var currentvalue = 150 - (dbHelper.getColValue(0,"user_info").toInt())
+            changeNp.setOnValueChangedListener { picker, oldVal, newVal ->
+                currentvalue = newVal
+            }
+            fix.setOnClickListener {
+                if (dbHelper.isEmpty("change")) dbHelper.insertChange()
+                dbHelper.updateUserInfo("current_weight",150 - currentvalue)
+                dbHelper.updateChange(150 - currentvalue)
+                dbHelper.close()
+                mAlertDialog.dismiss()
+            }
+        }
+
+        waterTv.setOnClickListener {
+            val mDialogView = LayoutInflater.from(context).inflate(R.layout.fix_edittext_water, null)
+            val mBuilder = AlertDialog.Builder(context)
+                .setView(mDialogView)
+            val mAlertDialog = mBuilder.show()
+            mAlertDialog.window!!.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
+            mAlertDialog.window!!.setGravity(Gravity.CENTER)
+
+            val fix = mDialogView.findViewById<AppCompatButton>(R.id.intentBtn)
+
+//            var imm : InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+//            imm.showSoftInput(waterInput,0)
+//            waterInput.requestFocus()
+
+
+            fix.setOnClickListener {
+//                dbHelper.updateWater(waterInput.text.toString().toInt())
+                mAlertDialog.dismiss()
+            }
+        }
 
         btn100.setOnClickListener {
             var now = LocalDate.now()
@@ -138,3 +158,4 @@ class CustomViewPager : ViewPager {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
     }
 }
+

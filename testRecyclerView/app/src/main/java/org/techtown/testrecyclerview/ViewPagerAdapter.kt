@@ -50,38 +50,26 @@ class ViewPagerAdapter: PagerAdapter() {
             view = LayoutInflater.from(container.context).inflate(R.layout.page,container,false)
             val title = view.findViewById<TextView>(R.id.title)
             title.text = dbHelper.getColValue(0,"user_info") + "kg"
-            title.setOnClickListener {
-                val mDialogView = LayoutInflater.from(container.context).inflate(R.layout.activity_current_weight, null)
-                val mBuilder = AlertDialog.Builder(container.context)
-                    .setView(mDialogView)
-                val mAlertDialog = mBuilder.show()
-                mAlertDialog.window!!.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
-                mAlertDialog.window!!.setGravity(Gravity.BOTTOM)
-//            mAlertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-                var weightList: List<Int> = (150 downTo 35).toList()
-                var weightStrConvertList = weightList.map { it.toString() }
+            val kcalPb = view.findViewById<ProgressBar>(R.id.calPb)
+            val cabPb = view.findViewById<ProgressBar>(R.id.tanPb)
+            val proPb = view.findViewById<ProgressBar>(R.id.danPb)
+            val fatPb = view.findViewById<ProgressBar>(R.id.giPb)
 
-                val changeNp = mDialogView.findViewById<NumberPicker>(R.id.infoNp)
-                val fix = mDialogView.findViewById<AppCompatButton>(R.id.intentBtn)
+            val kcalTv = view.findViewById<TextView>(R.id.calTv3)
+            val tanTv = view.findViewById<TextView>(R.id.tanTv)
+            val danTv = view.findViewById<TextView>(R.id.danTv)
+            val giTv = view.findViewById<TextView>(R.id.giTv)
 
-                changeNp.maxValue = weightStrConvertList.size - 1
-                changeNp.wrapSelectorWheel = true
-                changeNp.displayedValues = weightStrConvertList.toTypedArray()
+            kcalPb.progress = dbHelper.getKcal(strnow)
+            cabPb.progress = dbHelper.getNutri(7,strnow)
+            proPb.progress = dbHelper.getNutri(8,strnow)
+            fatPb.progress = dbHelper.getNutri(9,strnow)
 
-                changeNp.value = 150 - (dbHelper.getColValue(0,"user_info").toInt())
-                var currentvalue = 150 - (dbHelper.getColValue(0,"user_info").toInt())
-                changeNp.setOnValueChangedListener { picker, oldVal, newVal ->
-                    currentvalue = newVal
-                }
-                fix.setOnClickListener {
-                    if (dbHelper.isEmpty("change")) dbHelper.insertChange()
-                    dbHelper.updateUserInfo("current_weight",150 - currentvalue)
-                    dbHelper.updateChange(150 - currentvalue)
-                    dbHelper.close()
-                    mAlertDialog.dismiss()
-                }
-            }
+            kcalTv.text = dbHelper.getKcal(strnow).toString()
+            tanTv.text = dbHelper.getNutri(7,strnow).toString()
+            danTv.text = dbHelper.getNutri(8,strnow).toString()
+            giTv.text = dbHelper.getNutri(9,strnow).toString()
 
         }
 
@@ -89,6 +77,10 @@ class ViewPagerAdapter: PagerAdapter() {
             view = LayoutInflater.from(container.context).inflate(R.layout.pagewater,container,false)
             val waterTv = view.findViewById<TextView>(R.id.waterTv)
             waterTv.text = dbHelper.getWater().toString() + "/" + dbHelper.getColValue(6, "user_info") + "ml"
+
+            val calPb2 = view.findViewById<ProgressBar>(R.id.calPb2)
+            calPb2.progress = dbHelper.getWater()
+
         }
 
 
