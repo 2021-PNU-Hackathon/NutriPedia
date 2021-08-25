@@ -44,6 +44,7 @@
         <entry key="..\:/Users/jhl81/OneDrive/NutriPedia/testRecyclerView/app/src/main/res/menu/setting_detail.xml" value="0.2111111111111111" />
         <entry key="..\:/Users/wogud/androidProject/NutriPedia/testRecyclerView/app/src/main/res/layout/activity_private_fix.xml" value="0.20606884057971014" />
         <entry key="..\:/Users/wogud/androidProject/NutriPedia/testRecyclerView/app/src/main/res/layout/activity_setting.xml" value="0.17481884057971014" />
+        <entry key="app/src/main/res/drawable/ic_back.xml" value="0.275" />
         <entry key="app/src/main/res/layout/activity_camera_result.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_current_weight.xml" value="0.23497267759562843" />
         <entry key="app/src/main/res/layout/activity_fix_search_result.xml" value="0.5635416666666667" />
@@ -57,9 +58,7 @@
         <entry key="app/src/main/res/layout/activity_setting.xml" value="0.2740628166160081" />
         <entry key="app/src/main/res/layout/activity_water_setting.xml" value="0.2740628166160081" />
         <entry key="app/src/main/res/layout/card_layout.xml" value="0.5635416666666667" />
-
         <entry key="app/src/main/res/layout/change_weight.xml" value="0.1785063752276867" />
-
         <entry key="app/src/main/res/layout/clicked_date_dialog.xml" value="0.2740628166160081" />
         <entry key="app/src/main/res/layout/custom_dialog.xml" value="0.5635416666666667" />
         <entry key="app/src/main/res/layout/custom_dialog_fixver.xml" value="0.5635416666666667" />

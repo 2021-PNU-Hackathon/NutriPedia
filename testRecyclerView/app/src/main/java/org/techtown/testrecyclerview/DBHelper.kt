@@ -349,6 +349,22 @@ class DBHelper(
         return returnvalue
     }
 
+    fun getNutri(field:Int, date:String) : Int {
+        var db: SQLiteDatabase = readableDatabase
+        val query = "SELECT * FROM record where date = '${date}'"
+        var cursor: Cursor = db.rawQuery(query, null)
+        var returnvalue :Int = 0
+
+        while(cursor.moveToNext()) {
+            returnvalue += cursor.getString(field).toInt()
+        }
+
+        cursor.close()
+        db.close()
+        return returnvalue
+    }
+
+
     fun getColValue(colindex: Int, tablename: String): String {
         var db: SQLiteDatabase = readableDatabase
         val query = "SELECT * FROM " + tablename
