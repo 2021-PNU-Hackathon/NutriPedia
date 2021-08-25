@@ -13,13 +13,14 @@ import android.widget.NumberPicker
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatButton
-import androidx.core.content.ContextCompat.getSystemService
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.findFragment
 import androidx.viewpager.widget.ViewPager
-import kotlinx.android.synthetic.main.activity_water_setting.*
-import kotlinx.android.synthetic.main.fix_edittext_water.view.*
+import com.gun0912.tedpermission.TedPermissionActivity.startActivity
+import kotlinx.android.synthetic.main.activity_age.view.*
 import kotlinx.android.synthetic.main.page.view.*
 import kotlinx.android.synthetic.main.pagewater.view.*
-
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -34,6 +35,7 @@ class CustomViewPager : ViewPager {
     val dbHelper = DBHelper(context, "food_nutri.db", null, 1)
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean {
+
 
         title.setOnClickListener {
             val mDialogView = LayoutInflater.from(context).inflate(R.layout.activity_current_weight, null)

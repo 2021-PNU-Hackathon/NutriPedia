@@ -8,13 +8,16 @@ import android.content.IntentFilter
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.ImageDecoder
+import android.media.ExifInterface
 import android.media.Image
 import android.media.audiofx.DynamicsProcessing
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.os.Handler
 import android.provider.MediaStore
 import android.util.Log
 
@@ -57,13 +60,15 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var br: BroadcastReceiver
 
+
+
     init {
         instance = this
 
     }
     companion object {
         var instance: MainActivity? = null
-
+        var arrayUse : ArrayList<FoodResult> = ArrayList<FoodResult>()
         fun gContext() : Context {
             return instance!!.applicationContext
         }
@@ -120,7 +125,12 @@ class MainActivity : AppCompatActivity() {
         fab.setOnClickListener {
             showSelectCameraOrImage()
         }
+
+
+
     }
+
+
 
     // 브로드캐스트리시버 필터 추가 & 등록
     override fun onResume() {
@@ -137,12 +147,18 @@ class MainActivity : AppCompatActivity() {
         super.onPause()
     }
 
+    fun test() {
+        val frg = supportFragmentManager.findFragmentById(R.id.main_frame)
+        val ft = supportFragmentManager.beginTransaction()
+        ft.detach(frg!!).attach(frg).commit()
+    }
+
 
 
     fun gallery() {
         var intent = Intent()
-        intent.setType("image/*")
-        intent.setAction(Intent.ACTION_GET_CONTENT)
+        intent.type = "image/*"
+        intent.action = Intent.ACTION_GET_CONTENT
         startActivityForResult(intent,REQUEST_CODE)
     }
 
@@ -234,9 +250,17 @@ class MainActivity : AppCompatActivity() {
         }
         if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK ) {
             var uri = data?.data
-            var cameraIntent = Intent(applicationContext, CameraResult::class.java)
-            cameraIntent.putExtra("uri", uri)
-            startActivity(cameraIntent)
+            //val path : String? = data!!.data!!.path
+            val path = getFullPath(uri!!)
+            var input = contentResolver.openInputStream(uri!!)
+            var image = BitmapFactory.decodeStream(input)
+            val file : File = bitmapToFile(image,path)
+            val serverData = FileUploadUtils().send2Server(file)
+            Handler().postDelayed({dataTOUse(serverData,image)
+                var cameraIntent = Intent(applicationContext, CameraResult::class.java)
+                cameraIntent.putExtra("uri", uri)
+                startActivity(cameraIntent)},2000)
+
         }
 
     }
@@ -261,27 +285,103 @@ class MainActivity : AppCompatActivity() {
         //실제적인 저장처리
         val out = FileOutputStream(folderPath + fileName)
         bitmap.compress(Bitmap.CompressFormat.JPEG,100,out)
-        Toast.makeText(this, "사진이 앨범에 저장되었습니다.", Toast.LENGTH_SHORT).show()
-        Toast.makeText(this, folderPath, Toast.LENGTH_SHORT).show()
+
         val file = File("/storage/emulated/0/Pictures/${fileName}")
         val serverData = FileUploadUtils().send2Server(file)
-        //dataTOUse(serverData)
-        var cameraIntent = Intent(applicationContext, CameraResult::class.java)
-        cameraIntent.putExtra("uri",photoURI)
-        //cameraIntent.putExtra("serverdata",serverData)
-        startActivity(cameraIntent)
+        Handler().postDelayed({dataTOUse(serverData,bitmap)
+            var cameraIntent = Intent(applicationContext, CameraResult::class.java)
+            cameraIntent.putExtra("uri",photoURI)
+            startActivity(cameraIntent)},2000)
     }
-    fun dataTOUse(serverData: ArrayList<ServerData>)  : ArrayList<FoodResult>?{
+
+    fun dataTOUse(serverData: ArrayList<ServerData>,bitmap: Bitmap) {
         dbHelper = DBHelper(this, "food_nutri.db", null, 1)
-        var arrayUse : ArrayList<FoodResult> = ArrayList<FoodResult>()
+
+        var crop :Bitmap
         if (serverData.size != 0) {
             for (i in 0 until serverData.size) {
                 val foodname = serverData[i].name
                 arrayUse.add(dbHelper.getFoodInfo(foodname))
+                crop = Bitmap.createBitmap(bitmap,serverData[i].x1.toInt(),serverData[i].y1.toInt(),
+                    (serverData[i].x2-serverData[i].x1).toInt(),(serverData[i].y2-serverData[i].y1).toInt())
+                arrayUse[i].uri = bitmapToUri(crop,i)
+                Log.e("check",arrayUse[i].foodName)
             }
         }
-            return arrayUse
     }
+
+    fun bitmapToUri(bitmap: Bitmap, i:Int) :Uri {
+        val folderPath = Environment.getExternalStorageDirectory().absolutePath + "/Pictures/" //사진 폴더에 저장 경로 선언
+        val timeStamp: String = SimpleDateFormat("yyyy-MM-dd-HHmmss").format(Date())+"-$i"
+        val fileName = "${timeStamp}.jpeg"
+        val folder = File(folderPath)
+        if (!folder.isDirectory) { // 현재 해당 경로에 폴더가 존재하지 않는다면
+            folder.mkdirs()
+        }
+        //실제적인 저장처리
+        val out = FileOutputStream(folderPath + fileName)
+        bitmap.compress(Bitmap.CompressFormat.JPEG,100,out)
+        val file = File("/storage/emulated/0/Pictures/${fileName}")
+        return Uri.parse(file.absolutePath)
+    }
+
+    fun bitmapToFile(bitmap:Bitmap, path : String?) : File {
+        val file = File(path)
+        var out : OutputStream
+        Log.e("path","$path")
+        file.createNewFile()
+        out = FileOutputStream(file)
+        bitmap.compress(Bitmap.CompressFormat.JPEG,100,out)
+        out.close()
+        return file
+    }
+
+    fun getGps(photoPath: String) {
+        var exif: ExifInterface?= null
+        try{
+            exif = ExifInterface(photoPath)
+        }catch (e: IOException) {
+            e.printStackTrace()
+        }
+        val lat = exif?.getAttribute(ExifInterface.TAG_GPS_LATITUDE)
+        // TAG_GPS_LATITUDE_REF: Indicates whether the latitude is north or south latitude
+        val lat_ref = exif?.getAttribute(ExifInterface.TAG_GPS_LATITUDE_REF)
+        val lon = exif?.getAttribute(ExifInterface.TAG_GPS_LONGITUDE)
+        // TAG_GPS_LONGITUDE_REF: Indicates whether the longitude is east or west longitude.
+        val lon_ref = exif?.getAttribute(ExifInterface.TAG_GPS_LONGITUDE_REF)
+
+        Log.d("latitude",lat.toString())
+        Log.d("longtitude",lon.toString())
+    }
+
+    fun getFullPath(uri: Uri) :String? {
+        val context = applicationContext
+        val contentResolver = context.contentResolver ?: return null
+
+        // Create file path inside app's data dir
+        val filePath = (context.applicationInfo.dataDir + File.separator
+                + System.currentTimeMillis())
+        val file = File(filePath)
+        try {
+            val inputStream = contentResolver.openInputStream(uri) ?: return null
+            val outputStream: OutputStream = FileOutputStream(file)
+            val buf = ByteArray(1024)
+            var len: Int
+            while (inputStream.read(buf).also { len = it } > 0) outputStream.write(buf, 0, len)
+            outputStream.close()
+            inputStream.close()
+        } catch (e: IOException) {
+            e.printStackTrace()
+            /*  절대 경로를 getGps()에 넘겨주기   */
+            getGps(file.getAbsolutePath())
+
+
+        }
+        return file.getAbsolutePath()
+    }
+
+
+
 
     class MyAdapter(val context: Context, var foodList: ArrayList<RecordFoodData>): RecyclerView.Adapter<MyAdapter.MyViewHolder>(){
       

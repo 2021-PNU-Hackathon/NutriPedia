@@ -46,13 +46,12 @@ class ResultSearchActivity : AppCompatActivity() {
         recyclerView.setHasFixedSize(true)
         displayList.addAll(foodList)
 
-
-
         var calorie : Int = 0
         var amount : Int = 0
         var nutri1 : Int = 0
         var nutri2 : Int = 0
         var nutri3 : Int = 0
+
 
         mAdapter.setItemClickListner(object : FoodAdapter.OnItemClickListner{
             override fun onClick(v: View, position: Int) {

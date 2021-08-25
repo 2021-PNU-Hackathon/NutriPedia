@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".FragmentOne"
+    android:id="@+id/fragment_one"
+    android:tag="one"
     android:layout_marginBottom="?attr/actionBarSize">
 
     <LinearLayout

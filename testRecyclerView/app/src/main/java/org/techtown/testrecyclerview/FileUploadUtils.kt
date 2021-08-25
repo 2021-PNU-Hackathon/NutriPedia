@@ -47,9 +47,11 @@ public class FileUploadUtils {
                         nameArr.get(i).toString())
                     serverData.add(sample)
                 }
-                Log.e("food",serverData[0].name)
+                //Log.e("food","${serverData[0].name},${serverData[1].name},${serverData[2].name}")
+                //Log.e("arrayuse","${serverData.size}")
             }
         })
+
         return serverData
     }
 

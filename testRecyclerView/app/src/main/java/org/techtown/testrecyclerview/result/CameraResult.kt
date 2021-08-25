@@ -27,6 +27,9 @@ import org.techtown.testrecyclerview.MainActivity
 import org.techtown.testrecyclerview.R
 import org.techtown.testrecyclerview.ServerData
 import org.techtown.testrecyclerview.search.SearchList
+import java.lang.NullPointerException
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class CameraResult : AppCompatActivity(){
@@ -40,17 +43,21 @@ class CameraResult : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_camera_result)
         //clickInit()
-        supportActionBar?.setTitle("2021년 07월 27일")
+        val sdf = SimpleDateFormat("yyyy년 MM월 dd일")
+        val now = System.currentTimeMillis()
+        val date = Date(now)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back)
+        supportActionBar?.title = sdf.format(date)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.parseColor("#FFFFFF")))
-        val uri : Uri? = intent.getParcelableExtra<Uri>("uri")
-
-        mainIv.setImageURI(uri)
 
         imageArray.clear()
-
-        imageArray.add(FoodResult("hyun",100,100,100,100,uri,true))
+        imageArray.addAll(MainActivity.arrayUse)
         imageArray.add(imageArray.size,FoodResult("add",0,0,0,0,null,false))
+        Log.e("size","${imageArray.size}")
+
+        mainIv.setImageURI(imageArray[0].uri)
+        MainActivity.arrayUse.clear()
 
         foodTv1.text = imageArray[0].foodName
         kcalTv.text = imageArray[0].calorie.toString() + "Kcal"
@@ -63,8 +70,6 @@ class CameraResult : AppCompatActivity(){
         }
         totalCal.text = total.toString() + "Kcal"
 
-
-        Log.e("size", "${imageArray.size}")
         val mAdapter = ResultAdapter(this,imageArray)
         addRecyclerView.adapter = mAdapter
 
@@ -78,35 +83,40 @@ class CameraResult : AppCompatActivity(){
         addRecyclerView.addOnItemTouchListener(object : RecyclerView.OnItemTouchListener {
             override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
                 val child = addRecyclerView.findChildViewUnder(e.x, e.y)
-                val position = addRecyclerView.getChildAdapterPosition(child!!)
-                if (position == imageArray.size-1) { // 마지막거
+                try {
+                    val position : Int = addRecyclerView.getChildAdapterPosition(child!!)
+                    if (position == imageArray.size-1) { // 마지막거
 
-                } else if (imageArray[position].uri != null) {
-                    mainIv.setImageURI(imageArray[position].uri)
-                    foodTv1.text = imageArray[position].foodName
-                    kcalTv.text = imageArray[position].calorie.toString() + "Kcal"
-                    nutri1_Tv.text = imageArray[position].nutri1.toString() + "g"
-                    nutri2_Tv.text = imageArray[position].nutri2.toString() + "g"
-                    nutri3_Tv.text = imageArray[position].nutri3.toString() + "g"
-                    var total : Double = 0.0
-                    for (i in 0 until imageArray.size) {
-                        total += imageArray[i].calorie
+                    } else if (imageArray[position].uri != null) {
+                        mainIv.setImageURI(imageArray[position].uri)
+                        foodTv1.text = imageArray[position].foodName
+                        kcalTv.text = imageArray[position].calorie.toString() + "Kcal"
+                        nutri1_Tv.text = imageArray[position].nutri1.toString() + "g"
+                        nutri2_Tv.text = imageArray[position].nutri2.toString() + "g"
+                        nutri3_Tv.text = imageArray[position].nutri3.toString() + "g"
+                        var total : Double = 0.0
+                        for (i in 0 until imageArray.size) {
+                            total += imageArray[i].calorie
+                        }
+                        totalCal.text = total.toString() + "Kcal"
+                    } else
+                    {
+                        mainIv.setImageResource(R.drawable.ic_no_image)
+                        foodTv1.text = imageArray[position].foodName
+                        kcalTv.text = imageArray[position].calorie.toString() + "Kcal"
+                        nutri1_Tv.text = imageArray[position].nutri1.toString() + "g"
+                        nutri2_Tv.text = imageArray[position].nutri2.toString() + "g"
+                        nutri3_Tv.text = imageArray[position].nutri3.toString() + "g"
+                        var total : Double = 0.0
+                        for (i in 0 until imageArray.size) {
+                            total += imageArray[i].calorie
+                        }
+                        totalCal.text = total.toString() + "Kcal"
                     }
-                    totalCal.text = total.toString() + "Kcal"
-                } else
-                 {
-                    mainIv.setImageResource(R.drawable.ic_no_image)
-                    foodTv1.text = imageArray[position].foodName
-                    kcalTv.text = imageArray[position].calorie.toString() + "Kcal"
-                    nutri1_Tv.text = imageArray[position].nutri1.toString() + "g"
-                    nutri2_Tv.text = imageArray[position].nutri2.toString() + "g"
-                    nutri3_Tv.text = imageArray[position].nutri3.toString() + "g"
-                    var total : Double = 0.0
-                    for (i in 0 until imageArray.size) {
-                        total += imageArray[i].calorie
-                    }
-                    totalCal.text = total.toString() + "Kcal"
+                } catch (e : NullPointerException) {
+
                 }
+
 
                 return false
             }
@@ -120,6 +130,22 @@ class CameraResult : AppCompatActivity(){
             }
 
         })
+        fix_search.setOnClickListener {
+            val intent = Intent(applicationContext,FixSearchResult::class.java)
+            var fixPosition : Int = 1000 // 1000은 예외처리
+            for (i in 0 until imageArray.size) {
+                if (foodTv1.text == imageArray[i].foodName) {
+                    fixPosition = i
+                    break
+                }
+            }
+            intent.putExtra("fixPosition",fixPosition)
+            startActivity(intent)
+        }
+        button.setOnClickListener {
+
+            finish()
+        }
     }
 
     override fun onResume() {
@@ -127,6 +153,22 @@ class CameraResult : AppCompatActivity(){
         var adapter = addRecyclerView.adapter
         addRecyclerView.invalidate()
         adapter!!.notifyDataSetChanged()
+
+
+        mainIv.setImageURI(imageArray[0].uri)
+
+        foodTv1.text = imageArray[0].foodName
+        kcalTv.text = imageArray[0].calorie.toString() + "Kcal"
+        nutri1_Tv.text = imageArray[0].nutri1.toString() + "g"
+        nutri2_Tv.text = imageArray[0].nutri2.toString() + "g"
+        nutri3_Tv.text = imageArray[0].nutri3.toString() + "g"
+        var total : Double = 0.0
+        for (i in 0 until imageArray.size) {
+            total += imageArray[i].calorie
+        }
+        totalCal.text = total.toString() + "Kcal"
+
+
     }
 
 //    private fun clickInit() {
