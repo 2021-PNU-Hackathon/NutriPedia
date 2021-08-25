@@ -18,7 +18,6 @@ class SettingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_setting)
-        supportActionBar?.setTitle("정보 수정")
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         dbHelper = DBHelper(this, "food_nutri.db", null, 1)
         database = dbHelper.writableDatabase

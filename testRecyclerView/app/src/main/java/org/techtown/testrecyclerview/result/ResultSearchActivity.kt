@@ -51,6 +51,7 @@ class ResultSearchActivity : AppCompatActivity() {
         var nutri1 = 0
         var nutri2 = 0
         var nutri3 = 0
+
         mAdapter.setItemClickListner(object : FoodAdapter.OnItemClickListner{
             override fun onClick(v: View, position: Int) {
                 //val intent = Intent(applicationContext, AddResult::class.java)
