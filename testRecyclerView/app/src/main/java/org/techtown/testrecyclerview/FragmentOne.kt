@@ -187,6 +187,8 @@ class FragmentOne : Fragment() {
         var recyclerView = v.findViewById<RecyclerView>(R.id.recyclerview_main) // recyclerview id
         var now = LocalDate.now()
         var strnow :String = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+        dbHelper = DBHelper(context, "food_nutri.db", null, 1)
+        db = dbHelper.readableDatabase
 
         fillFoodData(strnow)
 
