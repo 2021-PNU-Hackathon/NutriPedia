@@ -39,6 +39,26 @@ class ViewPagerAdapterPre(date:String): PagerAdapter() {
             view = LayoutInflater.from(container.context).inflate(R.layout.page,container,false)
             val title = view.findViewById<TextView>(R.id.title)
             title.text = dbHelper.getPreWeight(time).toString() + "kg"
+
+            val kcalPb = view.findViewById<ProgressBar>(R.id.calPb)
+            val cabPb = view.findViewById<ProgressBar>(R.id.tanPb)
+            val proPb = view.findViewById<ProgressBar>(R.id.danPb)
+            val fatPb = view.findViewById<ProgressBar>(R.id.giPb)
+
+            val kcalTv = view.findViewById<TextView>(R.id.calTv3)
+            val tanTv = view.findViewById<TextView>(R.id.tanTv)
+            val danTv = view.findViewById<TextView>(R.id.danTv)
+            val giTv = view.findViewById<TextView>(R.id.giTv)
+
+            kcalPb.progress = dbHelper.getKcal(time)
+            cabPb.progress = dbHelper.getNutri(7,time)
+            proPb.progress = dbHelper.getNutri(8,time)
+            fatPb.progress = dbHelper.getNutri(9,time)
+
+            kcalTv.text = dbHelper.getKcal(time).toString()
+            tanTv.text = dbHelper.getNutri(7,time).toString()
+            danTv.text = dbHelper.getNutri(8,time).toString()
+            giTv.text = dbHelper.getNutri(9,time).toString()
         }
 
         else {
@@ -46,6 +66,9 @@ class ViewPagerAdapterPre(date:String): PagerAdapter() {
             val waterTv = view.findViewById<TextView>(R.id.waterTv)
 
             waterTv.text = dbHelper.getPreWater(time).toString() + "/" + dbHelper.getColValue(6, "user_info") + "ml"
+
+            val calPb2 = view.findViewById<ProgressBar>(R.id.calPb2)
+            calPb2.progress = dbHelper.getPreWater(time)
 
         }
 

@@ -303,7 +303,7 @@ class SearchResult : AppCompatActivity() {
                     "snack" -> mt = "간식"
                     else -> null
                 }
-                dbHelper.insertFoodRecord(mt, )
+//                dbHelper.insertFoodRecord(mt, )
                 finish()
             }
         }

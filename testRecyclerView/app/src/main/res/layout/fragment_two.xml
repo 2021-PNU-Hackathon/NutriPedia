@@ -42,9 +42,9 @@
                                 android:id="@+id/backIb"
                                 android:layout_width="25dp"
                                 android:layout_height="22dp"
-                                android:layout_centerVertical="true"
                                 android:layout_alignParentLeft="true"
-                                android:background="@drawable/ic_back" />
+                                android:layout_centerVertical="true"
+                                android:background="@drawable/ic_goback" />
 
                             <TextView
                                 android:id="@+id/tv_current_month"
