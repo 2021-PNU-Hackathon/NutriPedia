@@ -46,7 +46,9 @@ class CameraResult : AppCompatActivity(){
         val uri : Uri? = intent.getParcelableExtra<Uri>("uri")
 
         mainIv.setImageURI(uri)
+
         imageArray.clear()
+
         imageArray.add(FoodResult("hyun",100,100,100,100,uri,true))
         imageArray.add(imageArray.size,FoodResult("add",0,0,0,0,null,false))
 

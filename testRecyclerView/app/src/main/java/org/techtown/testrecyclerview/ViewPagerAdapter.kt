@@ -43,12 +43,36 @@ class ViewPagerAdapter: PagerAdapter() {
             view = LayoutInflater.from(container.context).inflate(R.layout.page,container,false)
             val title = view.findViewById<TextView>(R.id.title)
             title.text = dbHelper.getColValue(0,"user_info") + "kg"
+
+            val kcalPb = view.findViewById<ProgressBar>(R.id.calPb)
+            val cabPb = view.findViewById<ProgressBar>(R.id.tanPb)
+            val proPb = view.findViewById<ProgressBar>(R.id.danPb)
+            val fatPb = view.findViewById<ProgressBar>(R.id.giPb)
+
+            val kcalTv = view.findViewById<TextView>(R.id.calTv3)
+            val tanTv = view.findViewById<TextView>(R.id.tanTv)
+            val danTv = view.findViewById<TextView>(R.id.danTv)
+            val giTv = view.findViewById<TextView>(R.id.giTv)
+
+            kcalPb.progress = dbHelper.getKcal(strnow)
+            cabPb.progress = dbHelper.getNutri(7,strnow)
+            proPb.progress = dbHelper.getNutri(8,strnow)
+            fatPb.progress = dbHelper.getNutri(9,strnow)
+
+            kcalTv.text = dbHelper.getKcal(strnow).toString()
+            tanTv.text = dbHelper.getNutri(7,strnow).toString()
+            danTv.text = dbHelper.getNutri(8,strnow).toString()
+            giTv.text = dbHelper.getNutri(9,strnow).toString()
         }
 
         else {
             view = LayoutInflater.from(container.context).inflate(R.layout.pagewater,container,false)
             val waterTv = view.findViewById<TextView>(R.id.waterTv)
             waterTv.text = dbHelper.getWater().toString() + "/" + dbHelper.getColValue(6, "user_info") + "ml"
+
+            val calPb2 = view.findViewById<ProgressBar>(R.id.calPb2)
+            calPb2.progress = dbHelper.getWater()
+
         }
 
 
