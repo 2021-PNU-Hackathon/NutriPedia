@@ -58,17 +58,6 @@ class SearchList : AppCompatActivity() {
         while(cursor.moveToNext()) {
             foodList.add(FoodData(cursor.getString(1), cursor.getString(2).toInt(),100,cursor.getString(3).toInt(), cursor.getString(4).toInt(), cursor.getString(5).toInt()))
         }
-
-//        foodLiscursor.close()
-//        db.close()t.add(FoodData("gimchi",1000,100,100,100,100))
-//        foodList.add(FoodData("bob",1000,100,100,100,100))
-//        foodList.add(FoodData("banana",1000,100,100,100,100))
-//        foodList.add(FoodData("salad",1000,100,100,100,100))
-//        foodList.add(FoodData("bulgogi",1000,100,100,100,100))
-//        foodList.add(FoodData("chicken",1000,100,100,100,100))
-//        foodList.add(FoodData("pizza",2000,100,100,100,100))
-//        foodList.add(FoodData("bread",1000,100,100,100,100))
-//        foodList.add(FoodData("meat",1000,100,100,100,100))
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

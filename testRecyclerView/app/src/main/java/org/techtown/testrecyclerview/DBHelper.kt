@@ -1,15 +1,18 @@
 package org.techtown.testrecyclerview
 
 import android.annotation.SuppressLint
+import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.net.Uri
 import android.os.Build
+import android.provider.BaseColumns
 import android.util.Log
 import androidx.annotation.RequiresApi
 import org.techtown.testrecyclerview.result.FoodResult
+import org.w3c.dom.Text
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -41,10 +44,10 @@ class DBHelper(
                 "imgPath TEXT," +
                 "photoGuide TEXT," +
                 "amount INT," +
-                "kcal DOUBLE," +
-                "cab DOUBLE," +
-                "pro DOUBLE," +
-                "fat DOUBLE" +
+                "kcal INT," +
+                "cab INT," +
+                "pro INT," +
+                "fat INT" +
                 ");"
 
         var sql3: String = "CREATE TABLE if not exists water (" +
@@ -114,10 +117,10 @@ class DBHelper(
         db.execSQL(query)
     }
 
-    fun insertFoodRecord(_mealtime: String?, _foodname: String) {
+    fun insertFoodRecord(_mealtime: String?, _foodname: String?, _amount: Int, _kcal: Int, _cab: Int, _pro: Int, _fat: Int) {
         var db: SQLiteDatabase = writableDatabase
         var query =
-            "INSERT INTO record VALUES ((SELECT date('now','localtime')), _mealtime, _foodname, NULL, NULL, 0, 0, 0, 0, 0);"
+            "INSERT INTO record VALUES ((SELECT date('now','localtime')), '${_mealtime}', '${_foodname}', NULL, NULL, '${_amount}', '${_kcal}', '${_cab}', '${_pro}', '${_fat}');"
         db.execSQL(query)
     }
 
