@@ -69,14 +69,14 @@ class RecommendList : AppCompatActivity() {
             recommendedKcal)
 //        println("하루 권장 탄수화물, 단백질, 지방: ${nutrientRate}")
         // 3. |'하루 권장 탄, 단, 지' - '이미 섭취한 탄, 단, 지'|를 계산 하여 '부족한 탄, 단, 지(%)' 계산 // 임의의 값 넣어놓은 것
-        var scarceNutrientList:List<Double> = listOf(rateOfScarceNutrient(100.0, 500.0, 200.0).component1(), rateOfScarceNutrient(100.0, 500.0, 200.0).component2(), rateOfScarceNutrient(100.0, 500.0, 200.0).component3())
+        var scarceNutrientList:List<Double> = listOf(rateOfScarceNutrient(100, 500, 200).component1(), rateOfScarceNutrient(100, 500, 200).component2(), rateOfScarceNutrient(100, 500, 200).component3())
 //        println("비교를 위한 '부족한 영양소 비율(탄, 단, 지)(%)' $scarceNutrientList")
 
         // more test
         var name : String
-        var cab : Double
-        var pro : Double
-        var fat : Double
+        var cab : Int
+        var pro : Int
+        var fat : Int
         var priority : Int
         var differenceAndName = mutableMapOf<Double, String>()
         var priorityAndName = mutableMapOf<String, Int>()
@@ -85,11 +85,11 @@ class RecommendList : AppCompatActivity() {
         for (i in 0..90) {
 
             name = dbHelper.getColValueTest(i, 1, "real_nutri_91")
-            cab = dbHelper.getColValueTest(i, 3, "real_nutri_91").toDouble()
-            pro = dbHelper.getColValueTest(i, 4, "real_nutri_91").toDouble()
-            fat = dbHelper.getColValueTest(i, 5, "real_nutri_91").toDouble()
+            cab = dbHelper.getColValueTest(i, 3, "real_nutri_91").toInt()
+            pro = dbHelper.getColValueTest(i, 4, "real_nutri_91").toInt()
+            fat = dbHelper.getColValueTest(i, 5, "real_nutri_91").toInt()
             priority = dbHelper.getColValueTest(i, 6, "real_nutri_91").toInt()
-            listOf(rateOfScarceNutrient(100.0, 500.0, 200.0).component1(), rateOfScarceNutrient(100.0, 500.0, 200.0).component2(), rateOfScarceNutrient(100.0, 500.0, 200.0).component3())
+            listOf(rateOfScarceNutrient(100, 500, 200).component1(), rateOfScarceNutrient(100, 500, 200).component2(), rateOfScarceNutrient(100, 500, 200).component3())
             var foodNutrientList = listOf(cab, pro, fat, name)
             var foodNutrientListrate :List<Double> = listOf(rateOfScarceNutrient(cab, pro, fat).component1(), rateOfScarceNutrient(cab, pro, fat).component2(), rateOfScarceNutrient(cab, pro, fat).component3())
 //            println(foodNutrientList)
