@@ -21,14 +21,13 @@
             android:orientation="vertical">
 
 
-
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentBottom="true"
-                android:layout_marginTop="230dp"
-                android:layout_marginBottom="5dp"
+                android:layout_marginTop="98dp"
+                android:layout_marginBottom="137dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent">
