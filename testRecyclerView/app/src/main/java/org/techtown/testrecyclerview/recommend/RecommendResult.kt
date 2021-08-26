@@ -214,13 +214,13 @@ class RecommendResult : AppCompatActivity() {
             register.setOnClickListener {
                 mAlertDialog.dismiss()
                 var mt: String? = null
-                mt = when(idCheck.toString()) {
-                    "breakfast" -> "아침"
-                    "brunch" -> "아점"
-                    "lunch" -> "점심"
-                    "linner" -> "점저"
-                    "dinner" -> "저녁"
-                    "snack" -> "간식"
+                mt = when(idCheck) {
+                    breakfast -> "아침"
+                    brunch -> "아점"
+                    lunch -> "점심"
+                    linner -> "점저"
+                    dinner -> "저녁"
+                    snack -> "간식"
                     else -> null
                 }
 
