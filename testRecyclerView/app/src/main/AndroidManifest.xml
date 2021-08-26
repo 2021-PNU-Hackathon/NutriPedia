@@ -36,6 +36,7 @@
         <activity android:name=".result.ResultSearchActivity" />
         <activity
             android:name=".result.CameraResult"
+            android:theme="@style/Theme.Dark"
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".settings.TanDanJiSetting"

@@ -1,17 +1,20 @@
 package org.techtown.testrecyclerview
 
 import android.content.Context
+import android.content.Intent
 import android.database.sqlite.SQLiteDatabase
 import android.os.Build
 import android.renderscript.Sampler
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.NumberPicker
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.AppCompatButton
 import androidx.viewpager.widget.PagerAdapter
+import kotlinx.android.synthetic.main.page.view.*
 import org.techtown.testrecyclerview.R
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -31,6 +34,10 @@ class ViewPagerAdapter: PagerAdapter() {
 
     //position에 해당하는 페이지 생성
     lateinit var view:View
+    override fun getItemPosition(`object`: Any): Int {
+        return POSITION_NONE
+    }
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         dbHelper = DBHelper(container.context, "food_nutri.db", null, 1)
@@ -63,6 +70,7 @@ class ViewPagerAdapter: PagerAdapter() {
             tanTv.text = dbHelper.getNutri(7,strnow).toString()
             danTv.text = dbHelper.getNutri(8,strnow).toString()
             giTv.text = dbHelper.getNutri(9,strnow).toString()
+
         }
 
         else {
