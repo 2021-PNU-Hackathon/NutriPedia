@@ -61,6 +61,8 @@ class SearchResult : AppCompatActivity() {
             currentvalue = newVal
         }
 
+
+
         val registerBtn: Button = findViewById(R.id.registerBtn)
         registerBtn.setOnClickListener {
             val mDialogView = LayoutInflater.from(this).inflate(R.layout.custom_dialog, null)

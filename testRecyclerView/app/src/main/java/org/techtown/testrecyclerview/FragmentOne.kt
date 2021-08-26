@@ -22,7 +22,9 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.FileProvider
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
@@ -32,8 +34,6 @@ import kotlinx.android.synthetic.main.fragment_one.*
 import kotlinx.android.synthetic.main.page.*
 import kotlinx.android.synthetic.main.search_bar.*
 import kotlinx.android.synthetic.main.search_bar.view.*
-import org.techtown.testrecyclerview.databinding.ActivityAddResultBinding.inflate
-import org.techtown.testrecyclerview.databinding.ChangeWeightBinding.inflate
 import org.techtown.testrecyclerview.recommend.RecommendList
 import org.techtown.testrecyclerview.recommend.RecommendResult
 import org.techtown.testrecyclerview.result.CameraResult
@@ -49,6 +49,7 @@ import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.*
+import kotlin.concurrent.fixedRateTimer
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -72,7 +73,7 @@ class FragmentOne : Fragment() {
     lateinit var db : SQLiteDatabase
     var foodList = arrayListOf<RecordFoodData>()
     val displayList = ArrayList<RecordFoodData>()
-
+    lateinit var v : View
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -85,13 +86,12 @@ class FragmentOne : Fragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        var v :View = inflater.inflate(R.layout.fragment_one,container,false)
+        v = inflater.inflate(R.layout.fragment_one,container,false)
 
         dbHelper = DBHelper(context, "food_nutri.db", null, 1)
         db = dbHelper.readableDatabase
 
         var recyclerView = v.findViewById<RecyclerView>(R.id.recyclerview_main) // recyclerview id
-
 
         var now = LocalDate.now()
         var strnow :String = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
@@ -124,6 +124,23 @@ class FragmentOne : Fragment() {
         pagerTest.adapter = viewAdapter
         val dapter = pagerTest.adapter
         pagerTest.pageMargin = 30
+
+        pagerTest.addOnAdapterChangeListener { viewPager, oldAdapter, newAdapter ->  }
+//        pagerTest.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+//            val act = activity as MainActivity
+//            override fun onPageScrollStateChanged(state: Int) {
+//            }
+//
+//            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+//            }
+//            override fun onPageSelected(position: Int) {
+//                pagerTest.adapter!!.notifyDataSetChanged()
+//                pagerTest.invalidate()
+//                act.test()
+//            }
+//
+//        })
+
 
         var searchView = v.findViewById<View>(R.id.search_bar1)
         var searchTv = searchView.findViewById<TextView>(R.id.search_tv)
@@ -163,6 +180,40 @@ class FragmentOne : Fragment() {
             startActivity(intentRecommend)
         }
         return v
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun onResume() {
+        var recyclerView = v.findViewById<RecyclerView>(R.id.recyclerview_main) // recyclerview id
+        var now = LocalDate.now()
+        var strnow :String = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+        dbHelper = DBHelper(context, "food_nutri.db", null, 1)
+        db = dbHelper.readableDatabase
+
+        fillFoodData(strnow)
+
+        var layoutManager = LinearLayoutManager(context)
+        recyclerView.layoutManager = layoutManager
+
+        recyclerView.setHasFixedSize(true)
+        displayList.addAll(foodList)
+
+        var adapter = MainActivity.MyAdapter(MainActivity.gContext(),displayList)
+        recyclerView.adapter = adapter
+
+        adapter.notifyDataSetChanged()
+        recyclerView.invalidate()
+
+        val viewAdapter= ViewPagerAdapter()
+        val pagerTest = v.findViewById<ViewPager>(R.id.pager)
+        pagerTest.adapter = viewAdapter
+        val dapter = pagerTest.adapter
+        pagerTest.pageMargin = 30
+
+        dapter!!.notifyDataSetChanged()
+        pagerTest.invalidate()
+
+        super.onResume()
     }
 
 
