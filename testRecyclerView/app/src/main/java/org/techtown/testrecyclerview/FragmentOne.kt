@@ -36,6 +36,7 @@ import kotlinx.android.synthetic.main.fragment_one.*
 import kotlinx.android.synthetic.main.page.*
 import kotlinx.android.synthetic.main.search_bar.*
 import kotlinx.android.synthetic.main.search_bar.view.*
+import org.techtown.testrecyclerview.recommend.RecommendFoodAdapter
 import org.techtown.testrecyclerview.recommend.RecommendList
 import org.techtown.testrecyclerview.recommend.RecommendResult
 import org.techtown.testrecyclerview.result.CameraResult
@@ -117,11 +118,12 @@ class FragmentOne : Fragment() {
         )
 
         if (MainActivity.checkChange == 1) {
-            if(dbHelper.getKcal(strnow) >= (recommendedKcal * 0.85) && dbHelper.getKcal(strnow) >= (recommendedKcal * 1.15))
+            if(dbHelper.getKcal(strnow) >= (recommendedKcal * 0.85) && dbHelper.getKcal(strnow) <= (recommendedKcal * 1.15))
                 dbHelper.updateSuccess(1)
             else dbHelper.updateSuccess(0)
             MainActivity.checkChange = 0
-            Log.d("check",dbHelper.getColValue(1,"success"))
+            Log.d("update",dbHelper.getColValue(1,"success"))
+            Log.d("update",(recommendedKcal * 0.85).toString())
         }
 
         calTv.text = "${recommendedKcal - dbHelper.getKcal(strnow)}Kcal"
@@ -162,10 +164,11 @@ class FragmentOne : Fragment() {
 //        searchTv.auto_tv.setAdapter(arrayAdapter)
 //        searchTv.auto_tv.threshold = 0
 
-//        searchIv.setOnClickListener {
-//            //if
-//            searchTv.auto_tv.setText("")
-//        }
+        searchIv.setOnClickListener {
+            val intent = Intent(context,SearchList::class.java)
+//            intent.putExtra("send", auto_tv.text)
+            startActivity(intent)
+        }
         settingBtn.setOnClickListener {
             var settingIntent: Intent = Intent(context, SettingActivity::class.java)
             startActivity(settingIntent)
@@ -180,29 +183,39 @@ class FragmentOne : Fragment() {
 //            intent.putExtra("send", auto_tv.text)
             startActivity(intent)
         }
-        recyclerView.addOnItemTouchListener(object : RecyclerView.OnItemTouchListener{
-            override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
-                try {
-                    val child = recyclerView.findChildViewUnder(e.x, e.y)
-                    if (e.action != MotionEvent.ACTION_MOVE && e.action == MotionEvent.ACTION_DOWN) {
-                        val cardViewIntent = Intent(context, FixItemActivity::class.java)
-                        position = recyclerView.getChildAdapterPosition(child!!)
-                        startActivityForResult(cardViewIntent, 123)
-                    }
-                } catch (e : NullPointerException) {
 
-                }
-                return false
-            }
+//        adapter.setItemClickListner(object : MainActivity.MyAdapter.OnItemClickListner {
+//            override fun onClick(v: View, position: Int) {
+//                val cardViewIntent = Intent(context, FixItemActivity::class.java)
+////                position = recyclerView.getChildAdapterPosition(child!!)
+//                startActivityForResult(cardViewIntent, 123)
+//            }
+//
+//        })  재현 테스트
 
-            override fun onTouchEvent(rv: RecyclerView, e: MotionEvent) {
-
-            }
-
-            override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {
-            }
-
-        })
+//        recyclerView.addOnItemTouchListener(object : RecyclerView.OnItemTouchListener{
+//            override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
+//                try {
+//                    val child = recyclerView.findChildViewUnder(e.x, e.y)
+//                    if (e.action != MotionEvent.ACTION_MOVE && e.action == MotionEvent.ACTION_DOWN) {
+//                        val cardViewIntent = Intent(context, FixItemActivity::class.java)
+//                        position = recyclerView.getChildAdapterPosition(child!!)
+//                        startActivityForResult(cardViewIntent, 123)
+//                    }
+//                } catch (e : NullPointerException) {
+//
+//                }
+//                return false
+//            }
+//
+//            override fun onTouchEvent(rv: RecyclerView, e: MotionEvent) {
+//
+//            }
+//
+//            override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {
+//            }
+//
+//        })
 
         recommendBtn.setOnClickListener {
             var intentRecommend = Intent(context, RecommendList::class.java)
@@ -243,11 +256,12 @@ class FragmentOne : Fragment() {
         )
 
         if (MainActivity.checkChange == 1) {
-            if(dbHelper.getKcal(strnow) >= (recommendedKcal * 0.85) && dbHelper.getKcal(strnow) >= (recommendedKcal * 1.15))
+            if(dbHelper.getKcal(strnow) >= (recommendedKcal * 0.85) && dbHelper.getKcal(strnow) <= (recommendedKcal * 1.15))
                 dbHelper.updateSuccess(1)
             else dbHelper.updateSuccess(0)
             MainActivity.checkChange = 0
-            Log.d("check",dbHelper.getColValue(1,"success"))
+            Log.d("update",dbHelper.getColValue(1,"success"))
+            Log.d("update",(recommendedKcal * 0.85).toString())
         }
 
         calTv.text = "${recommendedKcal - dbHelper.getKcal(strnow)}Kcal"

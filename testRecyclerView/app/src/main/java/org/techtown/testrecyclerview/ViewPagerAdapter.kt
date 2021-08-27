@@ -77,10 +77,10 @@ class ViewPagerAdapter: PagerAdapter() {
             proPb.progress = dbHelper.getNutri(8,strnow) * 100 / triple.second
             fatPb.progress = dbHelper.getNutri(9,strnow) * 100 / triple.third
 
-            kcalTv.text = dbHelper.getKcal(strnow).toString()
-            tanTv.text = dbHelper.getNutri(7,strnow).toString()
-            danTv.text = dbHelper.getNutri(8,strnow).toString()
-            giTv.text = dbHelper.getNutri(9,strnow).toString()
+            kcalTv.text = dbHelper.getKcal(strnow).toString() +"/"+recommendedKcal.toString()+"Kcal"
+            tanTv.text = dbHelper.getNutri(7,strnow).toString()+"/"+triple.first.toString()+"g"
+            danTv.text = dbHelper.getNutri(8,strnow).toString()+"/"+triple.second.toString()+"g"
+            giTv.text = dbHelper.getNutri(9,strnow).toString()+"/"+triple.third.toString()+"g"
 
         }
 
