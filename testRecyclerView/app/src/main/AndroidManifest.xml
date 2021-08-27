@@ -30,6 +30,7 @@
             android:exported="true" />
         <activity
             android:name=".settings.PrivateFix"
+            android:theme="@style/Theme.Dark"
             android:parentActivityName=".settings.SettingActivity" />
         <activity android:name=".result.FixItemActivity" />
         <activity android:name=".result.FixSearchResult" />
@@ -40,11 +41,13 @@
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".settings.TanDanJiSetting"
+            android:theme="@style/Theme.Dark"
             android:parentActivityName=".settings.SettingActivity"
             android:windowSoftInputMode="stateVisible" />
         <activity
             android:name=".settings.WaterSetting"
             android:parentActivityName=".settings.SettingActivity"
+            android:theme="@style/Theme.Dark"
             android:windowSoftInputMode="stateVisible" />
         <activity
             android:name=".settings.SettingActivity"
@@ -68,7 +71,8 @@
         <!-- android:name=".MainActivity" -->
         <!-- android:label="@string/title_activity_main" -->
         <!-- android:theme="@style/Theme.TestRecyclerView.NoActionBar" /> -->
-        <activity android:name=".recommend.RecommendResult" />
+        <activity android:name=".recommend.RecommendResult"
+            android:theme="@style/Theme.TestRecyclerView.NoActionBar"/>
         <activity
             android:name=".recommend.RecommendList"
             android:parentActivityName=".MainActivity"
@@ -76,7 +80,8 @@
         <activity
             android:name=".search.SearchList"
             android:theme="@style/Theme.Dark" />
-        <activity android:name=".search.SearchResult" />
+        <activity android:name=".search.SearchResult"
+            android:theme="@style/Theme.TestRecyclerView.NoActionBar"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -23,9 +23,9 @@ class PrivateFix : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_private_fix)
 
-        supportActionBar?.setTitle("내 정보 수정하기")
+        supportActionBar?.title ="내 정보 수정하기"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back)
 
         manBtn.setOnClickListener {
             if (idCheck == null || clicked == false){ // 아무 것도 클릭 안되어 있음

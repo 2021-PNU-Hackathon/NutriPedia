@@ -18,9 +18,10 @@ class SettingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_setting)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         dbHelper = DBHelper(this, "food_nutri.db", null, 1)
         database = dbHelper.writableDatabase
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = "정보수정"
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back)
         tanDanJi.setOnClickListener {

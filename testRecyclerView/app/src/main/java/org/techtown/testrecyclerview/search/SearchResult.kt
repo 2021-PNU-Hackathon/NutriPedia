@@ -20,6 +20,7 @@ import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_search_result.*
 import org.techtown.testrecyclerview.DBHelper
 import org.techtown.testrecyclerview.R
+import kotlin.math.roundToInt
 
 class SearchResult : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.Q)
@@ -34,6 +35,8 @@ class SearchResult : AppCompatActivity() {
         val nutri1 = intent.getIntExtra("nutri1", 0)
         val nutri2 = intent.getIntExtra("nutri2", 0)
         val nutri3 = intent.getIntExtra("nutri3", 0)
+
+        supportActionBar?.title = name
 
         some_id.text = name
         kcal.text = calorie.toString() + "Kcal"
@@ -58,15 +61,23 @@ class SearchResult : AppCompatActivity() {
         currentNp.value = 40
         var currentvalue = 40
 
+        var splitArray = nutri1_Tv.text.split("K") as MutableList<String>
+        val num1 = splitArray[0].toDouble()
+        splitArray.removeAll(splitArray)
+        splitArray = nutri2_Tv.text.split("K") as MutableList<String>
+        val num2 = splitArray[0].toDouble()
+        splitArray = nutri3_Tv.text.split("K") as MutableList<String>
+        val num3 = splitArray[0].toDouble()
+
         currentNp.setOnValueChangedListener { picker, oldVal, newVal ->
             currentvalue = newVal
             Log.e("change","$newVal")
-            val nutri_1 = nutri1_Tv.text.toString().toInt()
-            val nutri_2 = nutri2_Tv.text.toString().toInt()
-            val nutri_3 = nutri3_Tv.text.toString().toInt()
-            nutri1_Tv.text = (nutri_1*(newVal/oldVal)).toString()
-            nutri2_Tv.text = (nutri_2*(newVal/oldVal)).toString()
-            nutri3_Tv.text = (nutri_3*(newVal/oldVal)).toString()
+            nutri1_Tv.text = (num1*(50-newVal)/10).roundToInt().toString() + "Kcal"
+            nutri2_Tv.text = (num2*(50-newVal)/10).roundToInt().toString() + "Kcal"
+            nutri3_Tv.text = (num3*(50-newVal)/10).roundToInt().toString() + "Kcal"
+            kcal.text = ((num1*(50-newVal)/10).roundToInt()+(num2*(50-newVal)/10).roundToInt()+(num3*(50-newVal)/10).roundToInt()).toString() +"Kcal"
+            total.text = kcal.text
+
         }
 
 

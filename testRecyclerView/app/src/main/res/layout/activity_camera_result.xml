@@ -122,25 +122,25 @@
                     app:layout_constraintTop_toBottomOf="@+id/inputNutri">
 
                     <NumberPicker
-                        android:layout_weight="6"
                         android:id="@+id/np_gram"
                         android:layout_width="0dp"
                         android:layout_height="120dp"
-                        tools:layout_editor_absoluteX="108dp"
-                        tools:layout_editor_absoluteY="84dp"
                         android:layout_margin="10dp"
-                        android:theme="@style/AppTheme.Picker"/>
+                        android:layout_weight="6"
+                        android:theme="@style/AppTheme.Picker"
+                        tools:layout_editor_absoluteX="108dp"
+                        tools:layout_editor_absoluteY="84dp" />
 
                     <TextView
                         android:id="@+id/textView4"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:layout_margin="10dp"
-                        android:textSize="25sp"
+                        android:text="g"
                         android:textColor="@color/black"
-                        android:text="g" />
+                        android:textSize="25sp" />
 
 
                 </LinearLayout>

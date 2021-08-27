@@ -14,8 +14,10 @@ class TanDanJiSetting : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tan_dan_ji_setting)
 
-        supportActionBar?.setTitle("내 정보 수정하기")
+        supportActionBar?.title = "내 정보 수정하기"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back)
+
         val input1 = findViewById<EditText>(R.id.input1)
         var imm : InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.showSoftInput(input1,0)

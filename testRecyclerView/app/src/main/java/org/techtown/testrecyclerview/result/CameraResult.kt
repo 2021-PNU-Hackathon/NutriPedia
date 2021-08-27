@@ -8,10 +8,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.Toast
+import android.widget.*
 import androidx.annotation.Nullable
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -23,6 +20,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_camera_result.*
+import kotlinx.android.synthetic.main.activity_camera_result.nutri1_Tv
+import kotlinx.android.synthetic.main.activity_camera_result.nutri2_Tv
+import kotlinx.android.synthetic.main.activity_camera_result.nutri3_Tv
+import kotlinx.android.synthetic.main.activity_search_result.*
 import org.techtown.testrecyclerview.MainActivity
 import org.techtown.testrecyclerview.R
 import org.techtown.testrecyclerview.ServerData
@@ -30,6 +31,7 @@ import org.techtown.testrecyclerview.search.SearchList
 import java.lang.NullPointerException
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.roundToInt
 
 
 class CameraResult : AppCompatActivity(){
@@ -42,6 +44,7 @@ class CameraResult : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_camera_result)
+        var pos = 0
         //clickInit()
         val sdf = SimpleDateFormat("yyyy년 MM월 dd일")
         val now = System.currentTimeMillis()
@@ -64,11 +67,43 @@ class CameraResult : AppCompatActivity(){
         nutri1_Tv.text = imageArray[0].nutri1.toString() + "Kcal"
         nutri2_Tv.text = imageArray[0].nutri2.toString() + "Kcal"
         nutri3_Tv.text = imageArray[0].nutri3.toString() + "Kcal"
-        var total : Double = 0.0
+        var total = 0
         for (i in 0 until imageArray.size) {
             total += imageArray[i].calorie
         }
         totalCal.text = total.toString() + "Kcal"
+
+        var tempList: List<Int> = (50 downTo 5).toList()
+        var gramList = ArrayList<Int>()
+        for (i in 0 until tempList.size) {
+            gramList.add(tempList[i]*10)
+        }
+        var gramStrConvertList = gramList.map { it.toString() }
+
+
+        val currentNp = findViewById<NumberPicker>(R.id.np_gram)
+
+        currentNp.maxValue = gramStrConvertList.size - 1
+        currentNp.wrapSelectorWheel = true
+        currentNp.displayedValues = gramStrConvertList.toTypedArray()
+        currentNp.value = 40
+        var currentvalue = 40
+
+
+
+
+        currentNp.setOnValueChangedListener { picker, oldVal, newVal ->
+            currentvalue = newVal
+            Log.e("change","$newVal")
+            nutri1_Tv.text = (imageArray[pos].nutri1.toDouble()*(50-newVal)/10).roundToInt().toString() + "Kcal"
+            nutri2_Tv.text = (imageArray[pos].nutri2.toDouble()*(50-newVal)/10).roundToInt().toString() + "Kcal"
+            nutri3_Tv.text = (imageArray[pos].nutri3.toDouble()*(50-newVal)/10).roundToInt().toString() + "Kcal"
+            kcalTv.text = ((imageArray[pos].nutri1.toDouble()*(50-newVal)/10).roundToInt()+(imageArray[pos].nutri2.toDouble()*(50-newVal)/10).roundToInt()+(imageArray[pos].nutri3.toDouble()*(50-newVal)/10).roundToInt()).toString() +"Kcal"
+            totalCal.text = kcalTv.text
+            imageArray[pos].nutri1 = (imageArray[pos].nutri1.toDouble()*(50-newVal)/10).roundToInt()
+            imageArray[pos].nutri2 = (imageArray[pos].nutri2.toDouble()*(50-newVal)/10).roundToInt()
+            imageArray[pos].nutri3 = (imageArray[pos].nutri3.toDouble()*(50-newVal)/10).roundToInt()
+        }
 
         val mAdapter = ResultAdapter(this,imageArray)
         addRecyclerView.adapter = mAdapter
@@ -94,7 +129,8 @@ class CameraResult : AppCompatActivity(){
                         nutri1_Tv.text = imageArray[position].nutri1.toString() + "Kcal"
                         nutri2_Tv.text = imageArray[position].nutri2.toString() + "Kcal"
                         nutri3_Tv.text = imageArray[position].nutri3.toString() + "Kcal"
-                        var total : Double = 0.0
+                        pos = position
+                        var total = 0
                         for (i in 0 until imageArray.size) {
                             total += imageArray[i].calorie
                         }
@@ -107,7 +143,8 @@ class CameraResult : AppCompatActivity(){
                         nutri1_Tv.text = imageArray[position].nutri1.toString() + "Kcal"
                         nutri2_Tv.text = imageArray[position].nutri2.toString() + "Kcal"
                         nutri3_Tv.text = imageArray[position].nutri3.toString() + "Kcal"
-                        var total : Double = 0.0
+                        pos = position
+                        var total = 0
                         for (i in 0 until imageArray.size) {
                             total += imageArray[i].calorie
                         }
@@ -131,16 +168,18 @@ class CameraResult : AppCompatActivity(){
 
         })
         fix_search.setOnClickListener {
-            val intent = Intent(applicationContext,FixSearchResult::class.java)
-            var fixPosition : Int = 1000 // 1000은 예외처리
-            for (i in 0 until imageArray.size) {
-                if (foodTv1.text == imageArray[i].foodName) {
-                    fixPosition = i
-                    break
+            if (imageArray.size != 1) {
+                val intent = Intent(applicationContext,FixSearchResult::class.java)
+                var fixPosition : Int = 1000 // 1000은 예외처리
+                for (i in 0 until imageArray.size) {
+                    if (foodTv1.text == imageArray[i].foodName) {
+                        fixPosition = i
+                        break
+                    }
                 }
+                intent.putExtra("fixPosition",fixPosition)
+                startActivity(intent)
             }
-            intent.putExtra("fixPosition",fixPosition)
-            startActivity(intent)
         }
 
         button.setOnClickListener {
@@ -433,7 +472,7 @@ class CameraResult : AppCompatActivity(){
         nutri1_Tv.text = imageArray[0].nutri1.toString() + "Kcal"
         nutri2_Tv.text = imageArray[0].nutri2.toString() + "Kcal"
         nutri3_Tv.text = imageArray[0].nutri3.toString() + "Kcal"
-        var total : Double = 0.0
+        var total = 0
         for (i in 0 until imageArray.size) {
             total += imageArray[i].calorie
         }
