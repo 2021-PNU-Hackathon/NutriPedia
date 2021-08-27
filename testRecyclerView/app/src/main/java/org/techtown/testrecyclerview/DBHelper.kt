@@ -269,7 +269,7 @@ class DBHelper(
         Log.d("check in dbh",strstart)
         Log.d("check in dbh","${strnow}")
 
-        var cursor: Cursor = db.rawQuery("SELECT * FROM change where date Between '${strstart}' and '${strnow}' ORDER by date desc", null)
+        var cursor: Cursor = db.rawQuery("SELECT * FROM change where date Between '${strstart}' and '${strnow}' ORDER by date asc", null)
         while(cursor.moveToNext()) {
             returnList.add(cursor.getFloat(1))
             Log.d("check in dbh","123")

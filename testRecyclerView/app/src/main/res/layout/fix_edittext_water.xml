@@ -23,7 +23,7 @@
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/waterInput"
+            android:id="@+id/waterEdit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
