@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_camera_result.*
+import org.techtown.testrecyclerview.DBHelper
 import org.techtown.testrecyclerview.MainActivity
 import org.techtown.testrecyclerview.R
 import org.techtown.testrecyclerview.ServerData
@@ -40,6 +41,7 @@ class CameraResult : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_camera_result)
         //clickInit()
+        var dbHelper = DBHelper(this, "food_nutri.db", null, 1)
         val sdf = SimpleDateFormat("yyyy년 MM월 dd일")
         val now = System.currentTimeMillis()
         val date = Date(now)
@@ -429,8 +431,18 @@ class CameraResult : AppCompatActivity(){
                     snack -> "간식"
                     else -> null
                 }
-
-
+                for (i in 0 until imageArray.size-1) {
+                    dbHelper.insertFoodRecord2(
+                        mt,
+                        imageArray[i].foodName,
+                        imageArray[i].uri,
+                        500 - currentvalue * 10,
+                        imageArray[i].calorie,
+                        imageArray[i].nutri1,
+                        imageArray[i].nutri2,
+                        imageArray[i].nutri3
+                    )
+                }
                 finish()
             }
         }
