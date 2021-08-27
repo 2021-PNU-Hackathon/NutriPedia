@@ -24,6 +24,8 @@ import kotlinx.android.synthetic.main.activity_camera_result.nutri1_Tv
 import kotlinx.android.synthetic.main.activity_camera_result.nutri2_Tv
 import kotlinx.android.synthetic.main.activity_camera_result.nutri3_Tv
 import kotlinx.android.synthetic.main.activity_search_result.*
+import org.techtown.testrecyclerview.DBHelper
+
 import org.techtown.testrecyclerview.MainActivity
 import org.techtown.testrecyclerview.R
 import org.techtown.testrecyclerview.ServerData
@@ -45,6 +47,7 @@ class CameraResult : AppCompatActivity(){
         setContentView(R.layout.activity_camera_result)
         var pos = 0
         //clickInit()
+        var dbHelper = DBHelper(this, "food_nutri.db", null, 1)
         val sdf = SimpleDateFormat("yyyy년 MM월 dd일")
         val now = System.currentTimeMillis()
         val date = Date(now)
@@ -91,7 +94,6 @@ class CameraResult : AppCompatActivity(){
         currentNp.value = 40
         var currentvalue = 40
 
-
         var splitArray = nutri1_Tv.text.split("K") as MutableList<String>
         val num1 = splitArray[0].toDouble()
         splitArray.removeAll(splitArray)
@@ -108,6 +110,9 @@ class CameraResult : AppCompatActivity(){
             nutri3_Tv.text = (num3*(50-newVal)/10).roundToInt().toString() + "Kcal"
             kcalTv.text = ((num1*(50-newVal)/10).roundToInt()+(num2*(50-newVal)/10).roundToInt()+(num3*(50-newVal)/10).roundToInt()).toString() +"Kcal"
             totalCal.text = kcalTv.text
+            imageArray[pos].nutri1 = (imageArray[pos].nutri1.toDouble()*(50-newVal)/10).roundToInt()
+            imageArray[pos].nutri2 = (imageArray[pos].nutri2.toDouble()*(50-newVal)/10).roundToInt()
+            imageArray[pos].nutri3 = (imageArray[pos].nutri3.toDouble()*(50-newVal)/10).roundToInt()
 
         }
 
@@ -457,8 +462,18 @@ class CameraResult : AppCompatActivity(){
                     snack -> "간식"
                     else -> null
                 }
-
-
+                for (i in 0 until imageArray.size-1) {
+                    dbHelper.insertFoodRecord2(
+                        mt,
+                        imageArray[i].foodName,
+                        imageArray[i].uri,
+                        500 - currentvalue * 10,
+                        imageArray[i].calorie,
+                        imageArray[i].nutri1,
+                        imageArray[i].nutri2,
+                        imageArray[i].nutri3
+                    )
+                }
                 finish()
             }
         }

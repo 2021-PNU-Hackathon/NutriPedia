@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.NumberPicker
+import android.widget.Button
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_camera_result.*
@@ -23,6 +24,7 @@ import kotlinx.android.synthetic.main.activity_fix_item.nutri2_Tv
 import kotlinx.android.synthetic.main.activity_fix_item.nutri3_Tv
 import kotlinx.android.synthetic.main.activity_fix_item.totalCal
 import kotlinx.android.synthetic.main.activity_search_result.*
+import org.techtown.testrecyclerview.DBHelper
 import org.techtown.testrecyclerview.FragmentOne
 import org.techtown.testrecyclerview.MainActivity
 import org.techtown.testrecyclerview.R
@@ -188,6 +190,7 @@ class FixItemActivity : AppCompatActivity() {
         button.setOnClickListener {
             finish()
         }
+
     }
 
     override fun onResume() {
@@ -215,10 +218,8 @@ class FixItemActivity : AppCompatActivity() {
             }
             totalCal.text = total.toString() + "Kcal"
         }
-
-
-
     }
+
 
 
 

@@ -129,14 +129,21 @@ class FragmentTwo : Fragment() {
         linelist = ArrayList()
         linelist.add(Entry(xindex, fir.toFloat()))
 
-//        var cursor : Cursor = dbHelper.getListChangeWeight()
-//        while(cursor.moveToNext())
+        var checkFirst : Int = 0
+        var checkTwice : Float = 0f
 
         Log.d("check",valueList.toString())
 //        Log.d("check",valueList[0].toString())
         for (i in valueList){
-            xindex += 5
-            linelist.add(Entry(xindex, i))
+            if (checkFirst == 0) {
+                checkFirst = 1
+                if(i.toInt() == fir) continue
+            }
+
+            if (i != checkTwice)
+                xindex += 5
+                linelist.add(Entry(xindex, i))
+            checkTwice = i
             if (i >= maxWeight) maxWeight = i
             if (i <= minWeight) minWeight = i
             Log.d("check",i.toString())

@@ -353,7 +353,8 @@ class SearchResult : AppCompatActivity() {
                     else -> null
                 }
 
-                dbHelper.insertFoodRecord(mt, name, 500-currentvalue*10, calorie, nutri1, nutri2, nutri3)
+                dbHelper.insertFoodRecord1(mt, name, 500-currentvalue*10, calorie, nutri1, nutri2, nutri3)
+
                 finish()
             }
         }

@@ -70,6 +70,7 @@ class DBHelper(
         db.execSQL(sql3)
         db.execSQL(sql4)
         db.execSQL(sql5)
+        db.close()
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
@@ -80,6 +81,7 @@ class DBHelper(
         db.execSQL(sql2)
         db.execSQL(sql3)
         onCreate(db)
+        db.close()
     }
 
     fun isEmpty(tablename : String): Boolean {
@@ -102,12 +104,14 @@ class DBHelper(
         var db: SQLiteDatabase = writableDatabase
         var query = "INSERT INTO change VALUES ((SELECT date('now','localtime')), 0);"
         db.execSQL(query)
+        db.close()
     }
 
     fun insertUserInfo() {
         var db: SQLiteDatabase = writableDatabase
         var query = "INSERT INTO user_info VALUES ('0', '0', '0', '0', '0', '0', 2000,'0');"
         db.execSQL(query)
+        db.close()
     }
 
     fun insertRecord() {
@@ -115,19 +119,30 @@ class DBHelper(
         var query =
             "INSERT INTO record VALUES ((SELECT date('now','localtime')), NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0);"
         db.execSQL(query)
+        db.close()
     }
 
-    fun insertFoodRecord(_mealtime: String?, _foodname: String?, _amount: Int, _kcal: Int, _cab: Int, _pro: Int, _fat: Int) {
+    fun insertFoodRecord1(_mealtime: String?, _foodname: String?, _amount: Int, _kcal: Int, _cab: Int, _pro: Int, _fat: Int) {
         var db: SQLiteDatabase = writableDatabase
         var query =
-            "INSERT INTO record VALUES ((SELECT date('now','localtime')), '${_mealtime}', '${_foodname}', NULL, NULL, '${_amount}', '${_kcal}', '${_cab}', '${_pro}', '${_fat}');"
+            "INSERT INTO record VALUES ((SELECT date('now','localtime')), '${_mealtime}', '${_foodname}',NULL, NULL, '${_amount}', '${_kcal}', '${_cab}', '${_pro}', '${_fat}');"
         db.execSQL(query)
+        db.close()
+    }
+
+    fun insertFoodRecord2(_mealtime: String?, _foodname: String?, _uri: Uri?, _amount: Int, _kcal: Int, _cab: Int, _pro: Int, _fat: Int) {
+        var db: SQLiteDatabase = writableDatabase
+        var query =
+            "INSERT INTO record VALUES ((SELECT date('now','localtime')), '${_mealtime}', '${_foodname}', '${_uri}', NULL, '${_amount}', '${_kcal}', '${_cab}', '${_pro}', '${_fat}');"
+        db.execSQL(query)
+        db.close()
     }
 
     fun insertWater() {
         var db: SQLiteDatabase = writableDatabase
         var query = "INSERT INTO water VALUES ((SELECT date('now','localtime')), 0);"
         db.execSQL(query)
+        db.close()
     }
 
     fun insertSuccess(time : String, value: Int) {
@@ -137,6 +152,7 @@ class DBHelper(
         var query = "INSERT INTO success VALUES ('${time}',${value});"
         Log.d("check",query)
         db.execSQL(query)
+        db.close()
     }
 
     fun updateChange( value: Int) {
