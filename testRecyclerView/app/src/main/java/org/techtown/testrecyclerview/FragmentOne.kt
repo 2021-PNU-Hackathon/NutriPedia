@@ -47,6 +47,7 @@ import org.w3c.dom.Text
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
+import java.lang.NullPointerException
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -173,11 +174,15 @@ class FragmentOne : Fragment() {
         }
         recyclerView.addOnItemTouchListener(object : RecyclerView.OnItemTouchListener{
             override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
-                val child = recyclerView.findChildViewUnder(e.x, e.y)
-                if (e.action != MotionEvent.ACTION_MOVE && e.action == MotionEvent.ACTION_DOWN) {
-                    val cardViewIntent = Intent(context, FixItemActivity::class.java)
-                    position = recyclerView.getChildAdapterPosition(child!!)
-                    startActivityForResult(cardViewIntent, 123)
+                try {
+                    val child = recyclerView.findChildViewUnder(e.x, e.y)
+                    if (e.action != MotionEvent.ACTION_MOVE && e.action == MotionEvent.ACTION_DOWN) {
+                        val cardViewIntent = Intent(context, FixItemActivity::class.java)
+                        position = recyclerView.getChildAdapterPosition(child!!)
+                        startActivityForResult(cardViewIntent, 123)
+                    }
+                } catch (e : NullPointerException) {
+
                 }
                 return false
             }
@@ -277,7 +282,7 @@ class FragmentOne : Fragment() {
                     RecordFoodData(
                         mealtime[i],
                         nameStr,
-                        "1",
+                        null,
                         mealKcal,
                         mealCab,
                         mealPro,

@@ -38,7 +38,6 @@ class CameraResult : AppCompatActivity(){
 
     companion object RVarray{
         var imageArray = arrayListOf<FoodResult>()
-
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,11 +48,14 @@ class CameraResult : AppCompatActivity(){
         val sdf = SimpleDateFormat("yyyy년 MM월 dd일")
         val now = System.currentTimeMillis()
         val date = Date(now)
+
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back)
         supportActionBar?.title = sdf.format(date)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.parseColor("#FFFFFF")))
 
+        var uri = intent.getStringExtra("uri")
+        var totalUri = Uri.parse("uri")
         imageArray.clear()
         imageArray.addAll(MainActivity.arrayUse)
         imageArray.add(imageArray.size,FoodResult("add",0,0,0,0,null,false))
@@ -90,19 +92,23 @@ class CameraResult : AppCompatActivity(){
         var currentvalue = 40
 
 
-
+        var splitArray = nutri1_Tv.text.split("K") as MutableList<String>
+        val num1 = splitArray[0].toDouble()
+        splitArray.removeAll(splitArray)
+        splitArray = nutri2_Tv.text.split("K") as MutableList<String>
+        val num2 = splitArray[0].toDouble()
+        splitArray = nutri3_Tv.text.split("K") as MutableList<String>
+        val num3 = splitArray[0].toDouble()
 
         currentNp.setOnValueChangedListener { picker, oldVal, newVal ->
             currentvalue = newVal
             Log.e("change","$newVal")
-            nutri1_Tv.text = (imageArray[pos].nutri1.toDouble()*(50-newVal)/10).roundToInt().toString() + "Kcal"
-            nutri2_Tv.text = (imageArray[pos].nutri2.toDouble()*(50-newVal)/10).roundToInt().toString() + "Kcal"
-            nutri3_Tv.text = (imageArray[pos].nutri3.toDouble()*(50-newVal)/10).roundToInt().toString() + "Kcal"
-            kcalTv.text = ((imageArray[pos].nutri1.toDouble()*(50-newVal)/10).roundToInt()+(imageArray[pos].nutri2.toDouble()*(50-newVal)/10).roundToInt()+(imageArray[pos].nutri3.toDouble()*(50-newVal)/10).roundToInt()).toString() +"Kcal"
+            nutri1_Tv.text = (num1*(50-newVal)/10).roundToInt().toString() + "Kcal"
+            nutri2_Tv.text = (num2*(50-newVal)/10).roundToInt().toString() + "Kcal"
+            nutri3_Tv.text = (num3*(50-newVal)/10).roundToInt().toString() + "Kcal"
+            kcalTv.text = ((num1*(50-newVal)/10).roundToInt()+(num2*(50-newVal)/10).roundToInt()+(num3*(50-newVal)/10).roundToInt()).toString() +"Kcal"
             totalCal.text = kcalTv.text
-            imageArray[pos].nutri1 = (imageArray[pos].nutri1.toDouble()*(50-newVal)/10).roundToInt()
-            imageArray[pos].nutri2 = (imageArray[pos].nutri2.toDouble()*(50-newVal)/10).roundToInt()
-            imageArray[pos].nutri3 = (imageArray[pos].nutri3.toDouble()*(50-newVal)/10).roundToInt()
+
         }
 
         val mAdapter = ResultAdapter(this,imageArray)
