@@ -94,12 +94,12 @@ class CameraResult : AppCompatActivity(){
         currentNp.value = 40
         var currentvalue = 40
 
-        var splitArray = nutri1_Tv.text.split("K") as MutableList<String>
+        var splitArray = nutri1_Tv.text.split("g") as MutableList<String>
         val num1 = splitArray[0].toDouble()
         splitArray.removeAll(splitArray)
-        splitArray = nutri2_Tv.text.split("K") as MutableList<String>
+        splitArray = nutri2_Tv.text.split("g") as MutableList<String>
         val num2 = splitArray[0].toDouble()
-        splitArray = nutri3_Tv.text.split("K") as MutableList<String>
+        splitArray = nutri3_Tv.text.split("g") as MutableList<String>
         val num3 = splitArray[0].toDouble()
 
         currentNp.setOnValueChangedListener { picker, oldVal, newVal ->

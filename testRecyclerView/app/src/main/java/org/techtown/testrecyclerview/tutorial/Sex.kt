@@ -9,9 +9,7 @@ import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_sex.*
-import org.techtown.testrecyclerview.DBHelper
-import org.techtown.testrecyclerview.MainActivity
-import org.techtown.testrecyclerview.R
+import org.techtown.testrecyclerview.*
 
 class Sex : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -77,8 +75,21 @@ class Sex : AppCompatActivity() {
             gender = 1
         }
 
+        var recommendedKcal : Int = recommendedKcal(
+            db.getColValue(0, "user_info").toInt(),
+            db.getColValue(1, "user_info").toInt(),
+            db.getColValue(4, "user_info").toInt()
+        )
+        var triple : Triple<Int, Int, Int> = nutrientRate(db.getColValue(0, "user_info").toInt(),
+            db.getColValue(1, "user_info").toInt(),
+            recommendedKcal)
+
         intentBtn.setOnClickListener {
             db.updateUserInfo("sex", gender)
+            db.updateUserInfo("target_kcal", recommendedKcal)
+            db.updateUserInfo("target_cab", triple.first)
+            db.updateUserInfo("target_pro", triple.second)
+            db.updateUserInfo("target_fat", triple.third)
             db.close()
 
             val intent = Intent(applicationContext, MainActivity::class.java)

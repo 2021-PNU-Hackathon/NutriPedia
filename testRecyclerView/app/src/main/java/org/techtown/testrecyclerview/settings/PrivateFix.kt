@@ -85,13 +85,21 @@ class PrivateFix : AppCompatActivity() {
         // Handle presses on the action bar items
         when(item.itemId){
             R.id.fixActionBtn -> {
-                db.updateUserInfo("current_weight", cWeight_edit.text.toString().toInt())
-                db.updateUserInfo("target_weight", tWeight_edit.text.toString().toInt())
-                db.updateUserInfo("age", age_edit.text.toString().toInt())
+                if (cWeight_edit.text.toString() == "")
+                    db.updateUserInfo("current_weight", db.getColValue(0, "user_info").toInt())
+                else db.updateUserInfo("target_weight", cWeight_edit.text.toString().toInt())
+                if (tWeight_edit.text.toString() == "")
+                    db.updateUserInfo("target_weight", db.getColValue(1, "user_info").toInt())
+                else db.updateUserInfo("target_weight", tWeight_edit.text.toString().toInt())
+                if (age_edit.text.toString() == "")
+                    db.updateUserInfo("age", db.getColValue(2, "user_info").toInt())
+                else db.updateUserInfo("age", age_edit.text.toString().toInt())
                 var cgender = gender
 
                 db.updateUserInfo("sex", cgender)
-                db.updateUserInfo("current_height", cHeight_edit.text.toString().toInt())
+                if (cHeight_edit.text.toString() == "")
+                    db.updateUserInfo("current_height", cHeight_edit.text.toString().toInt())
+                else db.updateUserInfo("current_height", cHeight_edit.text.toString().toInt())
                 finish() }}
         return super.onOptionsItemSelected(item)
     }

@@ -33,7 +33,11 @@ class DBHelper(
                 "current_height integer," +
                 "idx integer," +
                 "target_water integer," +
-                "first_weight integer" +
+                "first_weight integer," +
+                "target_kcal integer," +
+                "target_cab integer," +
+                "target_pro integer," +
+                "target_fat integer" +
                 ");"
 
 
@@ -107,7 +111,7 @@ class DBHelper(
 
     fun insertUserInfo() {
         var db: SQLiteDatabase = writableDatabase
-        var query = "INSERT INTO user_info VALUES ('0', '0', '0', '0', '0', '0', 2000,'0');"
+        var query = "INSERT INTO user_info VALUES ('0', '0', '0', '0', '0', '0', 2000,'0',0,0,0,0);"
         db.execSQL(query)
         db.close()
     }
