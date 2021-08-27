@@ -35,21 +35,21 @@ class FixItemActivity : AppCompatActivity() {
 
         fixArray.clear()
         fixArray.addAll(dbArray)
-        fixArray.add(fixArray.size,FoodResult("add",0,0,0,0,null,false))
 
-        mainIv.setImageURI(fixArray[0].uri)
-        fixArray.clear()
 
-        foodTv1.text = fixArray[0].foodName
-        kcalTv.text = fixArray[0].calorie.toString() + "Kcal"
-        nutri1_Tv.text = fixArray[0].nutri1.toString() + "g"
-        nutri2_Tv.text = fixArray[0].nutri2.toString() + "g"
-        nutri3_Tv.text = fixArray[0].nutri3.toString() + "g"
-        var total : Double = 0.0
-        for (i in 0 until fixArray.size) {
-            total += fixArray[i].calorie
+        if(fixArray.size != 0) {
+            mainIv.setImageURI(fixArray[0].uri)
+            foodTv1.text = fixArray[0].foodName
+            kcalTv.text = fixArray[0].calorie.toString() + "Kcal"
+            nutri1_Tv.text = fixArray[0].nutri1.toString() + "g"
+            nutri2_Tv.text = fixArray[0].nutri2.toString() + "g"
+            nutri3_Tv.text = fixArray[0].nutri3.toString() + "g"
+            var total : Double = 0.0
+            for (i in 0 until fixArray.size) {
+                total += fixArray[i].calorie
+            }
+            totalCal.text = total.toString() + "Kcal"
         }
-        totalCal.text = total.toString() + "Kcal"
 
         val mAdapter = ResultAdapter(this, fixArray)
         addRecyclerView.adapter = mAdapter
@@ -112,7 +112,6 @@ class FixItemActivity : AppCompatActivity() {
 
         })
         button.setOnClickListener {
-
             finish()
         }
     }
@@ -123,19 +122,21 @@ class FixItemActivity : AppCompatActivity() {
         addRecyclerView.invalidate()
         adapter!!.notifyDataSetChanged()
 
+        if(fixArray.size != 0) {
+            mainIv.setImageURI(fixArray[0].uri)
 
-        mainIv.setImageURI(fixArray[0].uri)
-
-        foodTv1.text = fixArray[0].foodName
-        kcalTv.text = fixArray[0].calorie.toString() + "Kcal"
-        nutri1_Tv.text = fixArray[0].nutri1.toString() + "g"
-        nutri2_Tv.text = fixArray[0].nutri2.toString() + "g"
-        nutri3_Tv.text = fixArray[0].nutri3.toString() + "g"
-        var total : Double = 0.0
-        for (i in 0 until fixArray.size) {
-            total += fixArray[i].calorie
+            foodTv1.text = fixArray[0].foodName
+            kcalTv.text = fixArray[0].calorie.toString() + "Kcal"
+            nutri1_Tv.text = fixArray[0].nutri1.toString() + "g"
+            nutri2_Tv.text = fixArray[0].nutri2.toString() + "g"
+            nutri3_Tv.text = fixArray[0].nutri3.toString() + "g"
+            var total : Double = 0.0
+            for (i in 0 until fixArray.size) {
+                total += fixArray[i].calorie
+            }
+            totalCal.text = total.toString() + "Kcal"
         }
-        totalCal.text = total.toString() + "Kcal"
+
 
 
     }

@@ -6,6 +6,7 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.WindowManager
@@ -51,7 +52,6 @@ class SearchResult : AppCompatActivity() {
 
         val currentNp = findViewById<NumberPicker>(R.id.np_gram)
 
-
         currentNp.maxValue = gramStrConvertList.size - 1
         currentNp.wrapSelectorWheel = true
         currentNp.displayedValues = gramStrConvertList.toTypedArray()
@@ -60,6 +60,13 @@ class SearchResult : AppCompatActivity() {
 
         currentNp.setOnValueChangedListener { picker, oldVal, newVal ->
             currentvalue = newVal
+            Log.e("change","$newVal")
+            val nutri_1 = nutri1_Tv.text.toString().toInt()
+            val nutri_2 = nutri2_Tv.text.toString().toInt()
+            val nutri_3 = nutri3_Tv.text.toString().toInt()
+            nutri1_Tv.text = (nutri_1*(newVal/oldVal)).toString()
+            nutri2_Tv.text = (nutri_2*(newVal/oldVal)).toString()
+            nutri3_Tv.text = (nutri_3*(newVal/oldVal)).toString()
         }
 
 

@@ -15,6 +15,7 @@ import android.provider.MediaStore
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
@@ -117,14 +118,13 @@ class FragmentOne : Fragment() {
         recyclerView.setHasFixedSize(true)
         displayList.addAll(foodList)
 
-        var adapter = MainActivity.MyAdapter(MainActivity.gContext(),displayList)
+        var adapter = MainActivity.MyAdapter(requireContext(),displayList)
         recyclerView.adapter = adapter
 
 
         val viewAdapter= ViewPagerAdapter()
         val pagerTest = v.findViewById<ViewPager>(R.id.pager)
         pagerTest.adapter = viewAdapter
-        val dapter = pagerTest.adapter
         pagerTest.pageMargin = 30
 
         pagerTest.addOnAdapterChangeListener { viewPager, oldAdapter, newAdapter ->  }
@@ -169,12 +169,22 @@ class FragmentOne : Fragment() {
 //            intent.putExtra("send", auto_tv.text)
             startActivity(intent)
         }
-
-        adapter.setItemClickListner(object : MainActivity.MyAdapter.OnItemClickListner{
-            override fun onClick(v: View, position: Int) {
-                val cardViewIntent = Intent(context, FixItemActivity::class.java)
-                startActivityForResult(cardViewIntent, 123)
+        recyclerView.addOnItemTouchListener(object : RecyclerView.OnItemTouchListener{
+            override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
+                if (e.action == MotionEvent.ACTION_DOWN) {
+                    val cardViewIntent = Intent(context, FixItemActivity::class.java)
+                    startActivityForResult(cardViewIntent, 123)
+                }
+                return false
             }
+
+            override fun onTouchEvent(rv: RecyclerView, e: MotionEvent) {
+
+            }
+
+            override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {
+            }
+
         })
 
         recommendBtn.setOnClickListener {
