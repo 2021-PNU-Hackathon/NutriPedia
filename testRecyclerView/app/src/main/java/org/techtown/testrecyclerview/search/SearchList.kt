@@ -58,7 +58,7 @@ class SearchList : AppCompatActivity() {
     private fun fillData() {
         var cursor: Cursor = db.rawQuery("SELECT * FROM real_nutri", null)
         while(cursor.moveToNext()) {
-            foodList.add(FoodData(cursor.getString(1), cursor.getString(2).toInt(),100,cursor.getString(3).toInt(), cursor.getString(4).toInt(), cursor.getString(5).toInt()))
+            foodList.add(FoodData(cursor.getString(1), cursor.getString(2).toInt(),100,cursor.getString(5).toInt(), cursor.getString(3).toInt(), cursor.getString(4).toInt()))
         }
     }
 
