@@ -38,10 +38,12 @@ class FixItemActivity : AppCompatActivity() {
 
     val fixArray = ArrayList<FoodResult>()
     var pos = 0
+    var mt: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_fix_item)
+        var dbHelper = DBHelper(this, "food_nutri.db", null, 1)
 
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back)
         supportActionBar?.title = "----년--월--일"                 //디비 날짜 불러오기
@@ -63,6 +65,8 @@ class FixItemActivity : AppCompatActivity() {
         currentNp.displayedValues = gramStrConvertList.toTypedArray()
         currentNp.value = 40
         var currentvalue = 40
+
+        mt = FragmentOne.cardList[FragmentOne.position].mealTime
 
         fixArray.clear()
         for (i in 0 until FragmentOne.cardList.size) {
@@ -86,6 +90,8 @@ class FixItemActivity : AppCompatActivity() {
                 )
             }
         }
+
+
 
 
         if(fixArray.size != 0) {
@@ -188,6 +194,7 @@ class FixItemActivity : AppCompatActivity() {
 
         })
         button.setOnClickListener {
+
             finish()
         }
 
