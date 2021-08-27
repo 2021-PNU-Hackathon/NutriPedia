@@ -35,8 +35,8 @@ class MyBroadcastReceiver : BroadcastReceiver() {
 
 
             dbHelper.insertWater()
-            if (kcal == targetKcal) dbHelper.insertSuccess(date,1)
-            else dbHelper.insertSuccess(date,0)
+//            if (kcal == targetKcal) dbHelper.insertSuccess(date,1)
+//            else dbHelper.insertSuccess(date,0)
 
         }
     }

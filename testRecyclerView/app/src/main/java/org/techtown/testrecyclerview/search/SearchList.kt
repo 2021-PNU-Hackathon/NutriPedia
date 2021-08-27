@@ -13,6 +13,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import org.techtown.testrecyclerview.DBHelper
+import org.techtown.testrecyclerview.MainActivity
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -48,6 +49,7 @@ class SearchList : AppCompatActivity() {
                 intent.putExtra("nutri2" ,foodList[position].nutri2)
                 intent.putExtra("nutri3" ,foodList[position].nutri3)
                 startActivityForResult(intent,101)
+                MainActivity.checkChange =1
                 finish()
             }
 

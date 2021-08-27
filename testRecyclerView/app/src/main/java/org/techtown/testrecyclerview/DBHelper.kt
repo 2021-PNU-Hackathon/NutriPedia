@@ -95,7 +95,7 @@ class DBHelper(
         }
 
         cursor.close()
-        db.close()
+
         if (cnt > 0) ret = false
         return ret
     }
@@ -145,14 +145,24 @@ class DBHelper(
         db.close()
     }
 
-    fun insertSuccess(time : String, value: Int) {
+    fun insertSuccess() {
         var db: SQLiteDatabase = writableDatabase
 
 
-        var query = "INSERT INTO success VALUES ('${time}',${value});"
+        var query = "INSERT INTO success VALUES ((SELECT date('now','localtime')), 0);"
         Log.d("check",query)
         db.execSQL(query)
-        db.close()
+
+    }
+
+    fun updateSuccess(value : Int) {
+        var db: SQLiteDatabase = writableDatabase
+
+        if(isEmpty("success")) insertSuccess()
+
+        var query = "UPDATE success SET issuccess = "+value+" WHERE date = (SELECT date('now','localtime'));"
+        db.execSQL(query)
+
     }
 
     fun updateChange( value: Int) {
@@ -184,6 +194,8 @@ class DBHelper(
 
         db.close()
     }
+
+    
 
 //    fun updatewater(
 //        field: String, value: Int, date: String
