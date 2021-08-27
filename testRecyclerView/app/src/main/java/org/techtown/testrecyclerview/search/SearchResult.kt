@@ -51,6 +51,7 @@ class SearchResult : AppCompatActivity() {
 
         val currentNp = findViewById<NumberPicker>(R.id.np_gram)
 
+
         currentNp.maxValue = gramStrConvertList.size - 1
         currentNp.wrapSelectorWheel = true
         currentNp.displayedValues = gramStrConvertList.toTypedArray()

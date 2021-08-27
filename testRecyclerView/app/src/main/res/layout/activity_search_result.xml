@@ -53,54 +53,31 @@
         android:layout_marginTop="268dp"
         android:background="#EDECEC"
         android:gravity="center"
+        android:weightSum="7"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2">
 
         <NumberPicker
-            android:id="@+id/np_person"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:layout_editor_absoluteX="108dp"
-            tools:layout_editor_absoluteY="84dp" />
-
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="인분" />
-
-        <NumberPicker
+            android:layout_weight="6"
             android:id="@+id/np_gram"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="120dp"
             tools:layout_editor_absoluteX="108dp"
-            tools:layout_editor_absoluteY="84dp" />
+            tools:layout_editor_absoluteY="84dp"
+            android:layout_margin="10dp"
+            android:theme="@style/AppTheme.Picker"/>
 
         <TextView
             android:id="@+id/textView4"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
+            android:layout_margin="10dp"
+            android:textSize="25sp"
+            android:textColor="@color/black"
             android:text="g" />
-
-        <NumberPicker
-            android:id="@+id/np_plate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:layout_editor_absoluteX="108dp"
-            tools:layout_editor_absoluteY="84dp" />
-
-        <TextView
-            android:id="@+id/textView6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="접시" />
 
 
     </LinearLayout>
