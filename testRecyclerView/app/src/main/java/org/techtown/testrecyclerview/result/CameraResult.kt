@@ -24,6 +24,8 @@ import kotlinx.android.synthetic.main.activity_camera_result.nutri1_Tv
 import kotlinx.android.synthetic.main.activity_camera_result.nutri2_Tv
 import kotlinx.android.synthetic.main.activity_camera_result.nutri3_Tv
 import kotlinx.android.synthetic.main.activity_search_result.*
+import org.techtown.testrecyclerview.DBHelper
+
 import org.techtown.testrecyclerview.MainActivity
 import org.techtown.testrecyclerview.R
 import org.techtown.testrecyclerview.ServerData
@@ -46,6 +48,7 @@ class CameraResult : AppCompatActivity(){
         setContentView(R.layout.activity_camera_result)
         var pos = 0
         //clickInit()
+        var dbHelper = DBHelper(this, "food_nutri.db", null, 1)
         val sdf = SimpleDateFormat("yyyy년 MM월 dd일")
         val now = System.currentTimeMillis()
         val date = Date(now)
@@ -89,9 +92,6 @@ class CameraResult : AppCompatActivity(){
         currentNp.value = 40
         var currentvalue = 40
 
-
-
-
         currentNp.setOnValueChangedListener { picker, oldVal, newVal ->
             currentvalue = newVal
             Log.e("change","$newVal")
@@ -103,6 +103,7 @@ class CameraResult : AppCompatActivity(){
             imageArray[pos].nutri1 = (imageArray[pos].nutri1.toDouble()*(50-newVal)/10).roundToInt()
             imageArray[pos].nutri2 = (imageArray[pos].nutri2.toDouble()*(50-newVal)/10).roundToInt()
             imageArray[pos].nutri3 = (imageArray[pos].nutri3.toDouble()*(50-newVal)/10).roundToInt()
+
         }
 
         val mAdapter = ResultAdapter(this,imageArray)
@@ -451,8 +452,18 @@ class CameraResult : AppCompatActivity(){
                     snack -> "간식"
                     else -> null
                 }
-
-
+                for (i in 0 until imageArray.size-1) {
+                    dbHelper.insertFoodRecord2(
+                        mt,
+                        imageArray[i].foodName,
+                        imageArray[i].uri,
+                        500 - currentvalue * 10,
+                        imageArray[i].calorie,
+                        imageArray[i].nutri1,
+                        imageArray[i].nutri2,
+                        imageArray[i].nutri3
+                    )
+                }
                 finish()
             }
         }
