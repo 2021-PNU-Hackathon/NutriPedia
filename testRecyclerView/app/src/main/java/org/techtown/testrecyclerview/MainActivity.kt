@@ -5,14 +5,11 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.ImageDecoder
 import android.media.ExifInterface
-import android.media.Image
-import android.media.audiofx.DynamicsProcessing
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -20,16 +17,13 @@ import android.os.Environment
 import android.os.Handler
 import android.provider.MediaStore
 import android.util.Log
-
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.gun0912.tedpermission.PermissionListener
@@ -38,10 +32,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.card_layout.*
 import kotlinx.android.synthetic.main.search_bar.view.*
-import org.techtown.testrecyclerview.databinding.ActivityAddResultBinding.inflate
 import org.techtown.testrecyclerview.result.CameraResult
 import org.techtown.testrecyclerview.result.FoodResult
-import org.techtown.testrecyclerview.search.FoodData
 import org.techtown.testrecyclerview.tutorial.CurrentWeight
 import java.io.*
 import java.text.SimpleDateFormat
@@ -396,10 +388,6 @@ class MainActivity : AppCompatActivity() {
             holder.itemView.setOnClickListener {
                 itemClickListner.onClick(it,position)
             }
-            holder.cameraIb.setOnClickListener {
-                var activity : MainActivity = instance!!
-                activity.takeCapture()
-            }
 
             holder.apply {
                 bind(item,context)
@@ -423,7 +411,6 @@ class MainActivity : AppCompatActivity() {
             var itemimage: ImageView = itemview.findViewById(R.id.item_image)
             var itemtitle: TextView = itemview.findViewById(R.id.item_title)
             var itemdetail: TextView = itemview.findViewById(R.id.item_detail)
-            var cameraIb: ImageButton = itemview.findViewById(R.id.cameraIb)
             var cardTanTv: TextView = itemview.findViewById(R.id.cardTanTv)
             var cardDanTv: TextView = itemview.findViewById(R.id.cardDanTv)
             var cardJiTv: TextView = itemview.findViewById(R.id.cardJiTv)
