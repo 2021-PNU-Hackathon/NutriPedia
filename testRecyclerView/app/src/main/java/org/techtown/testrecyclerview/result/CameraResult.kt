@@ -474,6 +474,7 @@ class CameraResult : AppCompatActivity(){
                         imageArray[i].nutri3
                     )
                 }
+                MainActivity.checkChange =1
                 finish()
             }
         }

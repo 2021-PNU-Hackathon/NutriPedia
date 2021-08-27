@@ -116,6 +116,14 @@ class FragmentOne : Fragment() {
             dbHelper.getColValue(4, "user_info").toInt()
         )
 
+        if (MainActivity.checkChange == 1) {
+            if(dbHelper.getKcal(strnow) >= (recommendedKcal * 0.85) && dbHelper.getKcal(strnow) >= (recommendedKcal * 1.15))
+                dbHelper.updateSuccess(1)
+            else dbHelper.updateSuccess(0)
+            MainActivity.checkChange = 0
+            Log.d("check",dbHelper.getColValue(1,"success"))
+        }
+
         calTv.text = "${recommendedKcal - dbHelper.getKcal(strnow)}Kcal"
 
         recyclerView.setHasFixedSize(true)
@@ -233,6 +241,14 @@ class FragmentOne : Fragment() {
             dbHelper.getColValue(1, "user_info").toInt(),
             dbHelper.getColValue(4, "user_info").toInt()
         )
+
+        if (MainActivity.checkChange == 1) {
+            if(dbHelper.getKcal(strnow) >= (recommendedKcal * 0.85) && dbHelper.getKcal(strnow) >= (recommendedKcal * 1.15))
+                dbHelper.updateSuccess(1)
+            else dbHelper.updateSuccess(0)
+            MainActivity.checkChange = 0
+            Log.d("check",dbHelper.getColValue(1,"success"))
+        }
 
         calTv.text = "${recommendedKcal - dbHelper.getKcal(strnow)}Kcal"
 

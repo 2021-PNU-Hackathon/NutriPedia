@@ -64,6 +64,7 @@ class MainActivity : AppCompatActivity() {
         fun gContext() : Context {
             return instance!!.applicationContext
         }
+        var checkChange : Int = 1
     }
     private val fl: FrameLayout by lazy {
         findViewById(R.id.main_frame)
@@ -124,20 +125,20 @@ class MainActivity : AppCompatActivity() {
 
 
 
-    // 브로드캐스트리시버 필터 추가 & 등록
-    override fun onResume() {
-        br = MyBroadcastReceiver()
-        var filter = IntentFilter()
-        filter.addAction(Intent.ACTION_DATE_CHANGED)
-        registerReceiver(br, filter)
-        super.onResume()
-    }
-
-    // 등록 삭제
-    override fun onPause() {
-        unregisterReceiver(br)
-        super.onPause()
-    }
+//     브로드캐스트리시버 필터 추가 & 등록
+//    override fun onResume() {
+//        br = MyBroadcastReceiver()
+//        var filter = IntentFilter()
+//        filter.addAction(Intent.ACTION_DATE_CHANGED)
+//        registerReceiver(br, filter)
+//        super.onResume()
+//    }
+//
+//    // 등록 삭제
+//    override fun onPause() {
+//        unregisterReceiver(br)
+//        super.onPause()
+//    }
 
     fun test() {
         val frg = supportFragmentManager.findFragmentById(R.id.main_frame)

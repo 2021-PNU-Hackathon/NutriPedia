@@ -46,6 +46,7 @@ class RecommendList : AppCompatActivity() {
                 intent.putExtra("nutri2" ,foodList[position].nutri2)
                 intent.putExtra("nutri3" ,foodList[position].nutri3)
                 startActivityForResult(intent, 101)
+                MainActivity.checkChange =1
                 finish()
             }
 
