@@ -425,9 +425,9 @@ class MainActivity : AppCompatActivity() {
                     itemimage.setImageResource(R.drawable.ic_no_image)
                 }
 
-                cardTanTv.text = "탄 "+foodData.nutri1.toString()+"g"
-                cardDanTv.text = "단 "+foodData.nutri2.toString()+"g"
-                cardJiTv.text = "지 "+foodData.nutri3.toString()+"g"
+                cardTanTv.text = "탄 "+foodData.nutri1.toString()+"Kcal"
+                cardDanTv.text = "단 "+foodData.nutri2.toString()+"Kcal"
+                cardJiTv.text = "지 "+foodData.nutri3.toString()+"Kcal"
             }
         }
     }
