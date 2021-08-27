@@ -8,10 +8,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.Toast
+import android.widget.*
 import androidx.annotation.Nullable
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -69,6 +66,26 @@ class CameraResult : AppCompatActivity(){
             total += imageArray[i].calorie
         }
         totalCal.text = total.toString() + "Kcal"
+
+        var tempList: List<Int> = (50 downTo 5).toList()
+        var gramList = ArrayList<Int>()
+        for (i in 0 until tempList.size) {
+            gramList.add(tempList[i]*10)
+        }
+        var gramStrConvertList = gramList.map { it.toString() }
+
+
+        val currentNp = findViewById<NumberPicker>(R.id.np_gram)
+
+        currentNp.maxValue = gramStrConvertList.size - 1
+        currentNp.wrapSelectorWheel = true
+        currentNp.displayedValues = gramStrConvertList.toTypedArray()
+        currentNp.value = 40
+        var currentvalue = 40
+
+        currentNp.setOnValueChangedListener { picker, oldVal, newVal ->
+            currentvalue = newVal
+        }
 
         val mAdapter = ResultAdapter(this,imageArray)
         addRecyclerView.adapter = mAdapter
