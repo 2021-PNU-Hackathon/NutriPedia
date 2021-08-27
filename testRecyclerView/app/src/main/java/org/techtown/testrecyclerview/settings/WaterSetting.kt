@@ -22,8 +22,10 @@ class WaterSetting : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_water_setting)
 
-        supportActionBar?.setTitle("목표 물 섭취량")
+        supportActionBar?.title = "목표 물 섭취량"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back)
+
 
         val input1 = findViewById<EditText>(R.id.input1)
         var imm : InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager

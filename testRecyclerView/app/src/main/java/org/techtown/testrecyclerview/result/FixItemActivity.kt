@@ -3,6 +3,7 @@ package org.techtown.testrecyclerview.result
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -10,6 +11,7 @@ import android.view.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_fix_item.*
+import org.techtown.testrecyclerview.FragmentOne
 import org.techtown.testrecyclerview.MainActivity
 import org.techtown.testrecyclerview.R
 import java.lang.NullPointerException
@@ -30,11 +32,23 @@ class FixItemActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.parseColor("#FFFFFF")))
 
-
-        val dbArray = ArrayList<FoodResult>()
-
         fixArray.clear()
-        fixArray.addAll(dbArray)
+        for (i in 0 until FragmentOne.cardList.size) {
+            if (FragmentOne.cardList[i].mealTime == FragmentOne.cardList[FragmentOne.position].mealTime) {
+                val uri = Uri.parse(FragmentOne.cardList[i].picture)
+                fixArray.add(
+                    FoodResult(
+                        FragmentOne.cardList[i].foodName,
+                        FragmentOne.cardList[i].calorie,
+                        FragmentOne.cardList[i].nutri1,
+                        FragmentOne.cardList[i].nutri2,
+                        FragmentOne.cardList[i].nutri3,
+                        uri,
+                        true
+                    )
+                )
+            }
+        }
 
 
         if(fixArray.size != 0) {

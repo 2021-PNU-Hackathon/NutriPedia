@@ -415,9 +415,16 @@ class MainActivity : AppCompatActivity() {
             var cardDanTv: TextView = itemview.findViewById(R.id.cardDanTv)
             var cardJiTv: TextView = itemview.findViewById(R.id.cardJiTv)
             fun bind (foodData:RecordFoodData, context: Context) {
+
                 itemtitle.text = foodData.mealTime +" | "+foodData.calorie.toString()+"Kcal"
                 itemdetail.text = foodData.foodName
-                itemimage.setImageResource(R.drawable.ic_launcher_foreground)
+                if (foodData.picture != null) {
+                    val uri = Uri.parse(foodData.picture)
+                    itemimage.setImageURI(uri)
+                } else {
+                    itemimage.setImageResource(R.drawable.ic_no_image)
+                }
+
                 cardTanTv.text = "탄 "+foodData.nutri1.toString()+"g"
                 cardDanTv.text = "단 "+foodData.nutri2.toString()+"g"
                 cardJiTv.text = "지 "+foodData.nutri3.toString()+"g"

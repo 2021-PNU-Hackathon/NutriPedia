@@ -31,6 +31,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
+import kotlinx.android.synthetic.main.activity_camera_result.*
 import kotlinx.android.synthetic.main.fragment_one.*
 import kotlinx.android.synthetic.main.page.*
 import kotlinx.android.synthetic.main.search_bar.*
@@ -72,9 +73,10 @@ class FragmentOne : Fragment() {
     var mealtime = arrayOf("아침","아점","점심","점저","저녁","간식")
     lateinit var dbHelper : DBHelper
     lateinit var db : SQLiteDatabase
-    var foodList = arrayListOf<RecordFoodData>()
+
     val displayList = ArrayList<RecordFoodData>()
     lateinit var v : View
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -98,7 +100,7 @@ class FragmentOne : Fragment() {
         var strnow :String = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
 
         displayList.clear()
-        foodList.clear()
+        cardList.clear()
         fillFoodData(strnow)
 
         var recommendBtn = v.findViewById<Button>(R.id.recommendBtn)
@@ -116,7 +118,7 @@ class FragmentOne : Fragment() {
         calTv.text = "${recommendedKcal - dbHelper.getKcal(strnow)}Kcal"
 
         recyclerView.setHasFixedSize(true)
-        displayList.addAll(foodList)
+        displayList.addAll(cardList)
 
         var adapter = MainActivity.MyAdapter(requireContext(),displayList)
         recyclerView.adapter = adapter
@@ -171,8 +173,10 @@ class FragmentOne : Fragment() {
         }
         recyclerView.addOnItemTouchListener(object : RecyclerView.OnItemTouchListener{
             override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
-                if (e.action == MotionEvent.ACTION_DOWN) {
+                val child = recyclerView.findChildViewUnder(e.x, e.y)
+                if (e.action != MotionEvent.ACTION_MOVE && e.action == MotionEvent.ACTION_DOWN) {
                     val cardViewIntent = Intent(context, FixItemActivity::class.java)
+                    position = recyclerView.getChildAdapterPosition(child!!)
                     startActivityForResult(cardViewIntent, 123)
                 }
                 return false
@@ -203,14 +207,14 @@ class FragmentOne : Fragment() {
         db = dbHelper.readableDatabase
 
         displayList.clear()
-        foodList.clear()
+        cardList.clear()
         fillFoodData(strnow)
 
         var layoutManager = LinearLayoutManager(context)
         recyclerView.layoutManager = layoutManager
 
         recyclerView.setHasFixedSize(true)
-        displayList.addAll(foodList)
+        displayList.addAll(cardList)
 
         var adapter = MainActivity.MyAdapter(MainActivity.gContext(),displayList)
         recyclerView.adapter = adapter
@@ -269,7 +273,7 @@ class FragmentOne : Fragment() {
                 }
                 nameStr += names[cnt - 1]
                 //            if (nameStr.length >15)
-                foodList.add(
+                cardList.add(
                     RecordFoodData(
                         mealtime[i],
                         nameStr,
@@ -388,6 +392,8 @@ class FragmentOne : Fragment() {
          * @return A new instance of fragment FragmentOne.
          */
         // TODO: Rename and change types and number of parameters
+        var cardList = arrayListOf<RecordFoodData>()
+        var position = 0
         @JvmStatic fun newInstance(param1: String, param2: String) =
                 FragmentOne().apply {
                     arguments = Bundle().apply {

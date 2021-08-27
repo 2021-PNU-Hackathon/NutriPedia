@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.Button
 import android.widget.NumberPicker
@@ -23,6 +24,7 @@ import kotlinx.android.synthetic.main.activity_search_result.total
 import kotlinx.android.synthetic.main.custom_dialog.view.*
 import org.techtown.testrecyclerview.DBHelper
 import org.techtown.testrecyclerview.R
+import kotlin.math.roundToInt
 
 class RecommendResult : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,8 +62,23 @@ class RecommendResult : AppCompatActivity() {
         currentNp.value = 40
         var currentvalue = 40
 
+        var splitArray = nutri1_Tv.text.split("K") as MutableList<String>
+        val num1 = splitArray[0].toDouble()
+        splitArray.removeAll(splitArray)
+        splitArray = nutri2_Tv.text.split("K") as MutableList<String>
+        val num2 = splitArray[0].toDouble()
+        splitArray = nutri3_Tv.text.split("K") as MutableList<String>
+        val num3 = splitArray[0].toDouble()
+
         currentNp.setOnValueChangedListener { picker, oldVal, newVal ->
             currentvalue = newVal
+            Log.e("change","$newVal")
+            nutri1_Tv.text = (num1*(50-newVal)/10).roundToInt().toString() + "Kcal"
+            nutri2_Tv.text = (num2*(50-newVal)/10).roundToInt().toString() + "Kcal"
+            nutri3_Tv.text = (num3*(50-newVal)/10).roundToInt().toString() + "Kcal"
+            kcal.text = ((num1*(50-newVal)/10).roundToInt()+(num2*(50-newVal)/10).roundToInt()+(num3*(50-newVal)/10).roundToInt()).toString() +"Kcal"
+            total.text = kcal.text
+
         }
 
         val registerBtn: Button = findViewById(R.id.button)
