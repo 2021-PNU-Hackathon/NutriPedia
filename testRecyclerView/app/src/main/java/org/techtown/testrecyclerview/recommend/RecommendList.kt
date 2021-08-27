@@ -52,7 +52,7 @@ class RecommendList : AppCompatActivity() {
         })
     }
     private fun fillData() {
-
+        foodList.clear()
         /////////// FoodCalculator - START
 
 //        println("현재 몸무게, 목표 몸무게, 키 : ${dbHelper.getColValue(0, "user_info").toInt()}, ${dbHelper.getColValue(1, "user_info").toInt()}, ${dbHelper.getColValue(4, "user_info").toInt()}")
@@ -111,7 +111,7 @@ class RecommendList : AppCompatActivity() {
         var Top5Food: Array<String> = arrayOf()
         while(true){
             for(pri in 5 downTo 0) {
-                for (i in 0..4) {
+                for (i in 0 until 5) {
                     if (priorityAndName.get(differenceAndName.get(differenceList[i])) == pri) {
                         foodName = differenceAndName.get(differenceList[i]).toString()
                         Top5Food = Top5Food.plus(foodName)
@@ -128,11 +128,10 @@ class RecommendList : AppCompatActivity() {
         }
         // Priority 고려 (FINISH)
 
-        for(i in 0..5) {
+        for(i in 0 .. 5) {
             var cursor: Cursor = db.rawQuery("SELECT * FROM real_nutri_91", null)
             while (cursor.moveToNext()) {
-                if (cursor.getString(1) == differenceAndName.get(differenceList[i]))
-                    foodList.clear()
+                if (cursor.getString(1) == Top5Food[i])
                     foodList.add(
                         FoodData(
                             cursor.getString(1),
@@ -150,16 +149,5 @@ class RecommendList : AppCompatActivity() {
         db.close()
 
         ///////////  FoodCalculator - FINISH
-
-
-//            foodList.add(FoodData("gimchi",1000,100,100,100,100))
-//            foodList.add(FoodData("bob",1000,100,100,100,100))
-//            foodList.add(FoodData("banana",1000,100,100,100,100))
-//            foodList.add(FoodData("salad",1000,100,100,100,100))
-//            foodList.add(FoodData("bulgogi",1000,100,100,100,100))
-//            foodList.add(FoodData("chicken",1000,100,100,100,100))
-//            foodList.add(FoodData("pizza",2000,100,100,100,100))
-//            foodList.add(FoodData("bread",1000,100,100,100,100))
-//            foodList.add(FoodData("meat",1000,100,100,100,100))
     }
 }

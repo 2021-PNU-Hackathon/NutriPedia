@@ -11,22 +11,20 @@
         <entry key="..\:/Users/jhl81/OneDrive/NutriPedia/testRecyclerView/app/src/main/res/drawable/pager_backgrount.xml" value="0.2537037037037037" />
         <entry key="..\:/Users/jhl81/OneDrive/NutriPedia/testRecyclerView/app/src/main/res/drawable/progressbar.xml" value="0.2537037037037037" />
         <entry key="..\:/Users/jhl81/OneDrive/NutriPedia/testRecyclerView/app/src/main/res/drawable/progressbar2.xml" value="0.2537037037037037" />
-        <entry key="..\:/Users/jhl81/OneDrive/NutriPedia/testRecyclerView/app/src/main/res/layout/activity_camera_result.xml" value="0.22" />
+        <entry key="..\:/Users/jhl81/OneDrive/NutriPedia/testRecyclerView/app/src/main/res/layout/activity_camera_result.xml" value="0.10208333333333333" />
         <entry key="..\:/Users/jhl81/OneDrive/NutriPedia/testRecyclerView/app/src/main/res/layout/activity_current_height.xml" value="0.10208333333333333" />
         <entry key="..\:/Users/jhl81/OneDrive/NutriPedia/testRecyclerView/app/src/main/res/layout/activity_current_weight.xml" value="0.16666666666666666" />
-        <entry key="..\:/Users/jhl81/OneDrive/NutriPedia/testRecyclerView/app/src/main/res/layout/activity_fix_item.xml" value="0.22" />
+        <entry key="..\:/Users/jhl81/OneDrive/NutriPedia/testRecyclerView/app/src/main/res/layout/activity_fix_item.xml" value="0.1" />
         <entry key="..\:/Users/jhl81/OneDrive/NutriPedia/testRecyclerView/app/src/main/res/layout/activity_fix_search_result.xml" value="0.10208333333333333" />
         <entry key="..\:/Users/jhl81/OneDrive/NutriPedia/testRecyclerView/app/src/main/res/layout/activity_main.xml" value="0.13333333333333333" />
         <entry key="..\:/Users/jhl81/OneDrive/NutriPedia/testRecyclerView/app/src/main/res/layout/activity_private_fix.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/jhl81/OneDrive/NutriPedia/testRecyclerView/app/src/main/res/layout/activity_recommend_result.xml" value="0.322463768115942" />
-        <entry key="..\:/Users/jhl81/OneDrive/NutriPedia/testRecyclerView/app/src/main/res/layout/activity_search_list.xml" value="0.11626139817629179" />
         <entry key="..\:/Users/jhl81/OneDrive/NutriPedia/testRecyclerView/app/src/main/res/layout/activity_search_result.xml" value="0.20677083333333332" />
         <entry key="..\:/Users/jhl81/OneDrive/NutriPedia/testRecyclerView/app/src/main/res/layout/activity_setting.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/jhl81/OneDrive/NutriPedia/testRecyclerView/app/src/main/res/layout/activity_sex.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/jhl81/OneDrive/NutriPedia/testRecyclerView/app/src/main/res/layout/activity_tan_dan_ji_setting.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/jhl81/OneDrive/NutriPedia/testRecyclerView/app/src/main/res/layout/activity_target_weight.xml" value="0.10208333333333333" />
         <entry key="..\:/Users/jhl81/OneDrive/NutriPedia/testRecyclerView/app/src/main/res/layout/activity_water_setting.xml" value="0.16666666666666666" />
-        <entry key="..\:/Users/jhl81/OneDrive/NutriPedia/testRecyclerView/app/src/main/res/layout/card_layout.xml" value="0.13489583333333333" />
         <entry key="..\:/Users/jhl81/OneDrive/NutriPedia/testRecyclerView/app/src/main/res/layout/custo_dialog_fixver.xml" value="0.322463768115942" />
         <entry key="..\:/Users/jhl81/OneDrive/NutriPedia/testRecyclerView/app/src/main/res/layout/custom_dialog.xml" value="0.22" />
         <entry key="..\:/Users/jhl81/OneDrive/NutriPedia/testRecyclerView/app/src/main/res/layout/custom_dialog_fixVer.xml" value="0.4466666666666667" />
@@ -40,18 +38,16 @@
         <entry key="..\:/Users/wogud/androidProject/NutriPedia/testRecyclerView/app/src/main/res/layout/activity_setting.xml" value="0.17481884057971014" />
         <entry key="..\:/Users/wogud/androidProject/testRecyclerView/app/src/main/res/layout/activity_camera_result.xml" value="0.264" />
         <entry key="..\:/Users/wogud/androidProject/testRecyclerView/app/src/main/res/layout/activity_current_weight.xml" value="0.353713768115942" />
+        <entry key="..\:/Users/wogud/androidProject/testRecyclerView/app/src/main/res/layout/activity_fix_item.xml" value="0.17806484295845998" />
+        <entry key="..\:/Users/wogud/androidProject/testRecyclerView/app/src/main/res/layout/activity_fix_search_result.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/wogud/androidProject/testRecyclerView/app/src/main/res/layout/activity_recommend_result.xml" value="0.348731884057971" />
         <entry key="..\:/Users/wogud/androidProject/testRecyclerView/app/src/main/res/layout/activity_search_result.xml" value="0.353713768115942" />
         <entry key="..\:/Users/wogud/androidProject/testRecyclerView/app/src/main/res/layout/activity_setting.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.6163083713436269" />
         <entry key="app/src/main/res/layout/activity_previous.xml" value="0.3375" />
-        <entry key="app/src/main/res/layout/activity_recommend_list.xml" value="0.16261398176291794" />
-        <entry key="app/src/main/res/layout/activity_setting.xml" value="0.3061594202898551" />
-        <entry key="app/src/main/res/layout/activity_water_setting.xml" value="0.1641337386018237" />
         <entry key="app/src/main/res/layout/clicked_date_dialog.xml" value="0.2740628166160081" />
         <entry key="app/src/main/res/layout/custom_dialog.xml" value="0.5635416666666667" />
         <entry key="app/src/main/res/layout/custom_dialog_fixver.xml" value="0.5635416666666667" />
-        <entry key="app/src/main/res/layout/fix_edittext_water.xml" value="0.1641337386018237" />
         <entry key="app/src/main/res/layout/fragment_one.xml" value="0.3375" />
         <entry key="app/src/main/res/layout/fragment_two.xml" value="0.2740628166160081" />
         <entry key="app/src/main/res/layout/item_schedule.xml" value="0.2740628166160081" />
