@@ -36,9 +36,9 @@ class SearchResult : AppCompatActivity() {
 
         some_id.text = name
         kcal.text = calorie.toString() + "Kcal"
-        nutri1_Tv.text = nutri1.toString() + "kcal"
-        nutri2_Tv.text = nutri2.toString() + "kcal"
-        nutri3_Tv.text = nutri3.toString() + "kcal"
+        nutri1_Tv.text = nutri1.toString() + "Kcal"
+        nutri2_Tv.text = nutri2.toString() + "Kcal"
+        nutri3_Tv.text = nutri3.toString() + "Kcal"
         total.text = calorie.toString() + "Kcal"
 
         var tempList: List<Int> = (50 downTo 5).toList()
