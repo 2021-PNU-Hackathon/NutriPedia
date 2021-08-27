@@ -13,6 +13,8 @@ import androidx.annotation.RequiresApi
 import androidx.viewpager.widget.PagerAdapter
 import org.techtown.testrecyclerview.DBHelper
 import org.techtown.testrecyclerview.R
+import org.techtown.testrecyclerview.nutrientRate
+import org.techtown.testrecyclerview.recommendedKcal
 
 
 class ViewPagerAdapterPre(date:String): PagerAdapter() {
@@ -50,10 +52,19 @@ class ViewPagerAdapterPre(date:String): PagerAdapter() {
             val danTv = view.findViewById<TextView>(R.id.danTv)
             val giTv = view.findViewById<TextView>(R.id.giTv)
 
-            kcalPb.progress = dbHelper.getKcal(time)
-            cabPb.progress = dbHelper.getNutri(7,time)
-            proPb.progress = dbHelper.getNutri(8,time)
-            fatPb.progress = dbHelper.getNutri(9,time)
+            var recommendedKcal : Int = recommendedKcal(
+                dbHelper.getColValue(0, "user_info").toInt(),
+                dbHelper.getColValue(1, "user_info").toInt(),
+                dbHelper.getColValue(4, "user_info").toInt()
+            )
+            var triple : Triple<Int, Int, Int> = nutrientRate(dbHelper.getColValue(0, "user_info").toInt(),
+                dbHelper.getColValue(1, "user_info").toInt(),
+                recommendedKcal)
+
+            kcalPb.progress = dbHelper.getKcal(time) * 100 / recommendedKcal
+            cabPb.progress = dbHelper.getNutri(7,time) * 100 / triple.first
+            proPb.progress = dbHelper.getNutri(8,time) * 100 / triple.second
+            fatPb.progress = dbHelper.getNutri(9,time) * 100 / triple.second
 
             kcalTv.text = dbHelper.getKcal(time).toString()
             tanTv.text = dbHelper.getNutri(7,time).toString()
@@ -68,7 +79,7 @@ class ViewPagerAdapterPre(date:String): PagerAdapter() {
             waterTv.text = dbHelper.getPreWater(time).toString() + "/" + dbHelper.getColValue(6, "user_info") + "ml"
 
             val calPb2 = view.findViewById<ProgressBar>(R.id.calPb2)
-            calPb2.progress = dbHelper.getPreWater(time)
+            calPb2.progress = dbHelper.getPreWater(time) * 100 / dbHelper.getColValue(6, "user_info").toInt()
 
         }
 
