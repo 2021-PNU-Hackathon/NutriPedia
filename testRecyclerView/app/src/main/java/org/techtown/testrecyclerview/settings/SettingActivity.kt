@@ -43,19 +43,10 @@ class SettingActivity : AppCompatActivity() {
         infoTv.text = dbHelper.getColValue(4, "user_info") + "cm | " + gender + " | " + dbHelper.getColValue(2,"user_info") + "세"
         cWeight.text = dbHelper.getColValue(0,"user_info") + "kg"
         tWeight.text = dbHelper.getColValue(1,"user_info") + "kg"
-        recokcal.text = recommendedKcal(dbHelper.getColValue(0, "user_info").toInt() ,
-            dbHelper.getColValue(1, "user_info").toInt(),
-            dbHelper.getColValue(4, "user_info").toInt()).toString() + "kcal"
+        recokcal.text = dbHelper.getColValue(8,"user_info") + "kcal"
         twater.text = dbHelper.getColValue(6,"user_info") + "ml"
-        var recommendedKcal : Int = recommendedKcal(
-            dbHelper.getColValue(0, "user_info").toInt(),
-            dbHelper.getColValue(1, "user_info").toInt(),
-            dbHelper.getColValue(4, "user_info").toInt()
-        )
-        var triple : Triple<Int, Int, Int> = nutrientRate(dbHelper.getColValue(0, "user_info").toInt(),
-            dbHelper.getColValue(1, "user_info").toInt(),
-            recommendedKcal)
-        nrate.text = triple.first.toString() + ":" + triple.second.toString() + ":" + triple.third.toString()
+
+        nrate.text = dbHelper.getColValue(9,"user_info") + ":" + dbHelper.getColValue(10,"user_info") + ":" + dbHelper.getColValue(11,"user_info")
 
     }
 
@@ -70,19 +61,10 @@ class SettingActivity : AppCompatActivity() {
         infoTv.text = dbHelper.getColValue(4, "user_info") + "cm | " + gender + " | " + dbHelper.getColValue(2,"user_info") + "세"
         cWeight.text = dbHelper.getColValue(0,"user_info") + "kg"
         tWeight.text = dbHelper.getColValue(1,"user_info") + "kg"
-        recokcal.text = recommendedKcal(dbHelper.getColValue(0, "user_info").toInt() ,
-            dbHelper.getColValue(1, "user_info").toInt(),
-            dbHelper.getColValue(4, "user_info").toInt()).toString() + "kcal"
+        recokcal.text = dbHelper.getColValue(8,"user_info") + "kcal"
         twater.text = dbHelper.getColValue(6,"user_info") + "ml"
-        var recommendedKcal : Int = recommendedKcal(
-            dbHelper.getColValue(0, "user_info").toInt(),
-            dbHelper.getColValue(1, "user_info").toInt(),
-            dbHelper.getColValue(4, "user_info").toInt()
-        )
-        var triple : Triple<Int, Int, Int> = nutrientRate(dbHelper.getColValue(0, "user_info").toInt(),
-            dbHelper.getColValue(1, "user_info").toInt(),
-            recommendedKcal)
-        nrate.text = triple.first.toString() + ":" + triple.second.toString() + ":" + triple.third.toString()
+
+        nrate.text = dbHelper.getColValue(9,"user_info") + ":" + dbHelper.getColValue(10,"user_info") + ":" + dbHelper.getColValue(11,"user_info")
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
