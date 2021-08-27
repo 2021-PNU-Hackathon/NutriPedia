@@ -14,6 +14,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatButton
 import androidx.viewpager.widget.PagerAdapter
+import kotlinx.android.synthetic.main.activity_setting.*
 import kotlinx.android.synthetic.main.page.view.*
 import org.techtown.testrecyclerview.R
 import java.time.LocalDate
@@ -38,7 +39,8 @@ class ViewPagerAdapter: PagerAdapter() {
         return POSITION_NONE
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
+
+    @RequiresApi(Build.VERSION_CODES.Q)
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         dbHelper = DBHelper(container.context, "food_nutri.db", null, 1)
         database = dbHelper.writableDatabase
@@ -61,10 +63,19 @@ class ViewPagerAdapter: PagerAdapter() {
             val danTv = view.findViewById<TextView>(R.id.danTv)
             val giTv = view.findViewById<TextView>(R.id.giTv)
 
-            kcalPb.progress = dbHelper.getKcal(strnow)
-            cabPb.progress = dbHelper.getNutri(7,strnow)
-            proPb.progress = dbHelper.getNutri(8,strnow)
-            fatPb.progress = dbHelper.getNutri(9,strnow)
+            var recommendedKcal : Int = recommendedKcal(
+                dbHelper.getColValue(0, "user_info").toInt(),
+                dbHelper.getColValue(1, "user_info").toInt(),
+                dbHelper.getColValue(4, "user_info").toInt()
+            )
+            var triple : Triple<Int, Int, Int> = nutrientRate(dbHelper.getColValue(0, "user_info").toInt(),
+                dbHelper.getColValue(1, "user_info").toInt(),
+                recommendedKcal)
+
+            kcalPb.progress = dbHelper.getKcal(strnow) * 100 / recommendedKcal
+            cabPb.progress = dbHelper.getNutri(7,strnow)  * 100 / triple.first
+            proPb.progress = dbHelper.getNutri(8,strnow) * 100 / triple.second
+            fatPb.progress = dbHelper.getNutri(9,strnow) * 100 / triple.third
 
             kcalTv.text = dbHelper.getKcal(strnow).toString()
             tanTv.text = dbHelper.getNutri(7,strnow).toString()
@@ -79,7 +90,8 @@ class ViewPagerAdapter: PagerAdapter() {
             waterTv.text = dbHelper.getWater().toString() + "/" + dbHelper.getColValue(6, "user_info") + "ml"
 
             val calPb2 = view.findViewById<ProgressBar>(R.id.calPb2)
-            calPb2.progress = dbHelper.getWater()
+//            calPb2.maxHeight = dbHelper.getColValue(6, "user_info").toInt()
+            calPb2.progress = dbHelper.getWater() * 100 / dbHelper.getColValue(6, "user_info").toInt()
 
         }
 
@@ -110,3 +122,4 @@ class ViewPagerAdapter: PagerAdapter() {
         return (view==`object`)
     }
 }
+

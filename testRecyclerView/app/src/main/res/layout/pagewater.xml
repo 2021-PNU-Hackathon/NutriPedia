@@ -63,7 +63,6 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="88dp"
-        android:max="2000"
         android:progressBackgroundTint="#5CC485"
         android:progressDrawable="@drawable/progressbar2"
         android:progressTint="@color/white"
@@ -71,7 +70,8 @@
         android:scaleX="2"
         android:scaleY="3"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:progress="0" />
 
     <TextView
         android:id="@+id/waterTv"

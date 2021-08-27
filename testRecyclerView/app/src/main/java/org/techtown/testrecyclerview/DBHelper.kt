@@ -169,17 +169,17 @@ class DBHelper(
         db.close()
     }
 
-    fun updatewater(
-        field: String, value: Int, date: String
-    ) {
-        var db: SQLiteDatabase = writableDatabase
-
-        db.execSQL(
-            "UPDATE water SET " + field + " = " + value + " WHERE date = '" + date + "';"
-        )
-
-        db.close()
-    }
+//    fun updatewater(
+//        field: String, value: Int, date: String
+//    ) {
+//        var db: SQLiteDatabase = writableDatabase
+//
+//        db.execSQL(
+//            "UPDATE water SET " + field + " = " + value + " WHERE date = '" + date + "';"
+//        )
+//
+//        db.close()
+//    }
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun getWater(): Int {
