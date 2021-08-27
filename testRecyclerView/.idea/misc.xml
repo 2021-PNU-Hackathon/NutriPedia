@@ -43,9 +43,12 @@
         <entry key="..\:/Users/wogud/androidProject/testRecyclerView/app/src/main/res/layout/activity_setting.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.6163083713436269" />
         <entry key="app/src/main/res/layout/activity_previous.xml" value="0.3375" />
+        <entry key="app/src/main/res/layout/activity_setting.xml" value="0.3061594202898551" />
+        <entry key="app/src/main/res/layout/activity_water_setting.xml" value="0.1641337386018237" />
         <entry key="app/src/main/res/layout/clicked_date_dialog.xml" value="0.2740628166160081" />
         <entry key="app/src/main/res/layout/custom_dialog.xml" value="0.5635416666666667" />
         <entry key="app/src/main/res/layout/custom_dialog_fixver.xml" value="0.5635416666666667" />
+        <entry key="app/src/main/res/layout/fix_edittext_water.xml" value="0.1641337386018237" />
         <entry key="app/src/main/res/layout/fragment_one.xml" value="0.3375" />
         <entry key="app/src/main/res/layout/fragment_two.xml" value="0.2740628166160081" />
         <entry key="app/src/main/res/layout/item_schedule.xml" value="0.2740628166160081" />

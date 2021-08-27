@@ -96,6 +96,8 @@ class FragmentOne : Fragment() {
         var now = LocalDate.now()
         var strnow :String = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
 
+        displayList.clear()
+        foodList.clear()
         fillFoodData(strnow)
 
         var recommendBtn = v.findViewById<Button>(R.id.recommendBtn)
@@ -190,6 +192,8 @@ class FragmentOne : Fragment() {
         dbHelper = DBHelper(context, "food_nutri.db", null, 1)
         db = dbHelper.readableDatabase
 
+        displayList.clear()
+        foodList.clear()
         fillFoodData(strnow)
 
         var layoutManager = LinearLayoutManager(context)
@@ -203,6 +207,15 @@ class FragmentOne : Fragment() {
 
         adapter.notifyDataSetChanged()
         recyclerView.invalidate()
+
+        var calTv = v.findViewById<TextView>(R.id.textView14)
+        var recommendedKcal : Int = recommendedKcal(
+            dbHelper.getColValue(0, "user_info").toInt(),
+            dbHelper.getColValue(1, "user_info").toInt(),
+            dbHelper.getColValue(4, "user_info").toInt()
+        )
+
+        calTv.text = "${recommendedKcal - dbHelper.getKcal(strnow)}Kcal"
 
         val viewAdapter= ViewPagerAdapter()
         val pagerTest = v.findViewById<ViewPager>(R.id.pager)
@@ -221,6 +234,7 @@ class FragmentOne : Fragment() {
         for(i in 0..5) {
             Log.d("Log1",time)
             Log.d("Log1",mealtime[i])
+//            foodList.clear()
             var cursor: Cursor = db.rawQuery("SELECT * FROM record where date = '${time}' and mealtime = '${mealtime[i]}'", null)
             var mealKcal : Int = 0
             var mealCab : Int =0
