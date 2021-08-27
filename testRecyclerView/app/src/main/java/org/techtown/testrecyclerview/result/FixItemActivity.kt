@@ -8,9 +8,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.Button
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_fix_item.*
+import org.techtown.testrecyclerview.DBHelper
 import org.techtown.testrecyclerview.FragmentOne
 import org.techtown.testrecyclerview.MainActivity
 import org.techtown.testrecyclerview.R
@@ -55,9 +57,9 @@ class FixItemActivity : AppCompatActivity() {
             mainIv.setImageURI(fixArray[0].uri)
             foodTv1.text = fixArray[0].foodName
             kcalTv.text = fixArray[0].calorie.toString() + "Kcal"
-            nutri1_Tv.text = fixArray[0].nutri1.toString() + "g"
-            nutri2_Tv.text = fixArray[0].nutri2.toString() + "g"
-            nutri3_Tv.text = fixArray[0].nutri3.toString() + "g"
+            nutri1_Tv.text = fixArray[0].nutri1.toString() + "Kcal"
+            nutri2_Tv.text = fixArray[0].nutri2.toString() + "Kcal"
+            nutri3_Tv.text = fixArray[0].nutri3.toString() + "Kcal"
             var total : Double = 0.0
             for (i in 0 until fixArray.size) {
                 total += fixArray[i].calorie
@@ -86,9 +88,9 @@ class FixItemActivity : AppCompatActivity() {
                         mainIv.setImageURI(fixArray[position].uri)
                         foodTv1.text = fixArray[position].foodName
                         kcalTv.text = fixArray[position].calorie.toString() + "Kcal"
-                        nutri1_Tv.text = fixArray[position].nutri1.toString() + "g"
-                        nutri2_Tv.text = fixArray[position].nutri2.toString() + "g"
-                        nutri3_Tv.text = fixArray[position].nutri3.toString() + "g"
+                        nutri1_Tv.text = fixArray[position].nutri1.toString() + "Kcal"
+                        nutri2_Tv.text = fixArray[position].nutri2.toString() + "Kcal"
+                        nutri3_Tv.text = fixArray[position].nutri3.toString() + "Kcal"
                         var total : Double = 0.0
                         for (i in 0 until fixArray.size) {
                             total += fixArray[i].calorie
@@ -99,9 +101,9 @@ class FixItemActivity : AppCompatActivity() {
                         mainIv.setImageResource(R.drawable.ic_no_image)
                         foodTv1.text =fixArray[position].foodName
                         kcalTv.text = fixArray[position].calorie.toString() + "Kcal"
-                        nutri1_Tv.text = fixArray[position].nutri1.toString() + "g"
-                        nutri2_Tv.text = fixArray[position].nutri2.toString() + "g"
-                        nutri3_Tv.text = fixArray[position].nutri3.toString() + "g"
+                        nutri1_Tv.text = fixArray[position].nutri1.toString() + "Kcal"
+                        nutri2_Tv.text = fixArray[position].nutri2.toString() + "Kcal"
+                        nutri3_Tv.text = fixArray[position].nutri3.toString() + "Kcal"
                         var total : Double = 0.0
                         for (i in 0 until fixArray.size) {
                             total += fixArray[i].calorie
@@ -128,6 +130,7 @@ class FixItemActivity : AppCompatActivity() {
         button.setOnClickListener {
             finish()
         }
+
     }
 
     override fun onResume() {
@@ -141,19 +144,17 @@ class FixItemActivity : AppCompatActivity() {
 
             foodTv1.text = fixArray[0].foodName
             kcalTv.text = fixArray[0].calorie.toString() + "Kcal"
-            nutri1_Tv.text = fixArray[0].nutri1.toString() + "g"
-            nutri2_Tv.text = fixArray[0].nutri2.toString() + "g"
-            nutri3_Tv.text = fixArray[0].nutri3.toString() + "g"
+            nutri1_Tv.text = fixArray[0].nutri1.toString() + "Kcal"
+            nutri2_Tv.text = fixArray[0].nutri2.toString() + "Kcal"
+            nutri3_Tv.text = fixArray[0].nutri3.toString() + "Kcal"
             var total : Double = 0.0
             for (i in 0 until fixArray.size) {
                 total += fixArray[i].calorie
             }
             totalCal.text = total.toString() + "Kcal"
         }
-
-
-
     }
+
 
 
 
