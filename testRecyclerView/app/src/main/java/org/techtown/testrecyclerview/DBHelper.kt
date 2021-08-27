@@ -70,7 +70,6 @@ class DBHelper(
         db.execSQL(sql3)
         db.execSQL(sql4)
         db.execSQL(sql5)
-        db.close()
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
@@ -81,7 +80,6 @@ class DBHelper(
         db.execSQL(sql2)
         db.execSQL(sql3)
         onCreate(db)
-        db.close()
     }
 
     fun isEmpty(tablename : String): Boolean {
@@ -142,7 +140,6 @@ class DBHelper(
         var db: SQLiteDatabase = writableDatabase
         var query = "INSERT INTO water VALUES ((SELECT date('now','localtime')), 0);"
         db.execSQL(query)
-        db.close()
     }
 
     fun insertSuccess(time : String, value: Int) {
@@ -203,7 +200,7 @@ class DBHelper(
         var Strnow = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
         var db: SQLiteDatabase = readableDatabase
 
-        val query = "SELECT * FROM water where date = '${Strnow}'"
+        val query = "SELECT * FROM water"
         var cursor: Cursor = db.rawQuery(query, null)
         var returnvalue = 0
         var exist = 0
