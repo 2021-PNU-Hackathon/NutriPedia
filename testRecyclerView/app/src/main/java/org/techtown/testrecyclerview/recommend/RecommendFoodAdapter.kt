@@ -69,10 +69,10 @@ class RecommendFoodAdapter (val context: Context, var foodList: ArrayList<FoodDa
 
             /* 나머지 TextView와 String 데이터를 연결한다. */
             foodTitle.text = foodData.foodName
-            kcalTv.text = foodData.calorie.toString()+"kcal | "+foodData.amount.toString()+"g 기준"
-            nutri1.text = foodData.nutri1.toString()+"kcal"
-            nutri2.text = foodData.nutri2.toString()+"kcal"
-            nutri3.text = foodData.nutri3.toString()+"kcal"
+            kcalTv.text = foodData.calorie.toString()+"Kcal | "+foodData.amount.toString()+"g 기준"
+            nutri1.text = foodData.nutri1.toString()+"Kcal"
+            nutri2.text = foodData.nutri2.toString()+"Kcal"
+            nutri3.text = foodData.nutri3.toString()+"Kcal"
 
             thumbUp.setOnClickListener {
                 if (thumbUpClicked == true && thumbDownClicked == false) {
