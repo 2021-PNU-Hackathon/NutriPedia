@@ -115,7 +115,8 @@
         android:progressDrawable="@drawable/progressbar"
         app:layout_constraintStart_toEndOf="@+id/tanPb"
         app:layout_constraintTop_toBottomOf="@+id/danTv"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        android:progress="0"/>
 
     <ProgressBar
         android:id="@+id/tanPb"
@@ -127,7 +128,8 @@
         android:progressDrawable="@drawable/progressbar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tanTv"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        android:progress="0"/>
 
     <TextView
         android:id="@+id/tanTv"
@@ -150,7 +152,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="48dp"
-        android:progress="30"
+        android:progress="0"
         android:progressDrawable="@drawable/progressbar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title"

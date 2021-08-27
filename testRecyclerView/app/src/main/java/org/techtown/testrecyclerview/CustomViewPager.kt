@@ -48,7 +48,7 @@ class CustomViewPager : ViewPager {
                 .setView(mDialogView)
             val mAlertDialog = mBuilder.show()
             mAlertDialog.window!!.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
-            mAlertDialog.window!!.setGravity(Gravity.BOTTOM)
+            mAlertDialog.window!!.setGravity(Gravity.CENTER)
 
             var weightList: List<Int> = (150 downTo 35).toList()
             var weightStrConvertList = weightList.map { it.toString() }
@@ -97,47 +97,25 @@ class CustomViewPager : ViewPager {
                 dbHelper.updateWater(waterEdit.text.toString().toInt())
                 mAlertDialog.dismiss()
                 waterTv.text = dbHelper.getWater().toString() + "/" + dbHelper.getColValue(6, "user_info") + "ml"
-                calPb2.progress = dbHelper.getWater()
+                calPb2.progress = (dbHelper.getWater()*100) / (dbHelper.getColValue(6, "user_info").toInt())
             }
         }
 
         btn100.setOnClickListener {
-            var now = LocalDate.now()
-            var Strnow = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
-            var setProg = calPb2.getProgress()
-            
-            setProg += 100
-            calPb2.progress = setProg
-            splitArray = waterTv.text.split("/").toTypedArray()
-            var water = dbHelper.getColValue(1, "water").toInt()
-            water += 100
-            waterTv.text = water.toString() + "/" + splitArray[1]
-            dbHelper.updatewater("amount", dbHelper.getColValue(1, "water").toInt()+100, Strnow)
+            dbHelper.updateWater(dbHelper.getWater()+100)
+            calPb2.progress = dbHelper.getWater() * 100 / dbHelper.getColValue(6, "user_info").toInt()
+            waterTv.text = (dbHelper.getWater()).toString()+"/"+dbHelper.getColValue(6, "user_info")+"ml"
+            Log.d("water",((dbHelper.getWater()*100) / (dbHelper.getColValue(6, "user_info").toInt())).toString())
         }
         btn250.setOnClickListener {
-            var now = LocalDate.now()
-            var Strnow = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
-            var setProg = calPb2.getProgress()
-            setProg += 250
-            calPb2.setProgress(setProg)
-            splitArray = waterTv.text.split("/").toTypedArray()
-            var water = dbHelper.getColValue(1, "water").toInt()
-            water += 250
-            waterTv.text = water.toString() + "/" + splitArray[1]
-            dbHelper.updatewater("amount", dbHelper.getColValue(1, "water").toInt()+250, Strnow)
-
+            dbHelper.updateWater(dbHelper.getWater()+250)
+            calPb2.progress = dbHelper.getWater() * 100 / dbHelper.getColValue(6, "user_info").toInt()
+            waterTv.text = (dbHelper.getWater()).toString()+"/"+dbHelper.getColValue(6, "user_info")+"ml"
         }
         btn500.setOnClickListener {
-            var now = LocalDate.now()
-            var Strnow = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
-            var setProg = calPb2.getProgress()
-            setProg += 500
-            calPb2.setProgress(setProg)
-            splitArray = waterTv.text.split("/").toTypedArray()
-            var water = dbHelper.getColValue(1, "water").toInt()
-            water += 500
-            waterTv.text = water.toString() + "/" + splitArray[1]
-            dbHelper.updatewater("amount", dbHelper.getColValue(1, "water").toInt()+500, Strnow)
+            dbHelper.updateWater(dbHelper.getWater()+500)
+            calPb2.progress = dbHelper.getWater() * 100 / dbHelper.getColValue(6, "user_info").toInt()
+            waterTv.text = (dbHelper.getWater()).toString()+"/"+dbHelper.getColValue(6, "user_info")+"ml"
         }
         return super.onInterceptTouchEvent(ev)
     }

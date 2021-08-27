@@ -17,7 +17,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="40dp"
             android:layout_weight="2"
-            android:text="목표 섭취량"
+            android:text="현재 섭취량"
             android:textColor="@color/black"
             android:textSize="25dp"
             android:textStyle="bold" />
