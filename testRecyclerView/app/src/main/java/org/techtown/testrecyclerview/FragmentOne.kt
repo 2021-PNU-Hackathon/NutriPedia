@@ -185,23 +185,23 @@ class FragmentOne : Fragment() {
         }
 
 //        adapter.setItemClickListner(object : MainActivity.MyAdapter.OnItemClickListner {
+//
 //            override fun onClick(v: View, position: Int) {
 //                val cardViewIntent = Intent(context, FixItemActivity::class.java)
-////                position = recyclerView.getChildAdapterPosition(child!!)
+//
 //                startActivityForResult(cardViewIntent, 123)
 //            }
 //
-//        })  재현 테스트
+//        })
+
 
 //        recyclerView.addOnItemTouchListener(object : RecyclerView.OnItemTouchListener{
 //            override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
 //                try {
 //                    val child = recyclerView.findChildViewUnder(e.x, e.y)
-//                    if (e.action != MotionEvent.ACTION_MOVE && e.action == MotionEvent.ACTION_DOWN) {
-//                        val cardViewIntent = Intent(context, FixItemActivity::class.java)
-//                        position = recyclerView.getChildAdapterPosition(child!!)
-//                        startActivityForResult(cardViewIntent, 123)
-//                    }
+//                    val cardViewIntent = Intent(context, FixItemActivity::class.java)
+//                    position = recyclerView.getChildAdapterPosition(child!!)
+//                    startActivityForResult(cardViewIntent, 123)
 //                } catch (e : NullPointerException) {
 //
 //                }
