@@ -66,11 +66,11 @@ class FixItemActivity : AppCompatActivity() {
         currentNp.value = 40
         var currentvalue = 40
 
-        mt = FragmentOne.cardList[FragmentOne.position].mealTime
+        mt = FragmentOne.cardList[MainActivity.pos].mealTime
 
         fixArray.clear()
         for (i in 0 until FragmentOne.cardList.size) {
-            if (FragmentOne.cardList[i].mealTime == FragmentOne.cardList[FragmentOne.position].mealTime) {
+            if (FragmentOne.cardList[i].mealTime == FragmentOne.cardList[MainActivity.pos].mealTime) {
                 var uri : Uri?
                 if (FragmentOne.cardList[i].picture != null) {
                     uri = Uri.parse(FragmentOne.cardList[i].picture)

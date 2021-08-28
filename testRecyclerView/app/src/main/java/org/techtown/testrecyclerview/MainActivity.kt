@@ -33,6 +33,7 @@ import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.card_layout.*
 import kotlinx.android.synthetic.main.search_bar.view.*
 import org.techtown.testrecyclerview.result.CameraResult
+import org.techtown.testrecyclerview.result.FixItemActivity
 import org.techtown.testrecyclerview.result.FoodResult
 import org.techtown.testrecyclerview.tutorial.CurrentWeight
 import java.io.*
@@ -65,6 +66,7 @@ class MainActivity : AppCompatActivity() {
             return instance!!.applicationContext
         }
         var checkChange : Int = 1
+        var pos = 0
     }
     private val fl: FrameLayout by lazy {
         findViewById(R.id.main_frame)
@@ -371,7 +373,7 @@ class MainActivity : AppCompatActivity() {
 
             val item = foodList[position]
             holder.itemView.setOnClickListener {
-                itemClickListner.onClick(it,position)
+                itemClickListner!!.onClick(it,position)
             }
 
             holder.apply {
@@ -386,7 +388,7 @@ class MainActivity : AppCompatActivity() {
         interface OnItemClickListner {
             fun onClick(v:View, position: Int)
         }
-        private lateinit var itemClickListner: OnItemClickListner
+        private var itemClickListner: OnItemClickListner? = null
 
         fun setItemClickListner(itemClickListner: OnItemClickListner) {
             this.itemClickListner = itemClickListner
@@ -399,7 +401,15 @@ class MainActivity : AppCompatActivity() {
             var cardTanTv: TextView = itemview.findViewById(R.id.cardTanTv)
             var cardDanTv: TextView = itemview.findViewById(R.id.cardDanTv)
             var cardJiTv: TextView = itemview.findViewById(R.id.cardJiTv)
+
             fun bind (foodData:RecordFoodData, context: Context) {
+
+                itemView.setOnClickListener {
+                    pos = adapterPosition
+                    val cardViewIntent = Intent(context, FixItemActivity::class.java).apply{
+                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    }.run { context.startActivity(this) }
+                }
 
                 itemtitle.text = foodData.mealTime +" | "+foodData.calorie.toString()+"Kcal"
                 itemdetail.text = foodData.foodName
