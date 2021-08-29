@@ -291,6 +291,7 @@ class FragmentOne : Fragment() {
             var mealFat:Int =0
             var cnt : Int = 0
             var names = arrayListOf<String>()
+            var extra : String = ""
             while (cursor.moveToNext()) {
                 mealKcal += cursor.getString(6).toInt()
                 mealCab += cursor.getString(7).toInt()
@@ -302,11 +303,18 @@ class FragmentOne : Fragment() {
             if (cnt>0) {
                 Log.d("Log1","good")
                 var nameStr: String = ""
-                for (i in 0..cnt - 2) {
-                    nameStr += names[i]
-                    nameStr += ","
+                if (cnt == 1) {
+                    nameStr = names[i]
                 }
-                nameStr += names[cnt - 1]
+                else if (cnt == 2) {
+                    nameStr = names[i]
+                    extra += " 외 ${cnt-1}개"
+                }
+                else {
+                    nameStr = names[i]
+                    extra += " 외 ${cnt-1}개"
+                }
+                nameStr += extra
                 //            if (nameStr.length >15)
                 cardList.add(
                     RecordFoodData(
@@ -430,11 +438,11 @@ class FragmentOne : Fragment() {
         var cardList = arrayListOf<RecordFoodData>()
         var position = 0
         @JvmStatic fun newInstance(param1: String, param2: String) =
-                FragmentOne().apply {
-                    arguments = Bundle().apply {
-                        putString(ARG_PARAM1, param1)
-                        putString(ARG_PARAM2, param2)
-                    }
+            FragmentOne().apply {
+                arguments = Bundle().apply {
+                    putString(ARG_PARAM1, param1)
+                    putString(ARG_PARAM2, param2)
                 }
+            }
     }
 }
