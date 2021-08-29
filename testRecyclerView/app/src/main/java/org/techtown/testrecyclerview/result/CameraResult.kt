@@ -58,7 +58,7 @@ class CameraResult : AppCompatActivity(){
         supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.parseColor("#FFFFFF")))
 
         var uri = intent.getStringExtra("uri")
-        var totalUri = Uri.parse("uri")
+        var totalUri = Uri.parse(uri)
         imageArray.clear()
         imageArray.addAll(MainActivity.arrayUse)
         imageArray.add(imageArray.size,FoodResult("add",0,0,0,0,null,false))
@@ -467,6 +467,7 @@ class CameraResult : AppCompatActivity(){
                         mt,
                         imageArray[i].foodName,
                         imageArray[i].uri,
+                        totalUri,
                         500 - currentvalue * 10,
                         imageArray[i].calorie,
                         imageArray[i].nutri1,
@@ -474,7 +475,7 @@ class CameraResult : AppCompatActivity(){
                         imageArray[i].nutri3
                     )
                 }
-                MainActivity.checkChange =1
+                MainActivity.checkChange = 1
                 finish()
             }
         }

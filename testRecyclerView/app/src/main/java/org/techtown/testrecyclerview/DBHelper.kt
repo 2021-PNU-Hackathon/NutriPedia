@@ -132,10 +132,10 @@ class DBHelper(
         db.close()
     }
 
-    fun insertFoodRecord2(_mealtime: String?, _foodname: String?, _uri: Uri?, _amount: Int, _kcal: Int, _cab: Int, _pro: Int, _fat: Int) {
+    fun insertFoodRecord2(_mealtime: String?, _foodname: String?, _uri: Uri?, _totaluri: Uri?, _amount: Int, _kcal: Int, _cab: Int, _pro: Int, _fat: Int) {
         var db: SQLiteDatabase = writableDatabase
         var query =
-            "INSERT INTO record VALUES ((SELECT date('now','localtime')), '${_mealtime}', '${_foodname}', '${_uri}', NULL, '${_amount}', '${_kcal}', '${_cab}', '${_pro}', '${_fat}');"
+            "INSERT INTO record VALUES ((SELECT date('now','localtime')), '${_mealtime}', '${_foodname}', '${_uri}', '${_totaluri}', '${_amount}', '${_kcal}', '${_cab}', '${_pro}', '${_fat}');"
         db.execSQL(query)
         db.close()
     }
