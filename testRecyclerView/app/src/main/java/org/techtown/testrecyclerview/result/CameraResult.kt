@@ -58,7 +58,7 @@ class CameraResult : AppCompatActivity(){
         supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.parseColor("#FFFFFF")))
 
         var uri = intent.getStringExtra("uri")
-        var totalUri = Uri.parse("uri")
+        var totalUri = Uri.parse(uri)
         imageArray.clear()
         imageArray.addAll(MainActivity.arrayUse)
         imageArray.add(imageArray.size,FoodResult("add",0,0,0,0,null,false))
@@ -113,7 +113,6 @@ class CameraResult : AppCompatActivity(){
             imageArray[pos].nutri1 = (imageArray[pos].nutri1.toDouble()*(50-newVal)/10).roundToInt()
             imageArray[pos].nutri2 = (imageArray[pos].nutri2.toDouble()*(50-newVal)/10).roundToInt()
             imageArray[pos].nutri3 = (imageArray[pos].nutri3.toDouble()*(50-newVal)/10).roundToInt()
-
         }
 
         val mAdapter = ResultAdapter(this,imageArray)

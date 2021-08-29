@@ -41,6 +41,7 @@ import org.techtown.testrecyclerview.recommend.RecommendList
 import org.techtown.testrecyclerview.recommend.RecommendResult
 import org.techtown.testrecyclerview.result.CameraResult
 import org.techtown.testrecyclerview.result.FixItemActivity
+import org.techtown.testrecyclerview.result.FoodResult
 import org.techtown.testrecyclerview.search.FoodData
 import org.techtown.testrecyclerview.search.SearchList
 import org.techtown.testrecyclerview.settings.SettingActivity
@@ -78,6 +79,7 @@ class FragmentOne : Fragment() {
 
     val displayList = ArrayList<RecordFoodData>()
     lateinit var v : View
+    val cardList : ArrayList<RecordFoodData> = ArrayList<RecordFoodData>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -280,6 +282,8 @@ class FragmentOne : Fragment() {
 
 
     fun fillFoodData(time: String) {
+        resultList.clear()
+        cardList.clear()
         for(i in 0..5) {
             Log.d("Log1",time)
             Log.d("Log1",mealtime[i])
@@ -291,6 +295,15 @@ class FragmentOne : Fragment() {
             var mealFat:Int =0
             var cnt : Int = 0
             var names = arrayListOf<String>()
+            var total :String? = null
+            var mealTime : String
+            var foodName : String
+            var picture : String?
+            var calorie : Int
+            var nutri1 : Int
+            var nutri2 : Int
+            var nutri3 : Int
+
             while (cursor.moveToNext()) {
                 mealKcal += cursor.getString(6).toInt()
                 mealCab += cursor.getString(7).toInt()
@@ -298,6 +311,25 @@ class FragmentOne : Fragment() {
                 mealFat += cursor.getString(9).toInt()
                 names.add(cursor.getString(2))
                 cnt++
+                mealTime = mealtime[i]
+                foodName = cursor.getString(2)
+                picture = cursor.getString(4)
+                calorie = cursor.getString(6).toInt()
+                nutri1 = cursor.getString(7).toInt()
+                nutri2 = cursor.getString(8).toInt()
+                nutri3 = cursor.getString(9).toInt()
+                resultList.add(
+                    RecordFoodData(
+                        mealTime,
+                        foodName,
+                        picture,
+                        calorie,
+                        nutri1,
+                        nutri2,
+                        nutri3
+                    )
+                )
+
             }
             if (cnt>0) {
                 Log.d("Log1","good")
@@ -312,15 +344,18 @@ class FragmentOne : Fragment() {
                     RecordFoodData(
                         mealtime[i],
                         nameStr,
-                        null,
+                        total,
                         mealKcal,
                         mealCab,
                         mealPro,
                         mealFat
                     )
                 )
+
             }
         }
+
+
     }
 
     fun takeCapture() { //카메라 촬영
@@ -427,7 +462,7 @@ class FragmentOne : Fragment() {
          * @return A new instance of fragment FragmentOne.
          */
         // TODO: Rename and change types and number of parameters
-        var cardList = arrayListOf<RecordFoodData>()
+        var resultList = arrayListOf<RecordFoodData>()
         var position = 0
         @JvmStatic fun newInstance(param1: String, param2: String) =
                 FragmentOne().apply {
