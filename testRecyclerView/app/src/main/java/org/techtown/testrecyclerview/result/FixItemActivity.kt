@@ -52,6 +52,7 @@ class FixItemActivity : AppCompatActivity() {
 
         var gramList = java.util.ArrayList<Int>()
         gramList.add(dbHelper.getColValue(5, "record").toInt())
+        dbHelper.close()
         var gramStrConvertList = gramList.map { it.toString() }
 
 
