@@ -41,27 +41,26 @@
         android:id="@+id/giTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginStart="249dp"
         android:text="지방"
         android:textColor="#80FFFFFF"
         android:textSize="20dp"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/danTv"
-        app:layout_constraintTop_toBottomOf="@+id/calPb"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/giTv2"
         tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/giTv2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
+        android:layout_marginStart="56dp"
         android:layout_marginTop="12dp"
         android:text="지방"
         android:textColor="#80FFFFFF"
         android:textSize="20dp"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/danTv"
+        app:layout_constraintStart_toEndOf="@+id/danTv2"
         app:layout_constraintTop_toBottomOf="@+id/calPb"
         tools:ignore="MissingConstraints" />
 
@@ -70,7 +69,7 @@
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="12dp"
         android:progressDrawable="@drawable/progressbar"
         app:layout_constraintStart_toEndOf="@+id/danPb"
@@ -81,14 +80,13 @@
         android:id="@+id/danTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="76dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginStart="138dp"
         android:text="단백질"
         android:textColor="#80FFFFFF"
         android:textSize="20dp"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/tanTv2"
-        app:layout_constraintTop_toBottomOf="@+id/calPb"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/danTv2"
         tools:ignore="MissingConstraints" />
 
     <TextView
@@ -135,14 +133,13 @@
         android:id="@+id/tanTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginStart="24dp"
         android:text="탄수화물"
         android:textColor="#80FFFFFF"
         android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/calPb"
+        app:layout_constraintTop_toBottomOf="@+id/tanTv2"
         tools:ignore="MissingConstraints" />
 
     <ProgressBar

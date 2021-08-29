@@ -113,7 +113,6 @@ class CameraResult : AppCompatActivity(){
             imageArray[pos].nutri1 = (imageArray[pos].nutri1.toDouble()*(50-newVal)/10).roundToInt()
             imageArray[pos].nutri2 = (imageArray[pos].nutri2.toDouble()*(50-newVal)/10).roundToInt()
             imageArray[pos].nutri3 = (imageArray[pos].nutri3.toDouble()*(50-newVal)/10).roundToInt()
-
         }
 
         val mAdapter = ResultAdapter(this,imageArray)

@@ -228,7 +228,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="191dp"
                         android:background="#5CC485"
-                        android:text="등록하기"
+                        android:text="완료하기"
                         android:textColor="@color/white" />
 
 

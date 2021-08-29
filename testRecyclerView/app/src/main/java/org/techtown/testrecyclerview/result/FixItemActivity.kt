@@ -61,25 +61,26 @@ class FixItemActivity : AppCompatActivity() {
         currentNp.maxValue = gramStrConvertList.size - 1
         currentNp.wrapSelectorWheel = true
         currentNp.displayedValues = gramStrConvertList.toTypedArray()
-
-        mt = FragmentOne.cardList[MainActivity.pos].mealTime
+        currentNp.value = 40
+        var currentvalue = 40
+        mt = FragmentOne.resultList[MainActivity.pos].mealTime
 
         fixArray.clear()
-        for (i in 0 until FragmentOne.cardList.size) {
-            if (FragmentOne.cardList[i].mealTime == FragmentOne.cardList[MainActivity.pos].mealTime) {
+        for (i in 0 until FragmentOne.resultList.size) {
+            if (FragmentOne.resultList[i].mealTime == FragmentOne.resultList[MainActivity.pos].mealTime) {
                 var uri : Uri?
-                if (FragmentOne.cardList[i].picture != null) {
-                    uri = Uri.parse(FragmentOne.cardList[i].picture)
+                if (FragmentOne.resultList[i].picture != null) {
+                    uri = Uri.parse(FragmentOne.resultList[i].picture)
                 } else {
                     uri = null
                 }
                 fixArray.add(
                     FoodResult(
-                        FragmentOne.cardList[i].foodName,
-                        FragmentOne.cardList[i].calorie,
-                        FragmentOne.cardList[i].nutri1,
-                        FragmentOne.cardList[i].nutri2,
-                        FragmentOne.cardList[i].nutri3,
+                        FragmentOne.resultList[i].foodName,
+                        FragmentOne.resultList[i].calorie,
+                        FragmentOne.resultList[i].nutri1,
+                        FragmentOne.resultList[i].nutri2,
+                        FragmentOne.resultList[i].nutri3,
                         uri,
                         true
                     )
@@ -120,12 +121,11 @@ class FixItemActivity : AppCompatActivity() {
 
         addRecyclerView.addOnItemTouchListener(object : RecyclerView.OnItemTouchListener {
             override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
-                val child = addRecyclerView.findChildViewUnder(e.x, e.y)
+
                 try {
+                    val child = addRecyclerView.findChildViewUnder(e.x, e.y)
                     val position : Int = addRecyclerView.getChildAdapterPosition(child!!)
-                    if (position == fixArray.size-1) { // 마지막거
-                        pos = position
-                    } else if (fixArray[position].uri != null) {
+                    if (fixArray[position].uri != null) {
                         pos = position
                         mainIv.setImageURI(fixArray[position].uri)
                         foodTv1.text = fixArray[position].foodName
