@@ -412,6 +412,21 @@ class DBHelper(
         return returnvalue
     }
 
+    fun getColValue2(colindex: Int, name: String, mt: String?): String {
+        var db: SQLiteDatabase = readableDatabase
+        val query = "SELECT * FROM record WHERE foodname = '${name}' and mealtime = '${mt}'"
+        var cursor: Cursor = db.rawQuery(query, null)
+        var returnvalue = ""
+
+        while (cursor.moveToNext()) {
+            returnvalue = cursor.getString(colindex)
+        }
+
+        cursor.close()
+        db.close()
+        return returnvalue
+    }
+
     /////////// test
     fun getColValueTest(columnIndex: Int, colindex: Int, tablename: String): String {
         var db: SQLiteDatabase = readableDatabase

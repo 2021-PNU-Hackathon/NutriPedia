@@ -51,21 +51,8 @@ class FixItemActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.parseColor("#FFFFFF")))
 
-        var gramList = java.util.ArrayList<Int>()
-        gramList.add(dbHelper.getColValue(5, "record").toInt())
-        dbHelper.close()
-        var gramStrConvertList = gramList.map { it.toString() }
-
-
-        val currentNp = findViewById<NumberPicker>(R.id.np_gram)
-
-        currentNp.maxValue = gramStrConvertList.size - 1
-        currentNp.wrapSelectorWheel = true
-        currentNp.displayedValues = gramStrConvertList.toTypedArray()
-        currentNp.value = 40
-        var currentvalue = 40
         mt = FragmentOne.cardList[MainActivity.pos].mealTime
-        Log.e("pos","${MainActivity.pos}")
+
         fixArray.clear()
         for (i in 0 until FragmentOne.resultList.size) {
             if (FragmentOne.resultList[i].mealTime == mt) {
@@ -108,6 +95,7 @@ class FixItemActivity : AppCompatActivity() {
                 total += fixArray[i].calorie
             }
             totalCal.text = total.toString() + "Kcal"
+            _amount.text = dbHelper.getColValue2(5,  fixArray[0].foodName, mt)
         }
 
         val mAdapter = ResultAdapter(this, fixArray)
@@ -139,6 +127,7 @@ class FixItemActivity : AppCompatActivity() {
                             total += fixArray[i].calorie
                         }
                         totalCal.text = total.toString() + "Kcal"
+                        _amount.text = dbHelper.getColValue2(5,  fixArray[position].foodName, mt)
                     } else
                     {
                         pos = position
@@ -153,6 +142,7 @@ class FixItemActivity : AppCompatActivity() {
                             total += fixArray[i].calorie
                         }
                         totalCal.text = total.toString() + "Kcal"
+                        _amount.text = dbHelper.getColValue2(5,  fixArray[position].foodName, mt)
                     }
                 } catch (e : NullPointerException) {
 
