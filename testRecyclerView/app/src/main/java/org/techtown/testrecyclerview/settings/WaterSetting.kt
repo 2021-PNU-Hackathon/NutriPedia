@@ -44,7 +44,9 @@ class WaterSetting : AppCompatActivity() {
         // Handle presses on the action bar items
         when(item.itemId){
             R.id.fixActionBtn -> {
-                db.updateUserInfo("target_water", waterinput.text.toString().toInt())
+                if(waterinput.text.toString() == "")
+                    db.updateUserInfo("target_water", db.getColValue(6,"user_info").toInt())
+                else db.updateUserInfo("target_water", waterinput.text.toString().toInt())
                 finish() }}
 
 

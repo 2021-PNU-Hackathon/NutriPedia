@@ -87,7 +87,7 @@ class PrivateFix : AppCompatActivity() {
             R.id.fixActionBtn -> {
                 if (cWeight_edit.text.toString() == "")
                     db.updateUserInfo("current_weight", db.getColValue(0, "user_info").toInt())
-                else db.updateUserInfo("target_weight", cWeight_edit.text.toString().toInt())
+                else db.updateUserInfo("current_weight", cWeight_edit.text.toString().toInt())
                 if (tWeight_edit.text.toString() == "")
                     db.updateUserInfo("target_weight", db.getColValue(1, "user_info").toInt())
                 else db.updateUserInfo("target_weight", tWeight_edit.text.toString().toInt())

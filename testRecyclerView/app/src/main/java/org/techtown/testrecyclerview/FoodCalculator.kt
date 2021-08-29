@@ -47,6 +47,30 @@ fun nutrientRate (currentWeight: Int, targetWeight: Int, Kcal: Int): Triple<Int,
     return Triple(cab, pro, fat)
 }
 
+fun newNutrientRate (currentWeight: Int, targetWeight: Int, Kcal: Int): Triple<Int, Int, Int> {
+    var pro:Int = 0
+    var fat = 0
+    var cab = 0
+    if(currentWeight == targetWeight){
+        pro = 3
+        fat = 2
+        cab = 5
+    }
+
+    else if(currentWeight > targetWeight){
+        pro = 4
+        fat = 3
+        cab = 3
+    }
+
+    else {
+        pro = 4
+        fat = 2
+        cab = 4
+    }
+    return Triple(cab, pro, fat)
+}
+
 fun rateOfScarceNutrient (scarceCab:Int, scarcePro:Int, scarceFat: Int): Triple<Double, Double, Double> {
     var total = scarceCab + scarcePro + scarceFat
     var rateCab= scarceCab * 100 / total.toDouble()

@@ -73,22 +73,13 @@ class RecommendList : AppCompatActivity() {
 
 //        println("현재 몸무게, 목표 몸무게, 키 : ${dbHelper.getColValue(0, "user_info").toInt()}, ${dbHelper.getColValue(1, "user_info").toInt()}, ${dbHelper.getColValue(4, "user_info").toInt()}")
         // 1. 하루 권장 칼로리 계산
-        var recommendedKcal : Int = recommendedKcal(
-            dbHelper.getColValue(0, "user_info").toInt(),
-            dbHelper.getColValue(1, "user_info").toInt(),
-            dbHelper.getColValue(4, "user_info").toInt()
-        )
-
-        var triple : Triple<Int, Int, Int> = nutrientRate(dbHelper.getColValue(0, "user_info").toInt(),
-            dbHelper.getColValue(1, "user_info").toInt(),
-            recommendedKcal)
 
         var now = LocalDate.now()
         var strnow :String = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
         // 부족한 영양소 계산
-        var remainCab :Int = triple.first - dbHelper.getNutri(7,strnow)
-        var remainPro :Int = triple.second - dbHelper.getNutri(8,strnow)
-        var remainFat :Int = triple.third - dbHelper.getNutri(9,strnow)
+        var remainCab :Int = dbHelper.getNutriRate(1) - dbHelper.getNutri(7,strnow)
+        var remainPro :Int = dbHelper.getNutriRate(2) - dbHelper.getNutri(8,strnow)
+        var remainFat :Int = dbHelper.getNutriRate(3) - dbHelper.getNutri(9,strnow)
 
         val remainRate : Triple<Double, Double, Double> = rateOfScarceNutrient(remainCab,remainPro,remainFat)
 //        var maxRemain : Double = maxOf(remainRate.first,remainRate.second,remainRate.third)

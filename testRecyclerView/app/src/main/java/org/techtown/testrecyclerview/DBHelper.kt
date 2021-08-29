@@ -263,6 +263,26 @@ class DBHelper(
         return returnvalue
     }
 
+    fun getNutriRate(pos : Int): Int {
+
+        var db: SQLiteDatabase = readableDatabase
+
+        var sumAll :Int = 0
+        var returnvalue : Int
+        var kcal: Int = getColValue(8,"user_info").toInt()
+        var cab: Int = getColValue(9,"user_info").toInt()
+        var pro: Int = getColValue(10,"user_info").toInt()
+        var fat: Int = getColValue(11,"user_info").toInt()
+
+        sumAll = cab + pro + fat
+        if (pos == 1) returnvalue = (kcal * cab / sumAll)
+        else if (pos == 2) returnvalue = (kcal * pro / sumAll)
+        else returnvalue = (kcal * fat / sumAll)
+
+        db.close()
+        return returnvalue
+    }
+
     fun getPreWeight(date: String): Int {
         var db: SQLiteDatabase = readableDatabase
         val query = "SELECT * FROM change where date <= '${date}' ORDER by date desc"

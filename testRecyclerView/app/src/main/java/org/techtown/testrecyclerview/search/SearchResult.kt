@@ -40,9 +40,9 @@ class SearchResult : AppCompatActivity() {
 
         some_id.text = name
         kcal.text = calorie.toString() + "Kcal"
-        nutri1_Tv.text = nutri1.toString() + "g"
-        nutri2_Tv.text = nutri2.toString() + "g"
-        nutri3_Tv.text = nutri3.toString() + "g"
+        nutri1_Tv.text = nutri1.toString() + "Kcal"
+        nutri2_Tv.text = nutri2.toString() + "Kcal"
+        nutri3_Tv.text = nutri3.toString() + "Kcal"
         total.text = calorie.toString() + "Kcal"
 
         var tempList: List<Int> = (50 downTo 5).toList()
@@ -61,20 +61,20 @@ class SearchResult : AppCompatActivity() {
         currentNp.value = 40
         var currentvalue = 40
 
-        var splitArray = nutri1_Tv.text.split("g") as MutableList<String>
+        var splitArray = nutri1_Tv.text.split("K") as MutableList<String>
         val num1 = splitArray[0].toDouble()
         splitArray.removeAll(splitArray)
-        splitArray = nutri2_Tv.text.split("g") as MutableList<String>
+        splitArray = nutri2_Tv.text.split("K") as MutableList<String>
         val num2 = splitArray[0].toDouble()
-        splitArray = nutri3_Tv.text.split("g") as MutableList<String>
+        splitArray = nutri3_Tv.text.split("K") as MutableList<String>
         val num3 = splitArray[0].toDouble()
 
         currentNp.setOnValueChangedListener { picker, oldVal, newVal ->
             currentvalue = newVal
             Log.e("change","$newVal")
-            nutri1_Tv.text = (num1*(50-newVal)/10).roundToInt().toString() + "g"
-            nutri2_Tv.text = (num2*(50-newVal)/10).roundToInt().toString() + "g"
-            nutri3_Tv.text = (num3*(50-newVal)/10).roundToInt().toString() + "g"
+            nutri1_Tv.text = (num1*(50-newVal)/10).roundToInt().toString() + "K"
+            nutri2_Tv.text = (num2*(50-newVal)/10).roundToInt().toString() + "K"
+            nutri3_Tv.text = (num3*(50-newVal)/10).roundToInt().toString() + "K"
             kcal.text = ((num1*(50-newVal)/10).roundToInt()+(num2*(50-newVal)/10).roundToInt()+(num3*(50-newVal)/10).roundToInt()).toString() +"Kcal"
             total.text = kcal.text
 
