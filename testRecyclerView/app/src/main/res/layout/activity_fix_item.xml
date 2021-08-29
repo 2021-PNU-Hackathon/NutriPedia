@@ -85,15 +85,16 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/inputNutri">
 
-                    <NumberPicker
-                        android:layout_weight="6"
-                        android:id="@+id/np_gram"
-                        android:layout_width="0dp"
-                        android:layout_height="120dp"
-                        tools:layout_editor_absoluteX="108dp"
-                        tools:layout_editor_absoluteY="84dp"
+                    <TextView
+
+                        android:id="@+id/_amount"
+                        android:layout_width="270dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
                         android:layout_margin="10dp"
-                        android:theme="@style/AppTheme.Picker"/>
+                        android:textSize="25sp"
+                        android:textColor="@color/black" />
 
                     <TextView
                         android:id="@+id/textView4"

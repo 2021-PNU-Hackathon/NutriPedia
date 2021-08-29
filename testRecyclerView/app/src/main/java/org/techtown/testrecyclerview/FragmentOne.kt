@@ -79,7 +79,7 @@ class FragmentOne : Fragment() {
 
     val displayList = ArrayList<RecordFoodData>()
     lateinit var v : View
-    val cardList : ArrayList<RecordFoodData> = ArrayList<RecordFoodData>()
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -336,14 +336,14 @@ class FragmentOne : Fragment() {
                 Log.d("Log1","good")
                 var nameStr: String = ""
                 if (cnt == 1) {
-                    nameStr = names[i]
+                    nameStr = names[0]
                 }
                 else if (cnt == 2) {
-                    nameStr = names[i]
+                    nameStr = names[0]
                     extra += " 외 ${cnt-1}개"
                 }
                 else {
-                    nameStr = names[i]
+                    nameStr = names[0]
                     extra += " 외 ${cnt-1}개"
                 }
                 nameStr += extra
@@ -472,6 +472,7 @@ class FragmentOne : Fragment() {
         // TODO: Rename and change types and number of parameters
         var resultList = arrayListOf<RecordFoodData>()
         var position = 0
+        val cardList : ArrayList<RecordFoodData> = ArrayList<RecordFoodData>()
         @JvmStatic fun newInstance(param1: String, param2: String) =
             FragmentOne().apply {
                 arguments = Bundle().apply {
