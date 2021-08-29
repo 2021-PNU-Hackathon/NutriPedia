@@ -466,6 +466,7 @@ class CameraResult : AppCompatActivity(){
                         mt,
                         imageArray[i].foodName,
                         imageArray[i].uri,
+                        totalUri,
                         500 - currentvalue * 10,
                         imageArray[i].calorie,
                         imageArray[i].nutri1,
@@ -473,7 +474,7 @@ class CameraResult : AppCompatActivity(){
                         imageArray[i].nutri3
                     )
                 }
-                MainActivity.checkChange =1
+                MainActivity.checkChange = 1
                 finish()
             }
         }

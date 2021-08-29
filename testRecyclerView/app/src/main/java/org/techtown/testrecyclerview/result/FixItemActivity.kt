@@ -50,11 +50,9 @@ class FixItemActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.parseColor("#FFFFFF")))
 
-        var tempList: List<Int> = (50 downTo 5).toList()
         var gramList = java.util.ArrayList<Int>()
-        for (i in 0 until tempList.size) {
-            gramList.add(tempList[i]*10)
-        }
+        gramList.add(dbHelper.getColValue(5, "record").toInt())
+        dbHelper.close()
         var gramStrConvertList = gramList.map { it.toString() }
 
 
@@ -120,25 +118,6 @@ class FixItemActivity : AppCompatActivity() {
         val lm = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false)
         addRecyclerView.layoutManager = lm
         addRecyclerView.setHasFixedSize(true)
-
-        var splitArray = nutri1_Tv.text.split("K") as MutableList<String>
-        val num1 = splitArray[0].toDouble()
-        splitArray.removeAll(splitArray)
-        splitArray = nutri2_Tv.text.split("K") as MutableList<String>
-        val num2 = splitArray[0].toDouble()
-        splitArray = nutri3_Tv.text.split("K") as MutableList<String>
-        val num3 = splitArray[0].toDouble()
-
-        currentNp.setOnValueChangedListener { picker, oldVal, newVal ->
-            currentvalue = newVal
-            Log.e("change","$newVal")
-            nutri1_Tv.text = (num1*(50-newVal)/10).roundToInt().toString() + "Kcal"
-            nutri2_Tv.text = (num2*(50-newVal)/10).roundToInt().toString() + "Kcal"
-            nutri3_Tv.text = (num3*(50-newVal)/10).roundToInt().toString() + "Kcal"
-            kcalTv.text = ((num1*(50-newVal)/10).roundToInt()+(num2*(50-newVal)/10).roundToInt()+(num3*(50-newVal)/10).roundToInt()).toString() +"Kcal"
-            totalCal.text = kcalTv.text
-
-        }
 
         addRecyclerView.addOnItemTouchListener(object : RecyclerView.OnItemTouchListener {
             override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
