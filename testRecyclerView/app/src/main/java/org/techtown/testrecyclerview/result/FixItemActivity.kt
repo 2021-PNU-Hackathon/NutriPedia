@@ -13,6 +13,7 @@ import android.widget.Button
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_camera_result.*
+import kotlinx.android.synthetic.main.activity_camera_result.view.*
 import kotlinx.android.synthetic.main.activity_fix_item.*
 import kotlinx.android.synthetic.main.activity_fix_item.addRecyclerView
 import kotlinx.android.synthetic.main.activity_fix_item.button
@@ -63,11 +64,11 @@ class FixItemActivity : AppCompatActivity() {
         currentNp.displayedValues = gramStrConvertList.toTypedArray()
         currentNp.value = 40
         var currentvalue = 40
-        mt = FragmentOne.resultList[MainActivity.pos].mealTime
-
+        mt = FragmentOne.cardList[MainActivity.pos].mealTime
+        Log.e("pos","${MainActivity.pos}")
         fixArray.clear()
         for (i in 0 until FragmentOne.resultList.size) {
-            if (FragmentOne.resultList[i].mealTime == FragmentOne.resultList[MainActivity.pos].mealTime) {
+            if (FragmentOne.resultList[i].mealTime == mt) {
                 var uri : Uri?
                 if (FragmentOne.resultList[i].picture != null) {
                     uri = Uri.parse(FragmentOne.resultList[i].picture)
@@ -111,7 +112,7 @@ class FixItemActivity : AppCompatActivity() {
 
         val mAdapter = ResultAdapter(this, fixArray)
         addRecyclerView.adapter = mAdapter
-
+        addRecyclerView.isHorizontalScrollBarEnabled = false
         var adapter = addRecyclerView.adapter
         addRecyclerView.invalidate()
         adapter!!.notifyDataSetChanged()
@@ -156,15 +157,11 @@ class FixItemActivity : AppCompatActivity() {
                 } catch (e : NullPointerException) {
 
                 }
-
-
                 return false
             }
-
             override fun onTouchEvent(rv: RecyclerView, e: MotionEvent) {
 
             }
-
             override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {
 
             }
