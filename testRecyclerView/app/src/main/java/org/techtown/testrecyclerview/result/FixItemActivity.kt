@@ -13,6 +13,7 @@ import android.widget.Button
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_camera_result.*
+import kotlinx.android.synthetic.main.activity_camera_result.view.*
 import kotlinx.android.synthetic.main.activity_fix_item.*
 import kotlinx.android.synthetic.main.activity_fix_item.addRecyclerView
 import kotlinx.android.synthetic.main.activity_fix_item.button
@@ -49,7 +50,6 @@ class FixItemActivity : AppCompatActivity() {
         supportActionBar?.title = "----년--월--일"                 //디비 날짜 불러오기
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.parseColor("#FFFFFF")))
-
 
         mt = FragmentOne.cardList[MainActivity.pos].mealTime
 
@@ -100,7 +100,7 @@ class FixItemActivity : AppCompatActivity() {
 
         val mAdapter = ResultAdapter(this, fixArray)
         addRecyclerView.adapter = mAdapter
-
+        addRecyclerView.isHorizontalScrollBarEnabled = false
         var adapter = addRecyclerView.adapter
         addRecyclerView.invalidate()
         adapter!!.notifyDataSetChanged()
@@ -147,15 +147,11 @@ class FixItemActivity : AppCompatActivity() {
                 } catch (e : NullPointerException) {
 
                 }
-
-
                 return false
             }
-
             override fun onTouchEvent(rv: RecyclerView, e: MotionEvent) {
 
             }
-
             override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {
 
             }
