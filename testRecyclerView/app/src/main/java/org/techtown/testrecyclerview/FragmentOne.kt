@@ -79,7 +79,7 @@ class FragmentOne : Fragment() {
 
     val displayList = ArrayList<RecordFoodData>()
     lateinit var v : View
-    val cardList : ArrayList<RecordFoodData> = ArrayList<RecordFoodData>()
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -336,14 +336,14 @@ class FragmentOne : Fragment() {
                 Log.d("Log1","good")
                 var nameStr: String = ""
                 if (cnt == 1) {
-                    nameStr = names[i]
+                    nameStr = names[0]
                 }
                 else if (cnt == 2) {
-                    nameStr = names[i]
+                    nameStr = names[0]
                     extra += " 외 ${cnt-1}개"
                 }
                 else {
-                    nameStr = names[i]
+                    nameStr = names[0]
                     extra += " 외 ${cnt-1}개"
                 }
                 nameStr += extra
@@ -366,96 +366,7 @@ class FragmentOne : Fragment() {
 
     }
 
-    fun takeCapture() { //카메라 촬영
-        // 기본 카메라 앱 실행
-        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
-            takePictureIntent.resolveActivity(requireActivity().packageManager)?.also {
-                val photofile: File? =try {
-                    createImageFile()
-                } catch(ex: IOException) {
-                    null
-                }
-                photofile?.also {
-                    val photoURI: Uri = FileProvider.getUriForFile(
-                        requireContext(),
-                        "org.techtown.testrecyclerview.fileprovider", //보안 서명
-                        it
-                    )
-                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-                    startActivityForResult(takePictureIntent,REQUEST_IMAGE_CAPTURE)
-                }
-            }
-        }
-    }
 
-    public fun createImageFile(): File { // 이미지파일 생성
-        val timeStamp: String = SimpleDateFormat("yyyy-MM-dd-HHmmss").format(Date())
-        val storageDir: File? = requireActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        return File.createTempFile("JPEG_${timeStamp}_",".jpg",storageDir)
-            .apply { curPhotoPath = absolutePath }
-
-    }
-
-    /*
-    테드 퍼미션 설정
-     */
-    public fun setPermission() {
-        val permission = object : PermissionListener {
-            override fun onPermissionGranted() { // 설정해놓은 권한 들이 허용 되었을 경우
-                Toast.makeText(requireContext(), "권한이 허용 되었습니다.", Toast.LENGTH_SHORT).show()
-            }
-
-            override fun onPermissionDenied(deniedPermissions: MutableList<String>?) { // 설정해 놓은 권한들을 거부한 경우
-                Toast.makeText(requireContext(), "권한이 거부 되었습니다.", Toast.LENGTH_SHORT).show()
-            }
-        }
-        TedPermission.with(requireContext())
-            .setPermissionListener(permission)
-            .setRationaleMessage("영양피디아를 사용하시려면 권한을 허용해주세요.")
-            .setDeniedMessage("권한을 거부하셨습니다. [앱 설정] -> [권한] 항목에서 허용해주세요.")
-            .setPermissions(android.Manifest.permission.WRITE_EXTERNAL_STORAGE,android.Manifest.permission.CAMERA)
-            .check()
-
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) { //startActivityForResult를 통해서 기본 카메라 앱으로 부터 받아온 사진 결과값
-        super.onActivityResult(requestCode, resultCode, data)
-        //사진을 성공적으로 가져 온 경우
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
-            //val ivPhoto : ImageView = findViewById(R.id.ivPhoto)
-            val bitmap: Bitmap
-            val file = File(curPhotoPath) // 절대 경로인 사진이 저장된 값
-            if (Build.VERSION.SDK_INT < 28) { // 안드로이드9.0(PIE) 버전보다 낮을 경우
-                bitmap = MediaStore.Images.Media.getBitmap(requireActivity().contentResolver, Uri.fromFile(file))
-                // 끌어온 비트맵을 넣음
-            } else { //PIE버전 이상인 경우
-                val decode = ImageDecoder.createSource( //변환을 해서 가져옴
-                    requireActivity().contentResolver,
-                    Uri.fromFile(file)
-                )
-                bitmap = ImageDecoder.decodeBitmap(decode)
-                //ivPhoto.setImageBitmap(bitmap)
-            }
-            savePhoto(bitmap)
-        }
-
-    }
-
-    public fun savePhoto(bitmap: Bitmap) {
-        val folderPath = Environment.getExternalStorageDirectory().absolutePath + "/Pictures/" //사진 폴더에 저장 경로 선언
-        val timeStamp: String = SimpleDateFormat("yyyy-MM-dd-HHmmss").format(Date())
-        val fileName = "${timeStamp}.jpeg"
-        val folder = File(folderPath)
-        if (!folder.isDirectory) { // 현재 해당 경로에 폴더가 존재하지 않는다면
-            folder.mkdirs()
-        }
-        //실제적인 저장처리
-        val out = FileOutputStream(folderPath + fileName)
-        bitmap.compress(Bitmap.CompressFormat.JPEG,100,out)
-        Toast.makeText(requireContext(), "사진이 앨범에 저장되었습니다.", Toast.LENGTH_SHORT).show()
-        var cameraIntent = Intent(requireContext(), CameraResult::class.java)
-        startActivity(cameraIntent)
-    }
 
 
 
@@ -472,6 +383,7 @@ class FragmentOne : Fragment() {
         // TODO: Rename and change types and number of parameters
         var resultList = arrayListOf<RecordFoodData>()
         var position = 0
+        val cardList : ArrayList<RecordFoodData> = ArrayList<RecordFoodData>()
         @JvmStatic fun newInstance(param1: String, param2: String) =
             FragmentOne().apply {
                 arguments = Bundle().apply {
