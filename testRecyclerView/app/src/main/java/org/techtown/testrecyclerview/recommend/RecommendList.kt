@@ -85,19 +85,22 @@ class RecommendList : AppCompatActivity() {
 //        var maxRemain : Double = maxOf(remainRate.first,remainRate.second,remainRate.third)
         var query1 : String
         var query2 : String
+        var query3 : String
         var Top5Food = arrayListOf<String>()
         var cnt : Int = 0
 
         if (remainRate.second < remainRate.first) {
             // 탄수화물 제일 부족
-            query1 = "SELECT * from real_nutri_91  where cab >= kcal * 0.4 ORDER by priority DESC, kcal DESC"
-            query2 = "SELECT * from real_nutri_91  where cab >= kcal * 0.4 and kcal <= 80 ORDER by priority DESC"
+            query1 = "SELECT * from real_nutri_91  where cab >= kcal * 0.4 and kcal >= 150 ORDER by priority DESC, kcal DESC"
+            query2 = "SELECT * from real_nutri_91  where cab >= kcal * 0.4 and priority = 3 ORDER by kcal DESC"
+            query3 = "SELECT * from real_nutri_91  where cab >= kcal * 0.4 and kcal <= 80 ORDER by priority DESC"
             textView7.text = "탄수화물 식사량이 부족"
         }
         else {
             // 단백질 제일 부족
-            query1 = "SELECT * from real_nutri_91  where protein >= kcal * 0.4 ORDER by priority DESC, kcal DESC"
-            query2 = "SELECT * from real_nutri_91  where protein >= kcal * 0.4 and kcal <= 80 ORDER by priority DESC"
+            query1 = "SELECT * from real_nutri_91  where protein >= kcal * 0.4 and kcal >= 150 ORDER by priority DESC, kcal DESC"
+            query2 = "SELECT * from real_nutri_91  where protein >= kcal * 0.4 and priority = 3 ORDER by kcal DESC"
+            query3 = "SELECT * from real_nutri_91  where protein >= kcal * 0.4 and kcal <= 80 ORDER by priority DESC"
             textView7.text = "단백질 식사량이 부족"
         }
 
@@ -106,7 +109,7 @@ class RecommendList : AppCompatActivity() {
 
         var cursor: Cursor = db.rawQuery(query1, null)
         while (cursor.moveToNext()) {
-            if (cnt == 3) break
+            if (cnt == 2) break
             if (cursor.getString(1) in Top5Food) continue
 
             Top5Food.add(cursor.getString(1))
@@ -128,7 +131,7 @@ class RecommendList : AppCompatActivity() {
         Log.d("reco",Top5Food.toString())
         var cursor2: Cursor = db.rawQuery(query2, null)
         while (cursor2.moveToNext()) {
-            if (cnt == 5) break
+            if (cnt == 3) break
             if (cursor2.getString(1) in Top5Food) continue
 
             Top5Food.add(cursor2.getString(1))
@@ -147,6 +150,28 @@ class RecommendList : AppCompatActivity() {
             Log.d("reco",cnt.toString())
         }
         cursor2.close()
+        Log.d("reco",Top5Food.toString())
+        var cursor3: Cursor = db.rawQuery(query3, null)
+        while (cursor3.moveToNext()) {
+            if (cnt == 5) break
+            if (cursor3.getString(1) in Top5Food) continue
+
+            Top5Food.add(cursor3.getString(1))
+            foodList.add(
+                FoodData(
+                    cursor3.getString(1),
+                    cursor3.getString(2).toInt(),
+                    100,
+                    cursor3.getString(5).toInt(),
+                    cursor3.getString(3).toInt(),
+                    cursor3.getString(4).toInt()
+                )
+            )
+            cnt++
+            Log.d("reco",cursor3.getString(1))
+            Log.d("reco",cnt.toString())
+        }
+        cursor3.close()
 
 
     }

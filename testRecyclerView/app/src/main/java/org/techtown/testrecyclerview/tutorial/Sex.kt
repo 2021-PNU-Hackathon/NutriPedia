@@ -76,6 +76,8 @@ class Sex : AppCompatActivity() {
         }
 
         var recommendedKcal : Int = recommendedKcal(
+            db.getColValue(3, "user_info").toInt(),
+            db.getColValue(2, "user_info").toInt(),
             db.getColValue(0, "user_info").toInt(),
             db.getColValue(1, "user_info").toInt(),
             db.getColValue(4, "user_info").toInt()

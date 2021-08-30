@@ -4,22 +4,36 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import org.techtown.testrecyclerview.search.FoodData
 import kotlin.math.absoluteValue
+import kotlin.math.roundToInt
 
 
-
-fun recommendedKcal(currentWeight: Int, targetWeight: Int, height: Int): Int {
-    var standardWeight = (height - 100) * (0.9) * 30
+fun recommendedKcal(sex:Int, age:Int,currentWeight: Int, targetWeight: Int, height: Int): Int {
+    var standardWeight :Int
+    if (sex == 0) {
+        standardWeight = (662-(9.53 * age) + (1.25 * (5.91 * currentWeight + 5.396 * height))).toInt()
+    }
+    else {
+        standardWeight = (354-(6.91 * age) + 1.0 * (9.36 * currentWeight + 7.26 * height)).roundToInt()
+    }
+//    var standardWeight = (height - 100) * (0.9) * 30
+    if (sex == 0) {
+        standardWeight = (662-(9.53 * age) + (1.25 * (5.91 * currentWeight + 5.396 * height))).toInt()
+    }
+    else {
+        standardWeight = (354-(6.91 * age) + 1.0 * (9.36 * currentWeight + 7.26 * height)).roundToInt()
+    }
     var forChange:Int = 0
     if(targetWeight > currentWeight) {
-        forChange = 300
+        forChange = 200
     }
     else if(targetWeight < currentWeight) {
-        forChange = -500
+        forChange = -400
     }
+    else forChange = 0
 
 
 
-    var Kcal:Int = (standardWeight + forChange).toInt()
+    var Kcal:Int = (standardWeight + forChange)
     return Kcal
 }
 
