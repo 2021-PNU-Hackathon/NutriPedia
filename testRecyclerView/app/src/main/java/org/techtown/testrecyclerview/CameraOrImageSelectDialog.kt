@@ -3,10 +3,8 @@ package org.techtown.testrecyclerview
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.text.method.KeyListener
+import android.view.*
 import androidx.fragment.app.DialogFragment
 import kotlinx.android.synthetic.main.dialog_camera_image_select.*
 
@@ -17,6 +15,7 @@ class CameraOrImageSelectDialog(private val listener: OnClickSelectListener) : D
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View? {
         val view = inflater.inflate(R.layout.dialog_camera_image_select, container, false)
+
         return view
     }
 
@@ -29,12 +28,13 @@ class CameraOrImageSelectDialog(private val listener: OnClickSelectListener) : D
             dialog!!.window!!.setGravity(Gravity.BOTTOM)
             dialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-            dialog!!.setCancelable(false)
+            dialog!!.setCancelable(true)
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         cameraIv.setOnClickListener {
             listener.onClickCamera()
             dismiss()
