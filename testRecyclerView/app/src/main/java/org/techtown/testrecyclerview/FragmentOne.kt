@@ -248,6 +248,8 @@ class FragmentOne : Fragment() {
 
         var calTv = v.findViewById<TextView>(R.id.textView14)
         var recommendedKcal : Int = recommendedKcal(
+            dbHelper.getColValue(3, "user_info").toInt(),
+            dbHelper.getColValue(2, "user_info").toInt(),
             dbHelper.getColValue(0, "user_info").toInt(),
             dbHelper.getColValue(1, "user_info").toInt(),
             dbHelper.getColValue(4, "user_info").toInt()

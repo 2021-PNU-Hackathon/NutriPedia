@@ -72,9 +72,9 @@ class SearchResult : AppCompatActivity() {
         currentNp.setOnValueChangedListener { picker, oldVal, newVal ->
             currentvalue = newVal
             Log.e("change","$newVal")
-            nutri1_Tv.text = (num1*(50-newVal)/10).roundToInt().toString() + "K"
-            nutri2_Tv.text = (num2*(50-newVal)/10).roundToInt().toString() + "K"
-            nutri3_Tv.text = (num3*(50-newVal)/10).roundToInt().toString() + "K"
+            nutri1_Tv.text = (num1*(50-newVal)/10).roundToInt().toString() + "Kcal"
+            nutri2_Tv.text = (num2*(50-newVal)/10).roundToInt().toString() + "Kcal"
+            nutri3_Tv.text = (num3*(50-newVal)/10).roundToInt().toString() + "Kcal"
             kcal.text = ((num1*(50-newVal)/10).roundToInt()+(num2*(50-newVal)/10).roundToInt()+(num3*(50-newVal)/10).roundToInt()).toString() +"Kcal"
             total.text = kcal.text
 

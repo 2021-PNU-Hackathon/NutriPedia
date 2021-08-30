@@ -52,14 +52,7 @@ class ViewPagerAdapterPre(date:String): PagerAdapter() {
             val danTv = view.findViewById<TextView>(R.id.danTv)
             val giTv = view.findViewById<TextView>(R.id.giTv)
 
-            var recommendedKcal : Int = recommendedKcal(
-                dbHelper.getColValue(0, "user_info").toInt(),
-                dbHelper.getColValue(1, "user_info").toInt(),
-                dbHelper.getColValue(4, "user_info").toInt()
-            )
-            var triple : Triple<Int, Int, Int> = nutrientRate(dbHelper.getColValue(0, "user_info").toInt(),
-                dbHelper.getColValue(1, "user_info").toInt(),
-                recommendedKcal)
+
 
             kcalPb.progress = dbHelper.getKcal(time) * 100 / dbHelper.getColValue(8,"user_info").toInt()
             cabPb.progress = dbHelper.getNutri(7,time) * 100 / dbHelper.getNutriRate(1)
