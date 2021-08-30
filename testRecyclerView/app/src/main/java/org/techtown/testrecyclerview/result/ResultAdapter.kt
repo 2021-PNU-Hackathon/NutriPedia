@@ -28,7 +28,10 @@ class ResultAdapter(val context: Context, val foodResult: ArrayList<FoodResult>)
         val item = foodResult[position]
 
         holder.itemView.setOnClickListener {
-            itemClickListner.onClick(it,position)
+            if (itemClickListner != null) {
+                itemClickListner!!.onClick(it,position)
+            }
+
         }
         holder.apply {
             bind(item,context)
@@ -41,7 +44,7 @@ class ResultAdapter(val context: Context, val foodResult: ArrayList<FoodResult>)
     interface OnItemClickListner {
         fun onClick(v: View, position: Int)
     }
-    private lateinit var itemClickListner: OnItemClickListner
+    private var itemClickListner: OnItemClickListner? = null
 
     fun setItemClickListner(itemClickListner: OnItemClickListner) {
         this.itemClickListner = itemClickListner
