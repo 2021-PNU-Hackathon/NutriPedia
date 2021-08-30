@@ -61,15 +61,15 @@ class ViewPagerAdapterPre(date:String): PagerAdapter() {
                 dbHelper.getColValue(1, "user_info").toInt(),
                 recommendedKcal)
 
-            kcalPb.progress = dbHelper.getKcal(time) * 100 / recommendedKcal
-            cabPb.progress = dbHelper.getNutri(7,time) * 100 / triple.first
-            proPb.progress = dbHelper.getNutri(8,time) * 100 / triple.second
-            fatPb.progress = dbHelper.getNutri(9,time) * 100 / triple.second
+            kcalPb.progress = dbHelper.getKcal(time) * 100 / dbHelper.getColValue(8,"user_info").toInt()
+            cabPb.progress = dbHelper.getNutri(7,time) * 100 / dbHelper.getNutriRate(1)
+            proPb.progress = dbHelper.getNutri(8,time) * 100 / dbHelper.getNutriRate(2)
+            fatPb.progress = dbHelper.getNutri(9,time) * 100 / dbHelper.getNutriRate(3)
 
-            kcalTv.text = dbHelper.getKcal(time).toString()+"/"+recommendedKcal.toString()+"Kcal"
-            tanTv.text = dbHelper.getNutri(7,time).toString()+"/"+triple.first.toString()+"g"
-            danTv.text = dbHelper.getNutri(8,time).toString()+"/"+triple.second.toString()+"g"
-            giTv.text = dbHelper.getNutri(9,time).toString()+"/"+triple.third.toString()+"g"
+            kcalTv.text = dbHelper.getKcal(time).toString()+"/"+dbHelper.getColValue(8,"user_info")+"Kcal"
+            tanTv.text = dbHelper.getNutri(7,time).toString()+"/"+dbHelper.getNutriRate(1).toString()+"Kcal"
+            danTv.text = dbHelper.getNutri(8,time).toString()+"/"+dbHelper.getNutriRate(2).toString()+"Kcal"
+            giTv.text = dbHelper.getNutri(9,time).toString()+"/"+dbHelper.getNutriRate(3).toString()+"Kcal"
         }
 
         else {

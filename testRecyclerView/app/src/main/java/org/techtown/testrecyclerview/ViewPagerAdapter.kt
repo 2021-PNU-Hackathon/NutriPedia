@@ -63,24 +63,27 @@ class ViewPagerAdapter: PagerAdapter() {
             val danTv = view.findViewById<TextView>(R.id.danTv)
             val giTv = view.findViewById<TextView>(R.id.giTv)
 
-            var recommendedKcal : Int = recommendedKcal(
-                dbHelper.getColValue(0, "user_info").toInt(),
-                dbHelper.getColValue(1, "user_info").toInt(),
-                dbHelper.getColValue(4, "user_info").toInt()
-            )
-            var triple : Triple<Int, Int, Int> = nutrientRate(dbHelper.getColValue(0, "user_info").toInt(),
-                dbHelper.getColValue(1, "user_info").toInt(),
-                recommendedKcal)
+            Log.d("db", dbHelper.getColValue(8,"user_info"))
+            if (dbHelper.getColValue(8,"user_info").toInt() != 0) {
+                kcalPb.progress =
+                    dbHelper.getKcal(strnow) * 100 / dbHelper.getColValue(8, "user_info").toInt()
+                cabPb.progress = dbHelper.getNutri(7, strnow) * 100 / dbHelper.getNutriRate(1)
+                proPb.progress = dbHelper.getNutri(8, strnow) * 100 / dbHelper.getNutriRate(2)
+                fatPb.progress = dbHelper.getNutri(9, strnow) * 100 / dbHelper.getNutriRate(3)
 
-            kcalPb.progress = dbHelper.getKcal(strnow) * 100 / recommendedKcal
-            cabPb.progress = dbHelper.getNutri(7,strnow)  * 100 / triple.first
-            proPb.progress = dbHelper.getNutri(8,strnow) * 100 / triple.second
-            fatPb.progress = dbHelper.getNutri(9,strnow) * 100 / triple.third
-
-            kcalTv.text = dbHelper.getKcal(strnow).toString() +"/"+recommendedKcal.toString()+"Kcal"
-            tanTv.text = dbHelper.getNutri(7,strnow).toString()+"/"+triple.first.toString()+"g"
-            danTv.text = dbHelper.getNutri(8,strnow).toString()+"/"+triple.second.toString()+"g"
-            giTv.text = dbHelper.getNutri(9,strnow).toString()+"/"+triple.third.toString()+"g"
+                kcalTv.text = dbHelper.getKcal(strnow).toString() + "/" + dbHelper.getColValue(
+                    8,
+                    "user_info"
+                ) + "Kcal"
+                tanTv.text =
+                    dbHelper.getNutri(7, strnow).toString() + "/" + dbHelper.getNutriRate(1)
+                        .toString() + "Kcal"
+                danTv.text =
+                    dbHelper.getNutri(8, strnow).toString() + "/" + dbHelper.getNutriRate(2)
+                        .toString() + "Kcal"
+                giTv.text = dbHelper.getNutri(9, strnow).toString() + "/" + dbHelper.getNutriRate(3)
+                    .toString() + "Kcal"
+            }
 
         }
 

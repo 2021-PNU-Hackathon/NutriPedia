@@ -80,7 +80,7 @@ class Sex : AppCompatActivity() {
             db.getColValue(1, "user_info").toInt(),
             db.getColValue(4, "user_info").toInt()
         )
-        var triple : Triple<Int, Int, Int> = nutrientRate(db.getColValue(0, "user_info").toInt(),
+        var triple : Triple<Int, Int, Int> = newNutrientRate(db.getColValue(0, "user_info").toInt(),
             db.getColValue(1, "user_info").toInt(),
             recommendedKcal)
 
