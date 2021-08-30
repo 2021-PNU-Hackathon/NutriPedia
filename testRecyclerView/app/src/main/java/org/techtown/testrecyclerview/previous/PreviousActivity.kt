@@ -29,7 +29,7 @@ class PreviousActivity : AppCompatActivity() {
     var mealtime = arrayOf("아침","아점","점심","점저","저녁","간식")
     lateinit var dbHelper : DBHelper
     lateinit var db : SQLiteDatabase
-    var cardList = arrayListOf<RecordFoodData>()
+//    var cardList = arrayListOf<RecordFoodData>()
     val displayList = ArrayList<RecordFoodData>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,7 +52,7 @@ class PreviousActivity : AppCompatActivity() {
         recyclerView.layoutManager = layoutManager
 
         recyclerView.setHasFixedSize(true)
-        displayList.addAll(cardList)
+        displayList.addAll(FragmentOne.cardList)
 
         var adapter = PreMyAdapter(this,displayList)
         recyclerView.adapter = adapter
@@ -77,7 +77,7 @@ class PreviousActivity : AppCompatActivity() {
 
     fun fillFoodData(time: String) {
         FragmentOne.resultList.clear()
-        cardList.clear()
+        FragmentOne.cardList.clear()
         for(i in 0..5) {
             Log.d("Log1",time)
             Log.d("Log1",mealtime[i])
@@ -134,7 +134,7 @@ class PreviousActivity : AppCompatActivity() {
                 }
                 nameStr += names[cnt - 1]
                 //            if (nameStr.length >15)
-                cardList.add(
+                FragmentOne.cardList.add(
                     RecordFoodData(
                         mealtime[i],
                         nameStr,
