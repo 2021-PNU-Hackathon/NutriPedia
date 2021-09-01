@@ -94,8 +94,12 @@ class MainActivity : AppCompatActivity() {
         if (!firstViewShow) {
             editor.putBoolean("hello",true).apply()
             var firstIntent = Intent(applicationContext,CurrentWeight::class.java)
+            copy.copyDataBaseFromAssets(this)
             startActivity(firstIntent)
         }
+
+
+
 
         bn.setOnNavigationItemSelectedListener {
             replaceFragment(
@@ -161,14 +165,17 @@ class MainActivity : AppCompatActivity() {
                 } catch(ex: IOException) {
                     null
                 }
+                Log.d("Check","picture")
                 photofile?.also {
                     photoURI = FileProvider.getUriForFile(
                         this,
                         "org.techtown.testrecyclerview.fileprovider", //보안 서명
                         it
                     )
-                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI.toString())
+                    Log.d("Check","picture1")
                     startActivityForResult(takePictureIntent,REQUEST_IMAGE_CAPTURE)
+                    Log.d("Check","picture2")
                 }
             }
         }

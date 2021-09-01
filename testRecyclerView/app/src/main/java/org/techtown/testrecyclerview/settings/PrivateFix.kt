@@ -12,6 +12,8 @@ import kotlinx.android.synthetic.main.activity_private_fix.manBtn
 import kotlinx.android.synthetic.main.activity_private_fix.womanBtn
 import org.techtown.testrecyclerview.DBHelper
 import org.techtown.testrecyclerview.R
+import org.techtown.testrecyclerview.newNutrientRate
+import org.techtown.testrecyclerview.recommendedKcal
 
 
 class PrivateFix : AppCompatActivity() {
@@ -87,7 +89,11 @@ class PrivateFix : AppCompatActivity() {
             R.id.fixActionBtn -> {
                 if (cWeight_edit.text.toString() == "")
                     db.updateUserInfo("current_weight", db.getColValue(0, "user_info").toInt())
-                else db.updateUserInfo("current_weight", cWeight_edit.text.toString().toInt())
+                else {
+                    db.updateUserInfo("current_weight", cWeight_edit.text.toString().toInt())
+                    if (db.isEmpty("change")) db.insertChange()
+                    db.updateChange(cWeight_edit.text.toString().toInt())
+                }
                 if (tWeight_edit.text.toString() == "")
                     db.updateUserInfo("target_weight", db.getColValue(1, "user_info").toInt())
                 else db.updateUserInfo("target_weight", tWeight_edit.text.toString().toInt())
@@ -100,6 +106,22 @@ class PrivateFix : AppCompatActivity() {
                 if (cHeight_edit.text.toString() == "")
                     db.updateUserInfo("current_height", cHeight_edit.text.toString().toInt())
                 else db.updateUserInfo("current_height", cHeight_edit.text.toString().toInt())
+
+                var recommendedKcal : Int = recommendedKcal(
+                    db.getColValue(3, "user_info").toInt(),
+                    db.getColValue(2, "user_info").toInt(),
+                    db.getColValue(0, "user_info").toInt(),
+                    db.getColValue(1, "user_info").toInt(),
+                    db.getColValue(4, "user_info").toInt()
+                )
+                var triple : Triple<Int, Int, Int> = newNutrientRate(db.getColValue(0, "user_info").toInt(),
+                    db.getColValue(1, "user_info").toInt(),
+                    recommendedKcal)
+
+                db.updateUserInfo("target_kcal", recommendedKcal)
+                db.updateUserInfo("target_cab", triple.first)
+                db.updateUserInfo("target_pro", triple.second)
+                db.updateUserInfo("target_fat", triple.third)
                 finish() }}
         return super.onOptionsItemSelected(item)
     }

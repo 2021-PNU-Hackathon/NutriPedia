@@ -131,7 +131,7 @@ class RecommendList : AppCompatActivity() {
         Log.d("reco",Top5Food.toString())
         var cursor2: Cursor = db.rawQuery(query2, null)
         while (cursor2.moveToNext()) {
-            if (cnt == 3) break
+            if (cnt == 4) break
             if (cursor2.getString(1) in Top5Food) continue
 
             Top5Food.add(cursor2.getString(1))

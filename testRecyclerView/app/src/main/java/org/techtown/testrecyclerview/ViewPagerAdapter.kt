@@ -64,7 +64,9 @@ class ViewPagerAdapter: PagerAdapter() {
             val giTv = view.findViewById<TextView>(R.id.giTv)
 
             Log.d("db", dbHelper.getColValue(8,"user_info"))
-            if (dbHelper.getColValue(8,"user_info") != "") {
+
+            if (dbHelper.getColValue(8,"user_info") != "" && dbHelper.getColValue(8,"user_info").toInt() != 0) {
+
                 kcalPb.progress =
                     dbHelper.getKcal(strnow) * 100 / dbHelper.getColValue(8, "user_info").toInt()
                 cabPb.progress = dbHelper.getNutri(7, strnow) * 100 / dbHelper.getNutriRate(1)
