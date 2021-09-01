@@ -57,11 +57,11 @@ class ResultSearchActivity : AppCompatActivity() {
             override fun onClick(v: View, position: Int) {
                 //val intent = Intent(applicationContext, AddResult::class.java)
 
-                foodName = foodList[position].foodName
-                calorie = foodList[position].calorie
-                nutri1 = foodList[position].nutri1
-                nutri2 = foodList[position].nutri2
-                nutri3 = foodList[position].nutri3
+                foodName = displayList[position].foodName
+                calorie = displayList[position].calorie
+                nutri1 = displayList[position].nutri1
+                nutri2 = displayList[position].nutri2
+                nutri3 = displayList[position].nutri3
 
                 CameraResult.imageArray.add(
                     CameraResult.imageArray.size-1,FoodResult(foodName,calorie,nutri1,nutri2,nutri3,null,true)

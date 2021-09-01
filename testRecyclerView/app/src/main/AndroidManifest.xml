@@ -20,11 +20,6 @@
         android:theme="@style/Theme.TestRecyclerView"
         android:usesCleartextTraffic="true">
 
-        <receiver android:name=".MyBroadcastReceiver"
-            android:enabled="true"
-            android:exported="true">
-        </receiver>
-
         <activity
             android:name=".previous.PreviousActivity"
             android:exported="true" />
@@ -34,7 +29,8 @@
             android:parentActivityName=".settings.SettingActivity" />
         <activity android:name=".result.FixItemActivity" />
         <activity android:name=".result.FixSearchResult" />
-        <activity android:name=".result.ResultSearchActivity" />
+        <activity android:name=".result.ResultSearchActivity"
+            android:theme="@style/Theme.Dark"/>
         <activity
             android:name=".result.CameraResult"
             android:theme="@style/Theme.Dark"

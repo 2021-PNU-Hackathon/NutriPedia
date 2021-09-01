@@ -61,7 +61,7 @@ class CameraResult : AppCompatActivity(){
         var totalUri = Uri.parse(uri)
         imageArray.clear()
         imageArray.addAll(MainActivity.arrayUse)
-        imageArray.add(imageArray.size,FoodResult("add",0,0,0,0,null,false))
+        imageArray.add(imageArray.size,FoodResult("인식 실패 직접 추가하세요.",0,0,0,0,null,false))
         Log.e("size","${imageArray.size}")
 
         mainIv.setImageURI(imageArray[0].uri)
@@ -94,25 +94,22 @@ class CameraResult : AppCompatActivity(){
         currentNp.value = 40
         var currentvalue = 40
 
-        var splitArray = nutri1_Tv.text.split("K") as MutableList<String>
-        val num1 = splitArray[0].toDouble()
-        splitArray.removeAll(splitArray)
-        splitArray = nutri2_Tv.text.split("K") as MutableList<String>
-        val num2 = splitArray[0].toDouble()
-        splitArray = nutri3_Tv.text.split("K") as MutableList<String>
-        val num3 = splitArray[0].toDouble()
+
+
 
         currentNp.setOnValueChangedListener { picker, oldVal, newVal ->
             currentvalue = newVal
-            Log.e("change","$newVal")
-            nutri1_Tv.text = (num1*(50-newVal)/10).roundToInt().toString() + "Kcal"
-            nutri2_Tv.text = (num2*(50-newVal)/10).roundToInt().toString() + "Kcal"
-            nutri3_Tv.text = (num3*(50-newVal)/10).roundToInt().toString() + "Kcal"
-            kcalTv.text = ((num1*(50-newVal)/10).roundToInt()+(num2*(50-newVal)/10).roundToInt()+(num3*(50-newVal)/10).roundToInt()).toString() +"Kcal"
+
+            imageArray[pos].nutri1 = imageArray[pos].nutri1*(((50-newVal)/(50-oldVal)))
+            imageArray[pos].nutri2 = imageArray[pos].nutri2*(((50-newVal)/(50-oldVal)))
+            imageArray[pos].nutri3 = imageArray[pos].nutri3*(((50-newVal)/(50-oldVal)))
+            imageArray[pos].calorie = (imageArray[pos].nutri1+imageArray[pos].nutri2+imageArray[pos].nutri3)
+            nutri1_Tv.text = imageArray[pos].nutri1.toString()+ "Kcal"
+            nutri2_Tv.text = imageArray[pos].nutri1.toString()+ "Kcal"
+            nutri3_Tv.text = imageArray[pos].nutri1.toString()+ "Kcal"
+            kcalTv.text = imageArray[pos].calorie.toString()+"Kcal"
             totalCal.text = kcalTv.text
-            imageArray[pos].nutri1 = (imageArray[pos].nutri1.toDouble()*(50-newVal)/10).roundToInt()
-            imageArray[pos].nutri2 = (imageArray[pos].nutri2.toDouble()*(50-newVal)/10).roundToInt()
-            imageArray[pos].nutri3 = (imageArray[pos].nutri3.toDouble()*(50-newVal)/10).roundToInt()
+            Log.e("check","${imageArray[pos].nutri1},${imageArray[pos].nutri2},${imageArray[pos].nutri3}")
         }
 
         val mAdapter = ResultAdapter(this,imageArray)

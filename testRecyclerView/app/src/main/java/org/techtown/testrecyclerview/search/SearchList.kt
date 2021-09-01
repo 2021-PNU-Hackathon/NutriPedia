@@ -43,11 +43,11 @@ class SearchList : AppCompatActivity() {
         mAdapter.setItemClickListner(object : FoodAdapter.OnItemClickListner{
             override fun onClick(v: View, position: Int) {
                 val intent = Intent(applicationContext,SearchResult::class.java)
-                intent.putExtra("name" ,foodList[position].foodName)
-                intent.putExtra("calorie" ,foodList[position].calorie)
-                intent.putExtra("nutri1" ,foodList[position].nutri1)
-                intent.putExtra("nutri2" ,foodList[position].nutri2)
-                intent.putExtra("nutri3" ,foodList[position].nutri3)
+                intent.putExtra("name" ,displayList[position].foodName)
+                intent.putExtra("calorie" ,displayList[position].calorie)
+                intent.putExtra("nutri1" ,displayList[position].nutri1)
+                intent.putExtra("nutri2" ,displayList[position].nutri2)
+                intent.putExtra("nutri3" ,displayList[position].nutri3)
                 startActivityForResult(intent,101)
                 MainActivity.checkChange =1
                 finish()

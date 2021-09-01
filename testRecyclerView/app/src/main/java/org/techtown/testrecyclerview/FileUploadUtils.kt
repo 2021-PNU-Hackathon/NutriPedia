@@ -6,7 +6,7 @@ import org.json.JSONObject
 import java.io.File
 import java.io.IOException
 
-public class FileUploadUtils {
+class FileUploadUtils {
 
     fun send2Server(file : File) : ArrayList<ServerData>{
         var serverData = arrayListOf<ServerData>()
@@ -17,8 +17,8 @@ public class FileUploadUtils {
             .build()
 
         var request = Request.Builder()
-            .url("http://101.101.164.14:7777")
-//            .url("http://180.69.118.29:7777")
+//            .url("http://49.50.165.171:7777")
+            .url("http://180.69.118.29:7777")
             .post(requestBody)
             .build()
 
@@ -27,7 +27,6 @@ public class FileUploadUtils {
             override fun onFailure(call: Call, e: IOException) {
                 e.printStackTrace()
             }
-
             override fun onResponse(call: Call, response: Response) {
                 val checkText : String = response.body()!!.string()
                 Log.e("TEST1 ", checkText)
