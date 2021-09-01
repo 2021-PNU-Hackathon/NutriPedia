@@ -113,7 +113,10 @@ class FragmentOne : Fragment() {
 
 //        var remainTv = v.findViewById<TextView>(R.id.textView12)
         var calTv = v.findViewById<TextView>(R.id.textView14)
-        var recommendedKcal : Int = dbHelper.getColValue(8,"user_info").toInt()
+        var recommendedKcal : Int
+        if (dbHelper.getColValue(8,"user_info") != "")
+            recommendedKcal = dbHelper.getColValue(8,"user_info").toInt()
+        else recommendedKcal = 0
 
         if (MainActivity.checkChange == 1) {
             if(dbHelper.getKcal(strnow) >= (recommendedKcal * 0.85) && dbHelper.getKcal(strnow) <= (recommendedKcal * 1.15))
@@ -250,7 +253,11 @@ class FragmentOne : Fragment() {
         recyclerView.invalidate()
 
         var calTv = v.findViewById<TextView>(R.id.textView14)
-        var recommendedKcal : Int = dbHelper.getColValue(8,"user_info").toInt()
+
+        var recommendedKcal : Int
+        if (dbHelper.getColValue(8,"user_info") != "")
+            recommendedKcal = dbHelper.getColValue(8,"user_info").toInt()
+        else recommendedKcal = 0
 
         if (MainActivity.checkChange == 1) {
             if(dbHelper.getKcal(strnow) >= (recommendedKcal * 0.85) && dbHelper.getKcal(strnow) <= (recommendedKcal * 1.15))
