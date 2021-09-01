@@ -86,6 +86,7 @@ class MainActivity : AppCompatActivity() {
 
         val preferences = getSharedPreferences("a", MODE_PRIVATE)
         var editor = preferences.edit()
+        var isfirst : Int = 0
         var firstViewShow : Boolean = preferences.getBoolean("First", false)
 
         if (!firstViewShow) {
@@ -93,6 +94,14 @@ class MainActivity : AppCompatActivity() {
             var firstIntent = Intent(applicationContext,CurrentWeight::class.java)
             startActivity(firstIntent)
         }
+
+//        editor.putBoolean("First",true).apply()
+//        if (isfirst == 0) {
+//            isfirst = 1
+//            var firstIntent = Intent(applicationContext,CurrentWeight::class.java)
+//            startActivity(firstIntent)
+//        }
+
 
         bn.setOnNavigationItemSelectedListener {
             replaceFragment(
