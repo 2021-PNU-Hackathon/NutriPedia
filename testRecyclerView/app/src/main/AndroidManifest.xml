@@ -29,7 +29,8 @@
             android:parentActivityName=".settings.SettingActivity" />
         <activity android:name=".result.FixItemActivity" />
         <activity android:name=".result.FixSearchResult" />
-        <activity android:name=".result.ResultSearchActivity" />
+        <activity android:name=".result.ResultSearchActivity"
+            android:theme="@style/Theme.Dark"/>
         <activity
             android:name=".result.CameraResult"
             android:theme="@style/Theme.Dark"

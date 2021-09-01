@@ -16,6 +16,7 @@ import android.os.Bundle
 import android.os.Environment
 import android.os.Handler
 import android.provider.MediaStore
+import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -32,6 +33,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.card_layout.*
 import kotlinx.android.synthetic.main.search_bar.view.*
+import kotlinx.coroutines.*
 import org.techtown.testrecyclerview.result.CameraResult
 import org.techtown.testrecyclerview.result.FixItemActivity
 import org.techtown.testrecyclerview.result.FoodResult
@@ -83,6 +85,7 @@ class MainActivity : AppCompatActivity() {
         setPermission()// 권한을 체크하는 메소드 수행
         supportFragmentManager.beginTransaction().add(fl.id,FragmentOne()).commit()
         supportActionBar!!.hide()
+        var isfirst : Int = 0
 
         val preferences = getSharedPreferences("a", MODE_PRIVATE)
         var editor = preferences.edit()
@@ -234,11 +237,27 @@ class MainActivity : AppCompatActivity() {
             var input = contentResolver.openInputStream(uri!!)
             var image = BitmapFactory.decodeStream(input)
             val file : File = bitmapToFile(image,path)
+
+//            CoroutineScope(Dispatchers.Main).launch {
+//                val temp = CoroutineScope(Dispatchers.Default).async {
+//                    val serverData = FileUploadUtils().send2Server(file)
+//                    dataTOUse(serverData, image)
+//                    Log.e("server","$serverData")
+//                }.await()
+//
+//                var cameraIntent = Intent(applicationContext, CameraResult::class.java)
+//                cameraIntent.putExtra("uri", uri.toString())
+//                startActivity(cameraIntent)
+//            }
+
             val serverData = FileUploadUtils().send2Server(file)
+            dataTOUse(serverData, image)
+
+
             Handler().postDelayed({dataTOUse(serverData,image)
                 var cameraIntent = Intent(applicationContext, CameraResult::class.java)
-                cameraIntent.putExtra("uri", uri)
-                startActivity(cameraIntent)},2000)
+                cameraIntent.putExtra("uri", uri.toString())
+                startActivity(cameraIntent)},3000)
 
         }
 
@@ -269,8 +288,8 @@ class MainActivity : AppCompatActivity() {
         val serverData = FileUploadUtils().send2Server(file)
         Handler().postDelayed({dataTOUse(serverData,bitmap)
             var cameraIntent = Intent(applicationContext, CameraResult::class.java)
-            cameraIntent.putExtra("uri",photoURI)
-            startActivity(cameraIntent)},2000)
+            cameraIntent.putExtra("uri",photoURI.toString())
+            startActivity(cameraIntent)},3000)
     }
 
     fun dataTOUse(serverData: ArrayList<ServerData>,bitmap: Bitmap) {

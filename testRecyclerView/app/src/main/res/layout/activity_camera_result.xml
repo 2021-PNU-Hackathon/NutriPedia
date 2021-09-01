@@ -278,7 +278,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="230dp"
                 android:scaleType="fitXY"
-                android:src="@color/calendar_blue" />
+                android:src="@drawable/ic_no_image" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/addRecyclerView"
