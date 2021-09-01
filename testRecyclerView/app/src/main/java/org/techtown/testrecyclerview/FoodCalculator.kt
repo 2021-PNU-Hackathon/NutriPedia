@@ -9,12 +9,7 @@ import kotlin.math.roundToInt
 
 fun recommendedKcal(sex:Int, age:Int,currentWeight: Int, targetWeight: Int, height: Int): Int {
     var standardWeight :Int
-    if (sex == 0) {
-        standardWeight = (662-(9.53 * age) + (1.25 * (5.91 * currentWeight + 5.396 * height))).toInt()
-    }
-    else {
-        standardWeight = (354-(6.91 * age) + 1.0 * (9.36 * currentWeight + 7.26 * height)).roundToInt()
-    }
+
 //    var standardWeight = (height - 100) * (0.9) * 30
     if (sex == 0) {
         standardWeight = (662-(9.53 * age) + (1.25 * (5.91 * currentWeight + 5.396 * height))).toInt()
