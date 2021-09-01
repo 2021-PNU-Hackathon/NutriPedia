@@ -86,21 +86,16 @@ class MainActivity : AppCompatActivity() {
 
         val preferences = getSharedPreferences("a", MODE_PRIVATE)
         var editor = preferences.edit()
-        var isfirst : Int = 0
-        var firstViewShow : Boolean = preferences.getBoolean("First", false)
+        var firstViewShow : Boolean = preferences.getBoolean("hello", false)
 
         if (!firstViewShow) {
-            editor.putBoolean("First",true).apply()
+            editor.putBoolean("hello",true).apply()
             var firstIntent = Intent(applicationContext,CurrentWeight::class.java)
+            copy.copyDataBaseFromAssets(this)
             startActivity(firstIntent)
         }
 
-//        editor.putBoolean("First",true).apply()
-//        if (isfirst == 0) {
-//            isfirst = 1
-//            var firstIntent = Intent(applicationContext,CurrentWeight::class.java)
-//            startActivity(firstIntent)
-//        }
+
 
 
         bn.setOnNavigationItemSelectedListener {
@@ -115,13 +110,6 @@ class MainActivity : AppCompatActivity() {
         }
 //
 //        FileUploadUtils().receiveFromServer() // 받는 부분은 일단 구현 안함
-
-        if (!firstViewShow) {
-            editor.putBoolean("First",true).apply()
-            var firstIntent = Intent(applicationContext,CurrentWeight::class.java)
-            copy.copyDataBaseFromAssets(this)
-            startActivity(firstIntent)
-        }
 
         bottomNavigationView.background = null
         bottomNavigationView.menu.getItem(1).isEnabled = false
@@ -174,14 +162,17 @@ class MainActivity : AppCompatActivity() {
                 } catch(ex: IOException) {
                     null
                 }
+                Log.d("Check","picture")
                 photofile?.also {
                     photoURI = FileProvider.getUriForFile(
                         this,
                         "org.techtown.testrecyclerview.fileprovider", //보안 서명
                         it
                     )
-                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI.toString())
+                    Log.d("Check","picture1")
                     startActivityForResult(takePictureIntent,REQUEST_IMAGE_CAPTURE)
+                    Log.d("Check","picture2")
                 }
             }
         }
