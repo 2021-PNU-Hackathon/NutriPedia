@@ -120,11 +120,14 @@ class FragmentOne : Fragment() {
                 dbHelper.updateSuccess(1)
             else dbHelper.updateSuccess(0)
             MainActivity.checkChange = 0
-            Log.d("update",dbHelper.getColValue(1,"success"))
-            Log.d("update",(recommendedKcal * 0.85).toString())
+            Log.d("reco",dbHelper.getColValue(1,"success"))
+            Log.d("reco",(recommendedKcal * 0.85).toString())
         }
 
         calTv.text = "${recommendedKcal - dbHelper.getKcal(strnow)}Kcal"
+        Log.d("reco1",(recommendedKcal).toString())
+        Log.d("reco2",(dbHelper.getKcal(strnow)).toString())
+        Log.d("reco3",(recommendedKcal - dbHelper.getKcal(strnow)).toString())
 
         recyclerView.setHasFixedSize(true)
         displayList.addAll(cardList)
@@ -247,13 +250,7 @@ class FragmentOne : Fragment() {
         recyclerView.invalidate()
 
         var calTv = v.findViewById<TextView>(R.id.textView14)
-        var recommendedKcal : Int = recommendedKcal(
-            dbHelper.getColValue(3, "user_info").toInt(),
-            dbHelper.getColValue(2, "user_info").toInt(),
-            dbHelper.getColValue(0, "user_info").toInt(),
-            dbHelper.getColValue(1, "user_info").toInt(),
-            dbHelper.getColValue(4, "user_info").toInt()
-        )
+        var recommendedKcal : Int = dbHelper.getColValue(8,"user_info").toInt()
 
         if (MainActivity.checkChange == 1) {
             if(dbHelper.getKcal(strnow) >= (recommendedKcal * 0.85) && dbHelper.getKcal(strnow) <= (recommendedKcal * 1.15))
