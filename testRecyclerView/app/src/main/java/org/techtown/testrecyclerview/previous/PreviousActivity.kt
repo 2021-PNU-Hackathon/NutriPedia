@@ -90,6 +90,7 @@ class PreviousActivity : AppCompatActivity() {
             var mealFat:Int =0
             var cnt : Int = 0
             var names = arrayListOf<String>()
+
             var total :String? = null
             var mealTime : String
             var foodName : String
@@ -99,7 +100,7 @@ class PreviousActivity : AppCompatActivity() {
             var nutri1 : Int
             var nutri2 : Int
             var nutri3 : Int
-
+            var extra : String = ""
             while (cursor.moveToNext()) {
                 mealKcal += cursor.getString(6).toInt()
                 mealAmount += cursor.getString(5).toInt()
@@ -134,15 +135,24 @@ class PreviousActivity : AppCompatActivity() {
                 )
 
             }
+
             if (cnt>0) {
                 Log.d("Log1","good")
                 var nameStr: String = ""
-                for (i in 0..cnt - 2) {
-                    nameStr += names[i]
-                    nameStr += ","
+                if (cnt == 1) {
+                    nameStr = names[0]
                 }
-                nameStr += names[cnt - 1]
+                else if (cnt == 2) {
+                    nameStr = names[0]
+                    extra += " 외 ${cnt-1}개"
+                }
+                else {
+                    nameStr = names[0]
+                    extra += " 외 ${cnt-1}개"
+                }
+                nameStr += extra
                 //            if (nameStr.length >15)
+
                 FragmentOne.cardList.add(
                     RecordFoodData(
                         mealtime[i],

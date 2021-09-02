@@ -66,7 +66,7 @@ class CameraResult : AppCompatActivity(){
         imageArray.addAll(MainActivity.arrayUse)
 
 //        Log.d("Check result", )
-        imageArray.add(imageArray.size,FoodResult("인식 실패 직접 추가하세요.",0,100, 0,0,0,null,false))
+        imageArray.add(imageArray.size,FoodResult("인식 실패",0,100, 0,0,0,null,false))
 
         Log.e("size","${imageArray.size}")
 
