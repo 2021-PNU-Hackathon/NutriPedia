@@ -13,6 +13,7 @@ import android.util.Log
 import androidx.annotation.RequiresApi
 import org.techtown.testrecyclerview.result.FoodResult
 import org.w3c.dom.Text
+import java.net.URLEncoder
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -439,7 +440,6 @@ class DBHelper(
         var returnvalue = 0
         Log.e("check result1", returnvalue.toString())
         while (cursor.moveToNext()) {
-            Log.e("test","${name.length},${name},${cursor.getString(1).length},${cursor.getString(1)}")
             if (name == cursor.getString(1)) {
                 returnvalue = cursor.getInt(colindex)
                 Log.e("check result2", cursor.getString(colindex))
