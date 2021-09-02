@@ -17,8 +17,10 @@ class FileUploadUtils {
             .build()
 
         var request = Request.Builder()
-//            .url("http://49.50.165.171:7777")
+
             .url("http://49.50.165.171:7777")
+//            .url("http://180.69.118.29:7777")
+
             .post(requestBody)
             .build()
 
