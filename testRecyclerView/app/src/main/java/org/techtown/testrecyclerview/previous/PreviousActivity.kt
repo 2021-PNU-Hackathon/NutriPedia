@@ -116,7 +116,8 @@ class PreviousActivity : AppCompatActivity() {
                 nutri1 = cursor.getString(7).toInt()
                 nutri2 = cursor.getString(8).toInt()
                 nutri3 = cursor.getString(9).toInt()
-                if (picture != null) {
+
+                if(picture != null) {
                     total = cursor.getString(4)
                 }
                 FragmentOne.resultList.add(

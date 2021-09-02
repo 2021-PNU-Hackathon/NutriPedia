@@ -258,16 +258,32 @@ class MainActivity : AppCompatActivity() {
             uri = bitmapToUri(image,99)
             Log.e("uuu","$uri")
 
-
-            val serverData = FileUploadUtils().send2Server(file)
-            dataTOUse(serverData, image)
+            var serverData = FileUploadUtils().send2Server(file)
 
 
-            Handler().postDelayed({dataTOUse(serverData,image)
+
+//            CoroutineScope(Dispatchers.IO).launch {
+//                var job = async {
+//                    var sd : ArrayList<ServerData>
+//                    do {
+//                        var serverData = FileUploadUtils().send2Server(file)
+//                        sd = serverData
+//                    }
+//                    while (!serverData.isEmpty())
+//
+//                    dataTOUse(sd, image) }.await()
+//            }
+            Handler().postDelayed({ dataTOUse(serverData, image)
                 var cameraIntent = Intent(applicationContext, CameraResult::class.java)
                 cameraIntent.putExtra("uri", uri.toString())
-//                cameraIntent
                 startActivity(cameraIntent)},3000)
+//
+//
+//
+//            Handler().postDelayed({dataTOUse(serverData,image)
+//                var cameraIntent = Intent(applicationContext, CameraResult::class.java)
+//                cameraIntent.putExtra("uri", uri.toString())
+//                startActivity(cameraIntent)},3000)
         }
 
     }
@@ -294,6 +310,7 @@ class MainActivity : AppCompatActivity() {
         bitmap.compress(Bitmap.CompressFormat.JPEG,100,out)
 
         val file = File("/storage/emulated/0/Pictures/${fileName}")
+
         val serverData = FileUploadUtils().send2Server(file)
         Handler().postDelayed(
             {
