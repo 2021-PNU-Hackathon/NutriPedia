@@ -18,8 +18,8 @@ class FileUploadUtils {
 
         var request = Request.Builder()
 
-            .url("http://49.50.165.171:7777")
-//            .url("http://180.69.118.29:7777")
+//            .url("http://49.50.165.171:7777")
+            .url("http://180.69.118.29:7777")
 
             .post(requestBody)
             .build()
@@ -31,6 +31,7 @@ class FileUploadUtils {
             }
             override fun onResponse(call: Call, response: Response) {
                 val checkText : String = response.body()!!.string()
+
                 Log.e("TEST1 ", checkText)
                 var jsonResult : String = checkText
                 val jsonObject = JSONObject(checkText)
@@ -49,8 +50,10 @@ class FileUploadUtils {
                         nameArr.get(i).toString())
                     serverData.add(sample)
                 }
+
                 //Log.e("food","${serverData[0].name},${serverData[1].name},${serverData[2].name}")
                 //Log.e("arrayuse","${serverData.size}")
+
             }
         })
 
