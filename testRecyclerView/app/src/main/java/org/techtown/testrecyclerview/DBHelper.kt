@@ -432,6 +432,26 @@ class DBHelper(
         return returnvalue
     }
 
+    fun getResultFood(colindex: Int, name: String): Int {
+        var db: SQLiteDatabase = readableDatabase
+        val query = "SELECT * FROM real_nutri_91"
+        var cursor: Cursor = db.rawQuery(query, null)
+        var returnvalue = 0
+        Log.e("check result1", returnvalue.toString())
+        while (cursor.moveToNext()) {
+            if (name == cursor.getString(1)) {
+                returnvalue = cursor.getInt(colindex)
+                Log.e("check result2", cursor.getString(colindex))
+                break
+            }
+        }
+        Log.e("check result3", returnvalue.toString())
+
+        cursor.close()
+        db.close()
+        return returnvalue
+    }
+
     fun getColValue2(colindex: Int, name: String, mt: String?): String {
         var db: SQLiteDatabase = readableDatabase
         val query = "SELECT * FROM record WHERE foodname = '${name}' and mealtime = '${mt}'"
@@ -507,25 +527,37 @@ class DBHelper(
     // 싫어요 기능(FINISH)
 
     fun getFoodInfo(name: String): FoodResult {
-        var db: SQLiteDatabase = readableDatabase
-        var query = "SELECT * FROM real_nutri_91"
-        var cursor: Cursor = db.rawQuery(query, null)
-        var retoutput = FoodResult("name", 0, 0, 0, 0, null, true)
-        while (cursor.moveToNext()) {
-            if (name == cursor.getString(1)) {
-                retoutput = FoodResult(
-                    cursor.getString(1),
-                    cursor.getString(2).toInt(),
-                    cursor.getString(3).toInt(),
-                    cursor.getString(4).toInt(),
-                    cursor.getString(5).toInt(),
-                    null,
-                    true
-                )
-            }
-        }
-        cursor.close()
-        db.close()
+        Log.e("check-foodname",name)
+//        var db: SQLiteDatabase = readableDatabase
+//        var query = "SELECT * FROM real_nutri_91 where name = '${name}'"
+//        var cursor: Cursor = db.rawQuery(query, null)
+        var kcal : Int = getResultFood(2,name)
+        var cab :Int = getResultFood(5,name)
+        var pro : Int = getResultFood(3,name)
+        var fat : Int = getResultFood(4,name)
+        var retoutput = FoodResult(name, kcal,cab,pro,fat, null, true)
+        Log.e("check-foodname",retoutput.toString())
+//        var retoutput : FoodResult
+//        while (cursor.moveToNext()) {
+//            if (name == cursor.getString(1)) {
+//                retoutput = FoodResult(
+//                    cursor.getString(1),
+//                    cursor.getString(2).toInt(),
+//                    cursor.getString(5).toInt(),
+//                    cursor.getString(3).toInt(),
+//                    cursor.getString(4).toInt(),
+//                    null,
+//                    true
+//                )
+//                Log.d("Check ret",cursor.getString(1))
+//                Log.d("Check ret",cursor.getString(2))
+//                Log.d("Check ret",cursor.getString(5))
+//                Log.d("Check ret",cursor.getString(3))
+//                Log.d("Check ret",cursor.getString(4))
+//            }
+//        }
+//        cursor.close()
+//        db.close()
         return retoutput
     }
 }

@@ -61,6 +61,7 @@ class CameraResult : AppCompatActivity(){
         var totalUri = Uri.parse(uri)
         imageArray.clear()
         imageArray.addAll(MainActivity.arrayUse)
+//        Log.d("Check result", )
         imageArray.add(imageArray.size,FoodResult("인식 실패 직접 추가하세요.",0,0,0,0,null,false))
         Log.e("size","${imageArray.size}")
 

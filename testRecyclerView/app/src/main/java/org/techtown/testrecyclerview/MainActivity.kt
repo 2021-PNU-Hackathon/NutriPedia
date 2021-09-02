@@ -219,6 +219,7 @@ class MainActivity : AppCompatActivity() {
             val bitmap: Bitmap
             val file = File(curPhotoPath) // 절대 경로인 사진이 저장된 값
             if (Build.VERSION.SDK_INT < 28) { // 안드로이드9.0(PIE) 버전보다 낮을 경우
+                Log.d("Check",file.toString())
                 bitmap = MediaStore.Images.Media.getBitmap(contentResolver, Uri.fromFile(file))
                 // 끌어온 비트맵을 넣음
             } else { //PIE버전 이상인 경우
@@ -226,6 +227,7 @@ class MainActivity : AppCompatActivity() {
                     this.contentResolver,
                     Uri.fromFile(file)
                 )
+                Log.d ("Checkkkkk",ImageDecoder.decodeBitmap(decode).toString())
                 bitmap = ImageDecoder.decodeBitmap(decode)
             }
             savePhoto(bitmap)
@@ -257,6 +259,7 @@ class MainActivity : AppCompatActivity() {
             Handler().postDelayed({dataTOUse(serverData,image)
                 var cameraIntent = Intent(applicationContext, CameraResult::class.java)
                 cameraIntent.putExtra("uri", uri.toString())
+//                cameraIntent
                 startActivity(cameraIntent)},3000)
 
         }
@@ -303,7 +306,7 @@ class MainActivity : AppCompatActivity() {
                 crop = Bitmap.createBitmap(bitmap,serverData[i].x1.toInt(),serverData[i].y1.toInt(),
                     (serverData[i].x2-serverData[i].x1).toInt(),(serverData[i].y2-serverData[i].y1).toInt())
                 arrayUse[i].uri = bitmapToUri(crop,i)
-                Log.e("check",arrayUse[i].foodName)
+                Log.e("check-foodname",arrayUse[i].foodName)
             }
         }
     }
