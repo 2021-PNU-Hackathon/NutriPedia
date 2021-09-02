@@ -340,7 +340,7 @@ class MainActivity : AppCompatActivity() {
             cameraIntent.putExtra("uri",photoURI.toString())
             startActivity(cameraIntent)
             }
-            ,3000)
+            ,4000)
     }
 
     fun dataTOUse(serverData: ArrayList<ServerData>,bitmap: Bitmap) {
