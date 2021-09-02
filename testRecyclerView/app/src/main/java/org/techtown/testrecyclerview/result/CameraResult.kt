@@ -33,6 +33,7 @@ import org.techtown.testrecyclerview.search.SearchList
 import java.lang.NullPointerException
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.ceil
 import kotlin.math.roundToInt
 
 
@@ -63,7 +64,9 @@ class CameraResult : AppCompatActivity(){
         var totalUri = Uri.parse(uri)
         imageArray.clear()
         imageArray.addAll(MainActivity.arrayUse)
-        imageArray.add(imageArray.size,FoodResult("인식 실패.",0,0,0,0,null,false))
+
+//        Log.d("Check result", )
+        imageArray.add(imageArray.size,FoodResult("인식 실패 직접 추가하세요.",0,100, 0,0,0,null,false))
 
         Log.e("size","${imageArray.size}")
 
@@ -103,16 +106,17 @@ class CameraResult : AppCompatActivity(){
         currentNp.setOnValueChangedListener { picker, oldVal, newVal ->
             currentvalue = newVal
 
-            imageArray[pos].nutri1 = imageArray[pos].nutri1*(((50-newVal)/(50-oldVal)))
-            imageArray[pos].nutri2 = imageArray[pos].nutri2*(((50-newVal)/(50-oldVal)))
-            imageArray[pos].nutri3 = imageArray[pos].nutri3*(((50-newVal)/(50-oldVal)))
-            imageArray[pos].calorie = (imageArray[pos].nutri1+imageArray[pos].nutri2+imageArray[pos].nutri3)
+            imageArray[pos].nutri1 = (ceil((imageArray[pos].nutri1 * (50-newVal) / (50-oldVal)).toDouble())).toInt()
+            imageArray[pos].nutri2 = (ceil((imageArray[pos].nutri2 * (50-newVal) / (50-oldVal)).toDouble())).toInt()
+            imageArray[pos].nutri3 = (ceil((imageArray[pos].nutri3 * (50-newVal) / (50-oldVal)).toDouble())).toInt()
+            imageArray[pos].calorie = imageArray[pos].calorie * (50-newVal) / (50-oldVal)
+            imageArray[pos].amount = (50-newVal) * 10
             nutri1_Tv.text = imageArray[pos].nutri1.toString()+ "Kcal"
-            nutri2_Tv.text = imageArray[pos].nutri1.toString()+ "Kcal"
-            nutri3_Tv.text = imageArray[pos].nutri1.toString()+ "Kcal"
+            nutri2_Tv.text = imageArray[pos].nutri2.toString()+ "Kcal"
+            nutri3_Tv.text = imageArray[pos].nutri3.toString()+ "Kcal"
             kcalTv.text = imageArray[pos].calorie.toString()+"Kcal"
             totalCal.text = kcalTv.text
-            Log.e("check","${imageArray[pos].nutri1},${imageArray[pos].nutri2},${imageArray[pos].nutri3}")
+            Log.e("check","${imageArray[pos].amount},${imageArray[pos].nutri1},${imageArray[pos].nutri2},${imageArray[pos].nutri3}")
         }
 
         val mAdapter = ResultAdapter(this,imageArray)
@@ -139,6 +143,7 @@ class CameraResult : AppCompatActivity(){
                         nutri1_Tv.text = imageArray[position].nutri1.toString() + "Kcal"
                         nutri2_Tv.text = imageArray[position].nutri2.toString() + "Kcal"
                         nutri3_Tv.text = imageArray[position].nutri3.toString() + "Kcal"
+                        currentNp.value = 50 - (imageArray[position].amount / 10)
                         pos = position
                         var total = 0
                         for (i in 0 until imageArray.size) {
@@ -153,6 +158,7 @@ class CameraResult : AppCompatActivity(){
                         nutri1_Tv.text = imageArray[position].nutri1.toString() + "Kcal"
                         nutri2_Tv.text = imageArray[position].nutri2.toString() + "Kcal"
                         nutri3_Tv.text = imageArray[position].nutri3.toString() + "Kcal"
+                        currentNp.value = 50 - (imageArray[position].amount / 10)
                         pos = position
                         var total = 0
                         for (i in 0 until imageArray.size) {

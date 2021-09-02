@@ -46,7 +46,7 @@ class FixSearchResult : AppCompatActivity() {
                 val fixPosition = intent.getIntExtra("fixPosition",1000)
                 val uri = CameraResult.imageArray[fixPosition].uri
                 CameraResult.imageArray.removeAt(fixPosition)
-                CameraResult.imageArray.add(fixPosition,FoodResult(foodList[position].foodName,foodList[position].calorie,
+                CameraResult.imageArray.add(fixPosition,FoodResult(foodList[position].foodName,foodList[position].calorie,100,
                     foodList[position].nutri1,foodList[position].nutri2,foodList[position].nutri3,uri,true))
                 finish()
             }
