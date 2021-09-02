@@ -110,12 +110,15 @@ class PreviousActivity : AppCompatActivity() {
                 cnt++
                 mealTime = mealtime[i]
                 foodName = cursor.getString(2)
-                picture = cursor.getString(4)
+                picture = cursor.getString(3)
                 calorie = cursor.getString(6).toInt()
                 amount = cursor.getString(5).toInt()
                 nutri1 = cursor.getString(7).toInt()
                 nutri2 = cursor.getString(8).toInt()
                 nutri3 = cursor.getString(9).toInt()
+                if (picture != null) {
+                    total = cursor.getString(4)
+                }
                 FragmentOne.resultList.add(
                     RecordFoodData(
                         mealTime,
