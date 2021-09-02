@@ -10,7 +10,9 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.ImageDecoder
 import android.media.ExifInterface
+import android.media.tv.TvContract.Programs.Genres.decode
 import android.net.Uri
+import android.net.Uri.decode
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
@@ -21,9 +23,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.URLUtil.decode
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
+import androidx.core.graphics.createBitmap
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -39,6 +43,10 @@ import org.techtown.testrecyclerview.result.FixItemActivity
 import org.techtown.testrecyclerview.result.FoodResult
 import org.techtown.testrecyclerview.tutorial.CurrentWeight
 import java.io.*
+import java.lang.Byte.decode
+import java.lang.Integer.decode
+import java.lang.Long.decode
+import java.net.URLDecoder.decode
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -86,6 +94,10 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction().add(fl.id,FragmentOne()).commit()
         supportActionBar!!.hide()
         var isfirst : Int = 0
+        intent.action = Intent.ACTION_OPEN_DOCUMENT_TREE
+        intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
 
         val preferences = getSharedPreferences("a", MODE_PRIVATE)
         var editor = preferences.edit()
@@ -97,8 +109,6 @@ class MainActivity : AppCompatActivity() {
             copy.copyDataBaseFromAssets(this)
             startActivity(firstIntent)
         }
-
-
 
 
         bn.setOnNavigationItemSelectedListener {
@@ -172,10 +182,9 @@ class MainActivity : AppCompatActivity() {
                         "org.techtown.testrecyclerview.fileprovider", //보안 서명
                         it
                     )
+
                     takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI.toString())
-                    Log.d("Check","picture1")
                     startActivityForResult(takePictureIntent,REQUEST_IMAGE_CAPTURE)
-                    Log.d("Check","picture2")
                 }
             }
         }
@@ -186,8 +195,8 @@ class MainActivity : AppCompatActivity() {
         val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         return File.createTempFile("JPEG_${timeStamp}_",".jpg",storageDir)
             .apply { curPhotoPath = absolutePath }
-
     }
+
 
     /*
     테드 퍼미션 설정
@@ -206,7 +215,7 @@ class MainActivity : AppCompatActivity() {
             .setPermissionListener(permission)
             .setRationaleMessage("영양피디아를 사용하시려면 권한을 허용해주세요.")
             .setDeniedMessage("권한을 거부하셨습니다. [앱 설정] -> [권한] 항목에서 허용해주세요.")
-            .setPermissions(android.Manifest.permission.WRITE_EXTERNAL_STORAGE,android.Manifest.permission.CAMERA)
+            .setPermissions(android.Manifest.permission.WRITE_EXTERNAL_STORAGE,android.Manifest.permission.READ_EXTERNAL_STORAGE,android.Manifest.permission.CAMERA)
             .check()
 
     }
@@ -216,16 +225,18 @@ class MainActivity : AppCompatActivity() {
         //사진을 성공적으로 가져 온 경우
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
             //val ivPhoto : ImageView = findViewById(R.id.ivPhoto)
-            val bitmap: Bitmap
+            var bitmap: Bitmap
             val file = File(curPhotoPath) // 절대 경로인 사진이 저장된 값
             if (Build.VERSION.SDK_INT < 28) { // 안드로이드9.0(PIE) 버전보다 낮을 경우
                 bitmap = MediaStore.Images.Media.getBitmap(contentResolver, Uri.fromFile(file))
                 // 끌어온 비트맵을 넣음
             } else { //PIE버전 이상인 경우
+                //contentResolver.takePersistableUriPermission(data!!.data!!,Intent.FLAG_GRANT_READ_URI_PERMISSION)
                 val decode = ImageDecoder.createSource( //변환을 해서 가져옴
-                    this.contentResolver,
+                    contentResolver,
                     Uri.fromFile(file)
                 )
+                Log.e("checku","${Uri.fromFile(file)}")
                 bitmap = ImageDecoder.decodeBitmap(decode)
             }
             savePhoto(bitmap)
@@ -236,19 +247,14 @@ class MainActivity : AppCompatActivity() {
             val path = getFullPath(uri!!)
             var input = contentResolver.openInputStream(uri!!)
             var image = BitmapFactory.decodeStream(input)
+//            Log.e("path","$path")
+//            Log.e("old uri","$uri")
+//            uri = Uri.parse(path)
+//            Log.e("new uri","$uri")
             val file : File = bitmapToFile(image,path)
+            uri = bitmapToUri(image,99)
+            Log.e("uuu","$uri")
 
-//            CoroutineScope(Dispatchers.Main).launch {
-//                val temp = CoroutineScope(Dispatchers.Default).async {
-//                    val serverData = FileUploadUtils().send2Server(file)
-//                    dataTOUse(serverData, image)
-//                    Log.e("server","$serverData")
-//                }.await()
-//
-//                var cameraIntent = Intent(applicationContext, CameraResult::class.java)
-//                cameraIntent.putExtra("uri", uri.toString())
-//                startActivity(cameraIntent)
-//            }
 
             val serverData = FileUploadUtils().send2Server(file)
             dataTOUse(serverData, image)
@@ -258,7 +264,6 @@ class MainActivity : AppCompatActivity() {
                 var cameraIntent = Intent(applicationContext, CameraResult::class.java)
                 cameraIntent.putExtra("uri", uri.toString())
                 startActivity(cameraIntent)},3000)
-
         }
 
     }
@@ -286,10 +291,14 @@ class MainActivity : AppCompatActivity() {
 
         val file = File("/storage/emulated/0/Pictures/${fileName}")
         val serverData = FileUploadUtils().send2Server(file)
-        Handler().postDelayed({dataTOUse(serverData,bitmap)
+        Handler().postDelayed(
+            {
+            dataTOUse(serverData,bitmap)
             var cameraIntent = Intent(applicationContext, CameraResult::class.java)
             cameraIntent.putExtra("uri",photoURI.toString())
-            startActivity(cameraIntent)},3000)
+            startActivity(cameraIntent)
+            }
+            ,1000)
     }
 
     fun dataTOUse(serverData: ArrayList<ServerData>,bitmap: Bitmap) {
@@ -320,7 +329,12 @@ class MainActivity : AppCompatActivity() {
         val out = FileOutputStream(folderPath + fileName)
         bitmap.compress(Bitmap.CompressFormat.JPEG,100,out)
         val file = File("/storage/emulated/0/Pictures/${fileName}")
-        return Uri.parse(file.absolutePath)
+        var uri = Uri.parse(file.absolutePath)
+        Log.e("old","$uri")
+//        val temp = Uri.decode(uri.toString())
+//        uri = Uri.parse(temp)
+
+        return uri
     }
 
     fun bitmapToFile(bitmap:Bitmap, path : String?) : File {
@@ -429,12 +443,21 @@ class MainActivity : AppCompatActivity() {
                         addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     }.run { context.startActivity(this) }
                 }
-
                 itemtitle.text = foodData.mealTime +" | "+foodData.calorie.toString()+"Kcal"
                 itemdetail.text = foodData.foodName
                 if (foodData.picture != null) {
-                    val uri = Uri.parse(foodData.picture)
-                    itemimage.setImageURI(uri)
+                    var uri = Uri.parse(foodData.picture)
+                    try {
+//                        var input : InputStream? = context.contentResolver.openInputStream(uri)
+//                        val bitmap = BitmapFactory.decodeStream(input)
+//                        itemimage.setImageBitmap(bitmap)
+                        itemimage.setImageURI(uri)
+
+                    } catch (e : SecurityException) {
+                        itemimage.setImageResource(R.drawable.ic_no_image)
+                    }
+
+
                 } else {
                     itemimage.setImageResource(R.drawable.ic_no_image)
                 }

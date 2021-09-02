@@ -510,7 +510,7 @@ class DBHelper(
         var db: SQLiteDatabase = readableDatabase
         var query = "SELECT * FROM real_nutri_91"
         var cursor: Cursor = db.rawQuery(query, null)
-        var retoutput = FoodResult("name", 0, 0, 0, 0, null, true)
+        var retoutput = FoodResult(name, 0, 0, 0, 0, null, true)
         while (cursor.moveToNext()) {
             if (name == cursor.getString(1)) {
                 retoutput = FoodResult(

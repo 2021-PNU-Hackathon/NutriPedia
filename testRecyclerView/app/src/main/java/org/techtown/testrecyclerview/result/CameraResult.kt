@@ -52,16 +52,18 @@ class CameraResult : AppCompatActivity(){
         val now = System.currentTimeMillis()
         val date = Date(now)
 
+
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back)
         supportActionBar?.title = sdf.format(date)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.parseColor("#FFFFFF")))
 
+
         var uri = intent.getStringExtra("uri")
         var totalUri = Uri.parse(uri)
         imageArray.clear()
         imageArray.addAll(MainActivity.arrayUse)
-        imageArray.add(imageArray.size,FoodResult("인식 실패 직접 추가하세요.",0,0,0,0,null,false))
+        imageArray.add(imageArray.size,FoodResult("인식 실패.",0,0,0,0,null,false))
         Log.e("size","${imageArray.size}")
 
         mainIv.setImageURI(imageArray[0].uri)
