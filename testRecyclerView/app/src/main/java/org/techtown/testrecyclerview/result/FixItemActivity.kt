@@ -67,6 +67,7 @@ class FixItemActivity : AppCompatActivity() {
                     FoodResult(
                         FragmentOne.resultList[i].foodName,
                         FragmentOne.resultList[i].calorie,
+                        FragmentOne.resultList[i].amount,
                         FragmentOne.resultList[i].nutri1,
                         FragmentOne.resultList[i].nutri2,
                         FragmentOne.resultList[i].nutri3,

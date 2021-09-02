@@ -64,7 +64,7 @@ class ResultSearchActivity : AppCompatActivity() {
                 nutri3 = displayList[position].nutri3
 
                 CameraResult.imageArray.add(
-                    CameraResult.imageArray.size-1,FoodResult(foodName,calorie,nutri1,nutri2,nutri3,null,true)
+                    CameraResult.imageArray.size-1,FoodResult(foodName,calorie,100,nutri1,nutri2,nutri3,null,true)
                 )
 
 

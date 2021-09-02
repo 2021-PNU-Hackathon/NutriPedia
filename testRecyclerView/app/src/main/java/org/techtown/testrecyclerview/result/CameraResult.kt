@@ -33,6 +33,7 @@ import org.techtown.testrecyclerview.search.SearchList
 import java.lang.NullPointerException
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.ceil
 import kotlin.math.roundToInt
 
 
@@ -63,7 +64,9 @@ class CameraResult : AppCompatActivity(){
         var totalUri = Uri.parse(uri)
         imageArray.clear()
         imageArray.addAll(MainActivity.arrayUse)
-        imageArray.add(imageArray.size,FoodResult("인식 실패.",0,0,0,0,null,false))
+
+//        Log.d("Check result", )
+        imageArray.add(imageArray.size,FoodResult("인식 실패 직접 추가하세요.",0,100, 0,0,0,null,false))
 
         Log.e("size","${imageArray.size}")
 
@@ -75,9 +78,11 @@ class CameraResult : AppCompatActivity(){
         nutri1_Tv.text = imageArray[0].nutri1.toString() + "Kcal"
         nutri2_Tv.text = imageArray[0].nutri2.toString() + "Kcal"
         nutri3_Tv.text = imageArray[0].nutri3.toString() + "Kcal"
+        textView10.text = imageArray[0].foodName+"이 아닌가요?"
+
         var total = 0
         for (i in 0 until imageArray.size) {
-            total += imageArray[i].calorie
+            total += (imageArray[i].calorie * imageArray[i].amount / 100)
         }
         totalCal.text = total.toString() + "Kcal"
 
@@ -103,16 +108,18 @@ class CameraResult : AppCompatActivity(){
         currentNp.setOnValueChangedListener { picker, oldVal, newVal ->
             currentvalue = newVal
 
-            imageArray[pos].nutri1 = imageArray[pos].nutri1*(((50-newVal)/(50-oldVal)))
-            imageArray[pos].nutri2 = imageArray[pos].nutri2*(((50-newVal)/(50-oldVal)))
-            imageArray[pos].nutri3 = imageArray[pos].nutri3*(((50-newVal)/(50-oldVal)))
-            imageArray[pos].calorie = (imageArray[pos].nutri1+imageArray[pos].nutri2+imageArray[pos].nutri3)
-            nutri1_Tv.text = imageArray[pos].nutri1.toString()+ "Kcal"
-            nutri2_Tv.text = imageArray[pos].nutri1.toString()+ "Kcal"
-            nutri3_Tv.text = imageArray[pos].nutri1.toString()+ "Kcal"
-            kcalTv.text = imageArray[pos].calorie.toString()+"Kcal"
-            totalCal.text = kcalTv.text
-            Log.e("check","${imageArray[pos].nutri1},${imageArray[pos].nutri2},${imageArray[pos].nutri3}")
+//            imageArray[pos].nutri1 = (imageArray[pos].nutri1 * (50-newVal) / 10)
+//            imageArray[pos].nutri2 = (ceil((imageArray[pos].nutri2 * (50-newVal) / (50-oldVal)).toDouble())).toInt()
+//            imageArray[pos].nutri3 = (ceil((imageArray[pos].nutri3 * (50-newVal) / (50-oldVal)).toDouble())).toInt()
+//            imageArray[pos].calorie = imageArray[pos].calorie * (50-newVal) / (50-oldVal)
+            imageArray[pos].amount = (50-newVal) * 10
+            nutri1_Tv.text = (imageArray[pos].nutri1 * imageArray[pos].amount / 100).toString()+ "Kcal"
+            nutri2_Tv.text = (imageArray[pos].nutri2 * imageArray[pos].amount / 100).toString()+ "Kcal"
+            nutri3_Tv.text = (imageArray[pos].nutri3 * imageArray[pos].amount / 100).toString()+ "Kcal"
+            kcalTv.text = (imageArray[pos].calorie * imageArray[pos].amount / 100).toString()+ "Kcal"
+            total = total - (imageArray[pos].calorie * (50 - oldVal) / 10) + (imageArray[pos].calorie * (50 - newVal) / 10)
+            totalCal.text = total.toString() + "Kcal"
+            Log.e("check","${imageArray[pos].amount},${imageArray[pos].nutri1 * imageArray[pos].amount / 100},${imageArray[pos].nutri2 * imageArray[pos].amount / 100},${imageArray[pos].nutri3 * imageArray[pos].amount / 100}")
         }
 
         val mAdapter = ResultAdapter(this,imageArray)
@@ -135,28 +142,31 @@ class CameraResult : AppCompatActivity(){
                     } else if (imageArray[position].uri != null) {
                         mainIv.setImageURI(imageArray[position].uri)
                         foodTv1.text = imageArray[position].foodName
-                        kcalTv.text = imageArray[position].calorie.toString() + "Kcal"
-                        nutri1_Tv.text = imageArray[position].nutri1.toString() + "Kcal"
-                        nutri2_Tv.text = imageArray[position].nutri2.toString() + "Kcal"
-                        nutri3_Tv.text = imageArray[position].nutri3.toString() + "Kcal"
+                        textView10.text = imageArray[position].foodName +"이 아닌가요?"
+                        kcalTv.text = (imageArray[position].calorie * imageArray[position].amount / 100).toString()+ "Kcal"
+                        nutri1_Tv.text = (imageArray[position].nutri1 * imageArray[position].amount / 100).toString()+ "Kcal"
+                        nutri2_Tv.text = (imageArray[position].nutri2 * imageArray[position].amount / 100).toString()+ "Kcal"
+                        nutri3_Tv.text = (imageArray[position].nutri3 * imageArray[position].amount / 100).toString()+ "Kcal"
+                        currentNp.value = 50 - (imageArray[position].amount / 10)
                         pos = position
                         var total = 0
                         for (i in 0 until imageArray.size) {
-                            total += imageArray[i].calorie
+                            total += (imageArray[i].calorie * imageArray[i].amount / 100)
                         }
                         totalCal.text = total.toString() + "Kcal"
                     } else
                     {
                         mainIv.setImageResource(R.drawable.ic_no_image)
                         foodTv1.text = imageArray[position].foodName
-                        kcalTv.text = imageArray[position].calorie.toString() + "Kcal"
-                        nutri1_Tv.text = imageArray[position].nutri1.toString() + "Kcal"
-                        nutri2_Tv.text = imageArray[position].nutri2.toString() + "Kcal"
-                        nutri3_Tv.text = imageArray[position].nutri3.toString() + "Kcal"
+                        textView10.text = imageArray[position].foodName + "이 아닌가요?"                        
+                        nutri1_Tv.text = (imageArray[position].nutri1 * imageArray[position].amount / 100).toString()+ "Kcal"
+                        nutri2_Tv.text = (imageArray[position].nutri2 * imageArray[position].amount / 100).toString()+ "Kcal"
+                        nutri3_Tv.text = (imageArray[position].nutri3 * imageArray[position].amount / 100).toString()+ "Kcal"
+                        currentNp.value = 50 - (imageArray[position].amount / 10)
                         pos = position
                         var total = 0
                         for (i in 0 until imageArray.size) {
-                            total += imageArray[i].calorie
+                            total += (imageArray[i].calorie * imageArray[i].amount / 100)
                         }
                         totalCal.text = total.toString() + "Kcal"
                     }
@@ -467,11 +477,11 @@ class CameraResult : AppCompatActivity(){
                         imageArray[i].foodName,
                         imageArray[i].uri,
                         totalUri,
-                        500 - currentvalue * 10,
-                        imageArray[i].calorie,
-                        imageArray[i].nutri1,
-                        imageArray[i].nutri2,
-                        imageArray[i].nutri3
+                        imageArray[i].amount,
+                        (imageArray[i].calorie * imageArray[i].amount / 100),
+                        (imageArray[i].nutri1 * imageArray[i].amount / 100),
+                        (imageArray[i].nutri2 * imageArray[i].amount / 100),
+                        (imageArray[i].nutri3 * imageArray[i].amount / 100)
                     )
                 }
                 MainActivity.checkChange = 1
@@ -490,13 +500,13 @@ class CameraResult : AppCompatActivity(){
         mainIv.setImageURI(imageArray[0].uri)
 
         foodTv1.text = imageArray[0].foodName
-        kcalTv.text = imageArray[0].calorie.toString() + "Kcal"
-        nutri1_Tv.text = imageArray[0].nutri1.toString() + "Kcal"
-        nutri2_Tv.text = imageArray[0].nutri2.toString() + "Kcal"
-        nutri3_Tv.text = imageArray[0].nutri3.toString() + "Kcal"
+        kcalTv.text = (imageArray[0].calorie * imageArray[0].amount / 100).toString() + "Kcal"
+        nutri1_Tv.text = (imageArray[0].nutri1 * imageArray[0].amount / 100).toString() + "Kcal"
+        nutri2_Tv.text = (imageArray[0].nutri2 * imageArray[0].amount / 100).toString() + "Kcal"
+        nutri3_Tv.text = (imageArray[0].nutri3 * imageArray[0].amount / 100).toString() + "Kcal"
         var total = 0
         for (i in 0 until imageArray.size) {
-            total += imageArray[i].calorie
+            total += (imageArray[i].calorie * imageArray[i].amount / 100)
         }
         totalCal.text = total.toString() + "Kcal"
 

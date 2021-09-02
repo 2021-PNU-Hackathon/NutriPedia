@@ -293,6 +293,7 @@ class FragmentOne : Fragment() {
 //            foodList.clear()
             var cursor: Cursor = db.rawQuery("SELECT * FROM record where date = '${time}' and mealtime = '${mealtime[i]}'", null)
             var mealKcal : Int = 0
+            var mealAmount : Int =0
             var mealCab : Int =0
             var mealPro:Int =0
             var mealFat:Int =0
@@ -304,12 +305,14 @@ class FragmentOne : Fragment() {
             var foodName : String
             var picture : String?
             var calorie : Int
+            var amount : Int
             var nutri1 : Int
             var nutri2 : Int
             var nutri3 : Int
             var extra : String = ""
             while (cursor.moveToNext()) {
                 mealKcal += cursor.getString(6).toInt()
+                mealAmount += cursor.getString(5).toInt()
                 mealCab += cursor.getString(7).toInt()
                 mealPro += cursor.getString(8).toInt()
                 mealFat += cursor.getString(9).toInt()
@@ -319,6 +322,7 @@ class FragmentOne : Fragment() {
                 foodName = cursor.getString(2)
                 picture = cursor.getString(3)
                 calorie = cursor.getString(6).toInt()
+                amount = cursor.getString(5).toInt()
                 nutri1 = cursor.getString(7).toInt()
                 nutri2 = cursor.getString(8).toInt()
                 nutri3 = cursor.getString(9).toInt()
@@ -331,6 +335,7 @@ class FragmentOne : Fragment() {
                         foodName,
                         picture,
                         calorie,
+                        amount,
                         nutri1,
                         nutri2,
                         nutri3
@@ -362,6 +367,7 @@ class FragmentOne : Fragment() {
                         nameStr,
                         total,
                         mealKcal,
+                        mealAmount,
                         mealCab,
                         mealPro,
                         mealFat

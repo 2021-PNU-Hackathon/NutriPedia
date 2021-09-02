@@ -528,25 +528,14 @@ class DBHelper(
 
     fun getFoodInfo(name: String): FoodResult {
 
-        var db: SQLiteDatabase = readableDatabase
-        var query = "SELECT * FROM real_nutri_91"
-        var cursor: Cursor = db.rawQuery(query, null)
-        var retoutput = FoodResult(name, 0, 0, 0, 0, null, true)
-        while (cursor.moveToNext()) {
-            if (name == cursor.getString(1)) {
-                retoutput = FoodResult(
-                    cursor.getString(1),
-                    cursor.getString(2).toInt(),
-                    cursor.getString(3).toInt(),
-                    cursor.getString(4).toInt(),
-                    cursor.getString(5).toInt(),
-                    null,
-                    true
-                )
-            }
-        }
-        cursor.close()
-        db.close()
+        Log.e("check-foodname",name)
+
+        var kcal : Int = getResultFood(2,name)
+        var cab :Int = getResultFood(5,name)
+        var pro : Int = getResultFood(3,name)
+        var fat : Int = getResultFood(4,name)
+        var retoutput = FoodResult(name, kcal,100,cab,pro,fat, null, true)
+        Log.e("check-foodname",retoutput.toString())
 
         return retoutput
     }
