@@ -259,28 +259,30 @@ class MainActivity : AppCompatActivity() {
             Log.e("uuu","$uri")
 
 
-            CoroutineScope(Dispatchers.IO).launch {
-                var job = async {
-                    var sd : ArrayList<ServerData>
-                    var serverData = FileUploadUtils().send2Server(file)
-                    sd = serverData
-                    do {
-                        Log.d("hello","hello")
-                    }
-                    while (serverData.isEmpty())
+//            CoroutineScope(Dispatchers.IO).launch {
+//                var job = async {
+//                    var sd : ArrayList<ServerData>
+//                    var serverData = FileUploadUtils().send2Server(file)
+//                    sd = serverData
+//                    do {
+//                        Log.d("hello","hello")
+//                    }
+//                    while (serverData.isEmpty())
+//
+//                    dataTOUse(sd, image) }.await()
+//
+//
+//                Handler().postDelayed({
+//                    var cameraIntent = Intent(applicationContext, CameraResult::class.java)
+//                    cameraIntent.putExtra("uri", uri.toString())
+//                    startActivity(cameraIntent)},1000)
+//            }
 
-                    dataTOUse(sd, image) }.await()
-
+            var serverData = FileUploadUtils().send2Server(file)
+            Handler().postDelayed({ dataTOUse(serverData, image)
                 var cameraIntent = Intent(applicationContext, CameraResult::class.java)
                 cameraIntent.putExtra("uri", uri.toString())
-                startActivity(cameraIntent)
-            }
-
-//            var serverData = FileUploadUtils().send2Server(file)
-//            Handler().postDelayed({ dataTOUse(serverData, image)
-//                var cameraIntent = Intent(applicationContext, CameraResult::class.java)
-//                cameraIntent.putExtra("uri", uri.toString())
-//                startActivity(cameraIntent)},3000)
+                startActivity(cameraIntent)},3000)
 
         }
 
@@ -310,32 +312,35 @@ class MainActivity : AppCompatActivity() {
         val file = File("/storage/emulated/0/Pictures/${fileName}")
 
 
-        CoroutineScope(Dispatchers.IO).launch {
-            var job = async {
-                var sd : ArrayList<ServerData>
-                var serverData = FileUploadUtils().send2Server(file)
-                sd = serverData
-                do {
-                    Log.d("hello","hello")
-                }
-                while (serverData.isEmpty())
-
-                dataTOUse(sd, bitmap) }.await()
-
-            var cameraIntent = Intent(applicationContext, CameraResult::class.java)
-            cameraIntent.putExtra("uri", photoURI.toString())
-            startActivity(cameraIntent)
-        }
-
-//        val serverData = FileUploadUtils().send2Server(file)
-//        Handler().postDelayed(
+//        CoroutineScope(Dispatchers.IO).launch {
+//            var job = async {
+//                var sd : ArrayList<ServerData>
+//                var serverData = FileUploadUtils().send2Server(file)
+//                sd = serverData
+//                do {
+//                    Log.d("hello","hello")
+//                }
+//                while (serverData.isEmpty())
+//
+//                dataTOUse(sd, bitmap) }.await()
+//            Handler().postDelayed(
 //            {
-//            dataTOUse(serverData,bitmap)
 //            var cameraIntent = Intent(applicationContext, CameraResult::class.java)
 //            cameraIntent.putExtra("uri",photoURI.toString())
 //            startActivity(cameraIntent)
 //            }
-//            ,5000)
+//            ,1000)
+//        }
+
+        val serverData = FileUploadUtils().send2Server(file)
+        Handler().postDelayed(
+            {
+            dataTOUse(serverData,bitmap)
+            var cameraIntent = Intent(applicationContext, CameraResult::class.java)
+            cameraIntent.putExtra("uri",photoURI.toString())
+            startActivity(cameraIntent)
+            }
+            ,3000)
     }
 
     fun dataTOUse(serverData: ArrayList<ServerData>,bitmap: Bitmap) {

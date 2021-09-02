@@ -419,7 +419,7 @@ class DBHelper(
 
     fun getColValue(colindex: Int, tablename: String): String {
         var db: SQLiteDatabase = readableDatabase
-        val query = "SELECT * FROM " + tablename
+        val query = "SELECT * FROM " + tablename;
         var cursor: Cursor = db.rawQuery(query, null)
         var returnvalue = ""
 
