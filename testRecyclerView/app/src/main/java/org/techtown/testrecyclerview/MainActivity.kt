@@ -282,7 +282,7 @@ class MainActivity : AppCompatActivity() {
             Handler().postDelayed({ dataTOUse(serverData, image)
                 var cameraIntent = Intent(applicationContext, CameraResult::class.java)
                 cameraIntent.putExtra("uri", uri.toString())
-                startActivity(cameraIntent)},3000)
+                startActivity(cameraIntent)},4000)
 
         }
 
@@ -340,7 +340,7 @@ class MainActivity : AppCompatActivity() {
             cameraIntent.putExtra("uri",photoURI.toString())
             startActivity(cameraIntent)
             }
-            ,3000)
+            ,4000)
     }
 
     fun dataTOUse(serverData: ArrayList<ServerData>,bitmap: Bitmap) {
