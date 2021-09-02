@@ -535,7 +535,7 @@ class DBHelper(
         var cab :Int = getResultFood(5,name)
         var pro : Int = getResultFood(3,name)
         var fat : Int = getResultFood(4,name)
-        var retoutput = FoodResult(name, kcal,cab,pro,fat, null, true)
+        var retoutput = FoodResult(name, kcal,100,cab,pro,fat, null, true)
         Log.e("check-foodname",retoutput.toString())
 //        var retoutput : FoodResult
 //        while (cursor.moveToNext()) {
