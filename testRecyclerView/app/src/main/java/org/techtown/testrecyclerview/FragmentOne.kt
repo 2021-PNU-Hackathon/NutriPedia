@@ -95,6 +95,7 @@ class FragmentOne : Fragment() {
                               savedInstanceState: Bundle?): View? {
         v = inflater.inflate(R.layout.fragment_one,container,false)
 
+
         dbHelper = DBHelper(context, "food_nutri.db", null, 1)
         db = dbHelper.readableDatabase
 
@@ -316,11 +317,14 @@ class FragmentOne : Fragment() {
                 cnt++
                 mealTime = mealtime[i]
                 foodName = cursor.getString(2)
-                picture = cursor.getString(4)
+                picture = cursor.getString(3)
                 calorie = cursor.getString(6).toInt()
                 nutri1 = cursor.getString(7).toInt()
                 nutri2 = cursor.getString(8).toInt()
                 nutri3 = cursor.getString(9).toInt()
+                if(picture != null) {
+                    total = cursor.getString(4)
+                }
                 resultList.add(
                     RecordFoodData(
                         mealTime,
@@ -334,6 +338,7 @@ class FragmentOne : Fragment() {
                 )
 
             }
+
             if (cnt>0) {
                 Log.d("Log1","good")
                 var nameStr: String = ""
@@ -350,6 +355,7 @@ class FragmentOne : Fragment() {
                 }
                 nameStr += extra
                 //            if (nameStr.length >15)
+
                 cardList.add(
                     RecordFoodData(
                         mealtime[i],

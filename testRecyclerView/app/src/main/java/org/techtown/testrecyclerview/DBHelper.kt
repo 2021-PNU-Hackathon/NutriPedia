@@ -527,37 +527,16 @@ class DBHelper(
     // 싫어요 기능(FINISH)
 
     fun getFoodInfo(name: String): FoodResult {
+
         Log.e("check-foodname",name)
-//        var db: SQLiteDatabase = readableDatabase
-//        var query = "SELECT * FROM real_nutri_91 where name = '${name}'"
-//        var cursor: Cursor = db.rawQuery(query, null)
+
         var kcal : Int = getResultFood(2,name)
         var cab :Int = getResultFood(5,name)
         var pro : Int = getResultFood(3,name)
         var fat : Int = getResultFood(4,name)
         var retoutput = FoodResult(name, kcal,100,cab,pro,fat, null, true)
         Log.e("check-foodname",retoutput.toString())
-//        var retoutput : FoodResult
-//        while (cursor.moveToNext()) {
-//            if (name == cursor.getString(1)) {
-//                retoutput = FoodResult(
-//                    cursor.getString(1),
-//                    cursor.getString(2).toInt(),
-//                    cursor.getString(5).toInt(),
-//                    cursor.getString(3).toInt(),
-//                    cursor.getString(4).toInt(),
-//                    null,
-//                    true
-//                )
-//                Log.d("Check ret",cursor.getString(1))
-//                Log.d("Check ret",cursor.getString(2))
-//                Log.d("Check ret",cursor.getString(5))
-//                Log.d("Check ret",cursor.getString(3))
-//                Log.d("Check ret",cursor.getString(4))
-//            }
-//        }
-//        cursor.close()
-//        db.close()
+
         return retoutput
     }
 }

@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.*
 import android.widget.NumberPicker
 import android.widget.Button
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_camera_result.*
@@ -115,8 +116,11 @@ class FixItemActivity : AppCompatActivity() {
                 try {
                     val child = addRecyclerView.findChildViewUnder(e.x, e.y)
                     val position : Int = addRecyclerView.getChildAdapterPosition(child!!)
-                    if (fixArray[position].uri != null) {
+                    var uri = fixArray[position].uri
+                    if ( uri != null && uri != "null".toUri()) {
+                        Log.e("uri?","${uri}")
                         pos = position
+
                         mainIv.setImageURI(fixArray[position].uri)
                         foodTv1.text = fixArray[position].foodName
                         kcalTv.text = fixArray[position].calorie.toString() + "Kcal"
