@@ -183,7 +183,7 @@ class MainActivity : AppCompatActivity() {
                         it
                     )
 
-                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI.toString())
+                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
                     startActivityForResult(takePictureIntent,REQUEST_IMAGE_CAPTURE)
                 }
             }
@@ -193,6 +193,7 @@ class MainActivity : AppCompatActivity() {
     fun createImageFile(): File { // 이미지파일 생성
         val timeStamp: String = SimpleDateFormat("yyyy-MM-dd-HHmmss").format(Date())
         val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        Log.e("storageDir","$storageDir")
         return File.createTempFile("JPEG_${timeStamp}_",".jpg",storageDir)
             .apply { curPhotoPath = absolutePath }
     }
@@ -298,7 +299,7 @@ class MainActivity : AppCompatActivity() {
             cameraIntent.putExtra("uri",photoURI.toString())
             startActivity(cameraIntent)
             }
-            ,1000)
+            ,3000)
     }
 
     fun dataTOUse(serverData: ArrayList<ServerData>,bitmap: Bitmap) {

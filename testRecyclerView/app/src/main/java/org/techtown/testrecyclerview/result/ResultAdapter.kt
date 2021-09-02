@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat.startActivity
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import de.hdodenhof.circleimageview.CircleImageView
 import org.techtown.testrecyclerview.R
@@ -57,14 +58,13 @@ class ResultAdapter(val context: Context, val foodResult: ArrayList<FoodResult>)
         val image = itemView.findViewById<CircleImageView>(R.id.smallIv)
         fun bind (food: FoodResult, context: Context) {
             /* 나머지 TextView와 String 데이터를 연결한다. */
-            if (food.uri != null) { // uri 있는거
+            if (food.uri != null && food.uri != "null".toUri()) { // uri 있는거
                 image.setImageURI(food.uri)
                 image.setOnClickListener { }
             } else if (food.check){ // 마지막인거 , context = cameraResult
                 image.setImageResource(R.drawable.result_item_border)
                 image.setCircleBackgroundColorResource(R.color.black)
                 image.setOnClickListener {
-
                 }
             } else { // 중간에 있는데 추가해서 생긴거
                 image.setImageResource(R.drawable.ic_result_add)
