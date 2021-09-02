@@ -258,32 +258,30 @@ class MainActivity : AppCompatActivity() {
             uri = bitmapToUri(image,99)
             Log.e("uuu","$uri")
 
-            var serverData = FileUploadUtils().send2Server(file)
 
+            CoroutineScope(Dispatchers.IO).launch {
+                var job = async {
+                    var sd : ArrayList<ServerData>
+                    var serverData = FileUploadUtils().send2Server(file)
+                    sd = serverData
+                    do {
+                        Log.d("hello","hello")
+                    }
+                    while (serverData.isEmpty())
 
+                    dataTOUse(sd, image) }.await()
 
-//            CoroutineScope(Dispatchers.IO).launch {
-//                var job = async {
-//                    var sd : ArrayList<ServerData>
-//                    do {
-//                        var serverData = FileUploadUtils().send2Server(file)
-//                        sd = serverData
-//                    }
-//                    while (!serverData.isEmpty())
-//
-//                    dataTOUse(sd, image) }.await()
-//            }
-            Handler().postDelayed({ dataTOUse(serverData, image)
                 var cameraIntent = Intent(applicationContext, CameraResult::class.java)
                 cameraIntent.putExtra("uri", uri.toString())
-                startActivity(cameraIntent)},3000)
-//
-//
-//
-//            Handler().postDelayed({dataTOUse(serverData,image)
+                startActivity(cameraIntent)
+            }
+
+//            var serverData = FileUploadUtils().send2Server(file)
+//            Handler().postDelayed({ dataTOUse(serverData, image)
 //                var cameraIntent = Intent(applicationContext, CameraResult::class.java)
 //                cameraIntent.putExtra("uri", uri.toString())
 //                startActivity(cameraIntent)},3000)
+
         }
 
     }
@@ -311,15 +309,33 @@ class MainActivity : AppCompatActivity() {
 
         val file = File("/storage/emulated/0/Pictures/${fileName}")
 
-        val serverData = FileUploadUtils().send2Server(file)
-        Handler().postDelayed(
-            {
-            dataTOUse(serverData,bitmap)
+
+        CoroutineScope(Dispatchers.IO).launch {
+            var job = async {
+                var sd : ArrayList<ServerData>
+                var serverData = FileUploadUtils().send2Server(file)
+                sd = serverData
+                do {
+                    Log.d("hello","hello")
+                }
+                while (serverData.isEmpty())
+
+                dataTOUse(sd, bitmap) }.await()
+
             var cameraIntent = Intent(applicationContext, CameraResult::class.java)
-            cameraIntent.putExtra("uri",photoURI.toString())
+            cameraIntent.putExtra("uri", photoURI.toString())
             startActivity(cameraIntent)
-            }
-            ,3000)
+        }
+
+//        val serverData = FileUploadUtils().send2Server(file)
+//        Handler().postDelayed(
+//            {
+//            dataTOUse(serverData,bitmap)
+//            var cameraIntent = Intent(applicationContext, CameraResult::class.java)
+//            cameraIntent.putExtra("uri",photoURI.toString())
+//            startActivity(cameraIntent)
+//            }
+//            ,5000)
     }
 
     fun dataTOUse(serverData: ArrayList<ServerData>,bitmap: Bitmap) {

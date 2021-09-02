@@ -60,7 +60,8 @@ class ResultAdapter(val context: Context, val foodResult: ArrayList<FoodResult>)
             /* 나머지 TextView와 String 데이터를 연결한다. */
             if (food.uri != null && food.uri != "null".toUri()) { // uri 있는거
                 image.setImageURI(food.uri)
-                image.setOnClickListener { }
+                image.setOnClickListener {
+                }
             } else if (food.check){ // 마지막인거 , context = cameraResult
                 image.setImageResource(R.drawable.result_item_border)
                 image.setCircleBackgroundColorResource(R.color.black)

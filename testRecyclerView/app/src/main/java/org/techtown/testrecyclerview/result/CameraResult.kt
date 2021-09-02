@@ -66,7 +66,7 @@ class CameraResult : AppCompatActivity(){
         imageArray.addAll(MainActivity.arrayUse)
 
 //        Log.d("Check result", )
-        imageArray.add(imageArray.size,FoodResult("인식 실패 직접 추가하세요.",0,100, 0,0,0,null,false))
+        imageArray.add(imageArray.size,FoodResult("인식 실패",0,100, 0,0,0,null,false))
 
         Log.e("size","${imageArray.size}")
 
@@ -158,7 +158,8 @@ class CameraResult : AppCompatActivity(){
                     {
                         mainIv.setImageResource(R.drawable.ic_no_image)
                         foodTv1.text = imageArray[position].foodName
-                        textView10.text = imageArray[position].foodName + "이 아닌가요?"                        
+                        textView10.text = imageArray[position].foodName + "이 아닌가요?"
+                        kcalTv.text = (imageArray[position].calorie * imageArray[position].amount / 100).toString()+ "Kcal"
                         nutri1_Tv.text = (imageArray[position].nutri1 * imageArray[position].amount / 100).toString()+ "Kcal"
                         nutri2_Tv.text = (imageArray[position].nutri2 * imageArray[position].amount / 100).toString()+ "Kcal"
                         nutri3_Tv.text = (imageArray[position].nutri3 * imageArray[position].amount / 100).toString()+ "Kcal"
