@@ -64,6 +64,7 @@ class CameraResult : AppCompatActivity(){
         imageArray.clear()
         imageArray.addAll(MainActivity.arrayUse)
         imageArray.add(imageArray.size,FoodResult("인식 실패.",0,0,0,0,null,false))
+
         Log.e("size","${imageArray.size}")
 
         mainIv.setImageURI(imageArray[0].uri)

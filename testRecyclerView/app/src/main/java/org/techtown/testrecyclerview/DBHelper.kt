@@ -432,6 +432,26 @@ class DBHelper(
         return returnvalue
     }
 
+    fun getResultFood(colindex: Int, name: String): Int {
+        var db: SQLiteDatabase = readableDatabase
+        val query = "SELECT * FROM real_nutri_91"
+        var cursor: Cursor = db.rawQuery(query, null)
+        var returnvalue = 0
+        Log.e("check result1", returnvalue.toString())
+        while (cursor.moveToNext()) {
+            if (name == cursor.getString(1)) {
+                returnvalue = cursor.getInt(colindex)
+                Log.e("check result2", cursor.getString(colindex))
+                break
+            }
+        }
+        Log.e("check result3", returnvalue.toString())
+
+        cursor.close()
+        db.close()
+        return returnvalue
+    }
+
     fun getColValue2(colindex: Int, name: String, mt: String?): String {
         var db: SQLiteDatabase = readableDatabase
         val query = "SELECT * FROM record WHERE foodname = '${name}' and mealtime = '${mt}'"
@@ -507,6 +527,7 @@ class DBHelper(
     // 싫어요 기능(FINISH)
 
     fun getFoodInfo(name: String): FoodResult {
+
         var db: SQLiteDatabase = readableDatabase
         var query = "SELECT * FROM real_nutri_91"
         var cursor: Cursor = db.rawQuery(query, null)
@@ -526,6 +547,7 @@ class DBHelper(
         }
         cursor.close()
         db.close()
+
         return retoutput
     }
 }
