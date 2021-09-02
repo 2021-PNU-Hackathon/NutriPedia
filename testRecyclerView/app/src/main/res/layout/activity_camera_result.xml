@@ -36,6 +36,7 @@
                     android:id="@+id/textView10"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
                     android:text="헬로가 아닌가요?"
                     app:layout_constraintBottom_toTopOf="@+id/inputNutri"
                     app:layout_constraintStart_toStartOf="parent"
