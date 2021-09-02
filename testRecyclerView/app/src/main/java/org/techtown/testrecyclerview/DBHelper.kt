@@ -439,6 +439,7 @@ class DBHelper(
         var returnvalue = 0
         Log.e("check result1", returnvalue.toString())
         while (cursor.moveToNext()) {
+            Log.e("test","${name.length},${name},${cursor.getString(1).length},${cursor.getString(1)}")
             if (name == cursor.getString(1)) {
                 returnvalue = cursor.getInt(colindex)
                 Log.e("check result2", cursor.getString(colindex))
